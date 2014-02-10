@@ -1,0 +1,15 @@
+{
+	"name": "Server",
+	"scripts": {
+		"start": "clear; node main.js",
+		"test": "clear; mocha --compilers coffee:coffee-script tests/server.coffee"
+	},
+	"dependencies" : {
+		"http":"*",
+		"express":"*",
+		"chai":"*",
+		"request":"*"
+	}
+}
+
+
