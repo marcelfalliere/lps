@@ -15,6 +15,16 @@ function Server(dao, limit) {
 Server.prototype.listen = function(port) {
 	this._server.listen(port);
 
+	// CORS ! for dev only
+	this._app.use(function(req, res, next) {
+	    res.header('Access-Control-Allow-Origin', '*');
+	    res.header('Access-Control-Allow-Methods', 'GET,POST');
+	    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+	    next();
+	});
+
+
 	// HTTP GET /threads 
 	this._app.get('/threads', _.bind(function(req,res){
 		this._dao.threads(function(threads){
