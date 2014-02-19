@@ -17,6 +17,7 @@ var ContentRegion = Backbone.Marionette.Region.extend({
 
 			this.currentView.$el
 				.addClass(animOut)
+				.trigger('pagebeforehide')
 				.on('webkitAnimationEnd', _.bind(function(){
 					this.$el.off('webkitAnimationEnd');
 					this.close();
@@ -27,6 +28,7 @@ var ContentRegion = Backbone.Marionette.Region.extend({
 
 			view.$el
 				.addClass(animIn)
+				.trigger('pagebeforeshow')
 				.one('webkitAnimationEnd', _.bind(function(){
 					this.off('webkitAnimationEnd')
 						.removeClass(animIn)
@@ -39,7 +41,7 @@ var ContentRegion = Backbone.Marionette.Region.extend({
 
 		} else {
 			this.show(view);
-			view.$el.trigger('pageshow');
+			view.$el.trigger('pagebeforeshow').trigger('pageshow');
 		}
 	}
 });

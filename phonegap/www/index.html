@@ -8,7 +8,7 @@
         
         phonestrap did it, so...
         -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, height=device-height, width=device-width" />
         
 
         <link rel="stylesheet" href="styles/reset.css">
@@ -20,7 +20,11 @@
 
         <div id="viewport">
             <section id="header">
+                <div id="scroll-back-to-top-helper"></div>
                 <h1>phonegap</h1>
+                <div class="button back hidden"></div>
+                <div class="button post-thread"></div>
+                <div class="button text publier">publier</div>
             </section>
 
             <section id="content"></section>
@@ -28,9 +32,44 @@
 
 
         <script type="html/template" id="tpl-home">
-            phonestrap is on !
+            <ol>
+
+            </ol>
+        </script>
+
+        <script type="html/template" id="tpl-home-item">
+            <h2><%= title %></h2>
+        </script>
+
+
+        <script type="html/template" id="tpl-thread-layout">
+            <div id="thread-title"></div>
+            <div id="thread-comments"></div>
+            <div id="post-comment"></div>
         </script>
         
+
+        <script type="html/template" id="tpl-thread-title-view">
+            <h2><%= title %></h2>
+        </script>
+
+        <script type="html/template" id="tpl-thread-comments-view">
+            <ol></ol>
+        </script>
+        <script type="html/template" id="tpl-thread-comment-item-view">
+            <%= text %>
+        </script>
+        
+        <script type="html/template" id="tpl-post-comment-view">
+            <input type='text' />
+            <a class="post">post</a>
+        </script>
+
+        <script type="html/template" id="tpl-post-thread-vc">
+            <div id="input-wrap">
+                <input type='text' placeholder='~ ~ ~'/>
+            </div>
+        </script>
         
         <script type="text/javascript" src="cordova.js"></script>
         
@@ -40,10 +79,18 @@
         <script type="text/javascript" src="js/bower_comps/backbone.marionette/lib/backbone.marionette.min.js"></script>
         <script type="text/javascript" src="js/bower_comps/jquery-hammerjs/jquery.hammer-full.js"></script>
 
+        <script src="js/app/conf.js"></script>
+
         <script src="js/app/models/thread.js"></script>   
         <script src="js/app/collections/threads.js"></script>   
+        <script src="js/app/models/comment.js"></script>   
+        <script src="js/app/collections/comments.js"></script>   
 
+        <script src="js/app/views/utils/hammerScrollableView.js"></script>   
         <script src="js/app/views/homeVC.js"></script>   
+        <script src="js/app/views/threadVC.js"></script>   
+        <script src="js/app/views/postThreadVC.js"></script>   
+
         <script src="js/app/views/headerView.js"></script>   
         <script src="js/app/regions/headerRegion.js"></script>    
         <script src="js/app/regions/contentRegion.js"></script>   

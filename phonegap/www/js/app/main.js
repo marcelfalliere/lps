@@ -7,9 +7,30 @@ function main(){
 }
 
 function initializeApp(){
-	initializeRegions();
+	initializeBackbone();
 	initializeHammer();
+
+	initializePlatformsSquirk();
+
+	initializeRegions();
+	initializeCollections();
 	initializeRouterAfterEverythingElse();
+}
+
+function initializeHammer(){
+	$("#viewport").hammer();
+}
+
+function initializeBackbone(){
+	Backbone.emulateHTTP = true;
+}
+
+function initializePlatformsSquirk(){
+	$(document).on('deviceready', function(){
+		if (parseFloat(device.version)>=7) {
+			$('html').attr('data-ios7',true);
+		}
+	});
 }
 
 function initializeRegions(){
@@ -19,12 +40,18 @@ function initializeRegions(){
 	});
 }
 
-function initializeHammer(){
-	$("#viewport").hammer();
+
+function initializeCollections() {
+	app.addInitializer(function(){
+		this.threads = new ThreadsCollection();
+		this.threads.fetch();
+	});
 }
+
 
 function initializeRouterAfterEverythingElse() {
 	app.on("initialize:after", function(options){
+	  location.hash='';
 	  this.router = new MainRouter();
 	  Backbone.history.start({pushState: false});
 	});

@@ -11,69 +11,87 @@ var initial_threads = [
 			id:'1',
 			title:'first',
 			count_comments:0,
-			last_comment:10
+			last_comment:10,
+			color:'rgb(255,0,140) '
 		},
 		{
 			id:'2',
 			title:'second',
 			count_comments:0,
-			last_comment:9
+			last_comment:9,
+			color:'rgb(110,0,255) '
 		},
 		{
 			id:'3',
 			title:'third',
 			count_comments:0,
-			last_comment:8
+			last_comment:8,
+			color:'rgb(0,140,255) '
 		},
 		{
 			id:'4',
 			title:'fourth',
 			count_comments:0,
-			last_comment:7
+			last_comment:7,
+			color:'rgb(0,255,140) '
 		},
 		{
 			id:'5',
 			title:'fifth',
 			count_comments:0,
-			last_comment:6
+			last_comment:6,
+			color:'rgb(0,255,110) '
 		},
 		{
 			id:'6',
 			title:'sixth',
 			count_comments:0,
-			last_comment:5
+			last_comment:5,
+			color:'rgb(255,0,140) '
 		},
 		{
 			id:'7',
 			title:'seventh',
 			count_comments:0,
-			last_comment:4
+			last_comment:4,
+			color:'rgb(255,255,50) '
 		},
 		{
 			id:'8',
 			title:'eighth',
 			count_comments:0,
-			last_comment:3
+			last_comment:3,
+			color:'rgb(255,110,0) '
 		},
 		{
 			id:'9',
 			title:'nineth',
 			count_comments:0,
-			last_comment:2
+			last_comment:2,
+			color:'rgb(0,255,140) '
 		},
 		{
 			id:'10',
 			title:'tenth',
 			count_comments:0,
-			last_comment:1
+			last_comment:1,
+			color:'rgb(255,0,140) '
 		}
 ];
 
-var initial_comments = [];
+var initial_comments = [
+	{
+		thread_id:'5',
+		text:'hey fifth'
+	},
+	{
+		thread_id:'5',
+		text:'goog luck dude'
+	}
+];
 
 module.exports = {
 	setLimit:function(limit){
-		console.log(limit)
 		this._limit=limit;
 	},
 	threads:function(callback){
@@ -111,7 +129,7 @@ module.exports = {
 			callback(thread);
 		});
 	},
-	post_thread:function(title, callback) {
+	post_thread:function(title, color, callback) {
 		if (initial_threads.length == this._limit) {
 			var oldest_thread = _.max(initial_threads, function(t){ return -t.last_comment; })
 			initial_threads = _.reject(initial_threads, function(t){ return t.id==oldest_thread.id });
@@ -121,6 +139,7 @@ module.exports = {
 			id:this.next_thread_id(),
 			comments:[],
 			title:title,
+			color:color,
 			last_comment:new Date().getTime()
 		}
 

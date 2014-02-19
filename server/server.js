@@ -24,7 +24,6 @@ Server.prototype.listen = function(port) {
 	    next();
 	});
 
-
 	// HTTP GET /threads 
 	this._app.get('/threads', _.bind(function(req,res){
 		this._dao.threads(function(threads){
@@ -51,7 +50,11 @@ Server.prototype.listen = function(port) {
 		});
 		req.on('end',_.bind(function(){
 
-			var body_parsed = qs.parse(body);
+			try {
+				var body_parsed = JSON.parse(body);
+			} catch(exc) {
+				var body_parsed = qs.parse(body);
+			}
 			var text = body_parsed.text;
 			
 			this._dao.post_comment(req.params.id, text, function(thread){
@@ -72,10 +75,15 @@ Server.prototype.listen = function(port) {
 		});
 		req.on('end',_.bind(function(){
 
-			var body_parsed = qs.parse(body);
+			try {
+				var body_parsed = JSON.parse(body);
+			} catch(exc) {
+				var body_parsed = qs.parse(body);
+			}
 			var title = body_parsed.title;
+			var color = body_parsed.color;
 			
-			this._dao.post_thread(title, function(thread){
+			this._dao.post_thread(title, color, function(thread){
 				res.send(thread);
 			})
 		},this));

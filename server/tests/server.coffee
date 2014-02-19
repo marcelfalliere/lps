@@ -59,12 +59,13 @@ describe 'Server ', ->
             done()
 
     it 'should reorder and limit when posting a new thread', (done) ->
-        request.post uri:'http://localhost:8888/post_thread', json:true, form:{title:'foobar'}, (err, res, body) ->
+        request.post uri:'http://localhost:8888/post_thread', json:true, form:{title:'foobar',color:'rgb(1,2,3)'}, (err, res, body) ->
             res.statusCode.should.equal 200
             body.should.be.a 'object'
             body.should.have.property 'id'
             body.id.should.not.be.undefined
             body.should.have.property 'comments'
+            body.should.have.property 'color', 'rgb(1,2,3)',
             body.should.have.property 'title', 'foobar'
             body.comments.should.be.a 'array'
             body.comments.should.have.property 'length', 0

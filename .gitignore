@@ -1,1 +1,7 @@
-node_modules/
+server/node_modules/
+server/npm-debug.log
+
+phonegap/node_modules/
+phonegap/platforms/ios/build
+phonegap/platforms/ios/DerivedData
+phonegap/platforms/ios/www

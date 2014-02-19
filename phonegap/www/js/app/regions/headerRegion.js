@@ -55,9 +55,9 @@ var HeaderRegion = Backbone.Marionette.Region.extend({
 	ensureEl:function(){
 		Backbone.Marionette.Region.prototype.ensureEl.call(this);
 		this.buttons = {
-			// -> declare the headers buttons here !
-			//back: this.$el.find('.button.back'),
-			//about: this.$el.find('.button.about')
+			back: this.$el.find('.button.back'),
+			postThread: this.$el.find('.button.post-thread'),
+			publier: this.$el.find('.button.publier')
 		};
 		this.$title = this.$el.find('h1');
 	}
