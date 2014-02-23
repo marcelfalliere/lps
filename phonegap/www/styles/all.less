@@ -1,7 +1,7 @@
 @headerBgColor: #ffffff;
 @headerShadowColor: #ffffff;
 @headerColor: #383851;
-@contentBgColor: transparent;
+@contentBgColor: #333;
 @headerHeight: 40px;
 @headerPaddingTop: 0px;
 @mainFont : homizio, 'Helvetica Neue', 'Helvetica', Arial;
@@ -21,9 +21,6 @@ html, body, #viewport {
 
 body {
 	overflow:scroll;
-	background-image:url('../images/clouds.jpg');
-	background-size:100% 100%;
-	background-repeat:no-repeat;
 }
 
 html[data-ios7] {
@@ -84,6 +81,8 @@ html[data-ios7] {
 			color: white;
 			text-shadow: 1px 1px 0px black;
 			box-shadow:  0px -2px 4px -2px @headerColor;
+
+			background-size:100% 100%;
 		}
 
 		&.hidden {
@@ -226,6 +225,7 @@ html[data-ios7] {
 				color:white;
 			}
 		}
+		background-size:contain;
 	}
 	.post {
 		display:block;

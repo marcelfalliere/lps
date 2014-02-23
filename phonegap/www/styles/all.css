@@ -5,7 +5,7 @@
 html,
 body,
 #viewport {
-  background-color: transparent;
+  background-color: #333333;
   font-family: homizio, 'Helvetica Neue', 'Helvetica', Arial;
   overflow: hidden;
   height: 100%;
@@ -13,9 +13,6 @@ body,
 }
 body {
   overflow: scroll;
-  background-image: url('../images/clouds.jpg');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
 }
 html[data-ios7] #header {
   height: 60px;
@@ -66,6 +63,7 @@ html[data-ios7] #content .page {
   color: white;
   text-shadow: 1px 1px 0px black;
   box-shadow: 0px -2px 4px -2px #383851;
+  background-size: 100% 100%;
 }
 #header .button.hidden {
   display: none;
@@ -99,7 +97,7 @@ html[data-ios7] #content .page {
   background-color: transparent;
 }
 #content {
-  background-color: transparent;
+  background-color: #333333;
 }
 #content .page {
   -webkit-transition: all 0.5s, top 0s;
@@ -109,7 +107,7 @@ html[data-ios7] #content .page {
   right: 0px;
   bottom: 0px;
   width: 100%;
-  background-color: transparent;
+  background-color: #333333;
 }
 .button {
   width: 20px;
@@ -187,6 +185,7 @@ html[data-ios7] #content .page {
 .page.post-thread-vc #input-wrap {
   width: 100%;
   position: relative;
+  background-size: contain;
 }
 .page.post-thread-vc #input-wrap input {
   position: absolute;

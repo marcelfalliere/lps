@@ -6,7 +6,8 @@ var HeaderView = Backbone.Marionette.ItemView.extend({
 		'tap .button.back': 'onBackTapped',
 		'tap .button.post-thread': 'onPostThreadTapped',
 		'tap .button.publier':'onPublierTapped',
-		'newcolor':'updateButtonColor'
+		'newcolor':'updateButtonColor',
+		'newimage':'updateImageBackground',
 	},
 	initialize:function(){
 		this.$backButton = this.$el.find('.back.button');
@@ -22,5 +23,8 @@ var HeaderView = Backbone.Marionette.ItemView.extend({
 	},
 	updateButtonColor:function(e, color){
 		this.$el.find('.publier').css('background-color', color)
+	},
+	updateImageBackground:function(e, imagePath){
+		this.$el.find('.publier').css('background-image', 'url("'+imagePath+'")');
 	}
 });

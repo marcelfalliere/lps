@@ -12,7 +12,22 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 		'dragdown #input-wrap':'onDragUpOrDownUpdateColor',
 		'dragup #input-wrap':'onDragUpOrDownUpdateColor',
 
-		'publiertapped':'onTapToPost'
+		'publiertapped':'onTapToPost',
+
+		'tap .picture':'startCapture'
+	},
+	startCapture:function(){
+		cordova.exec(
+			_.bind(function(imagePath){
+				this.model.set('imagePath', imagePath);
+				this.$iw.css('background-image', 'url("'+imagePath+'")');
+				app.header.headerView.$el.trigger('newimage', imagePath);
+			},this), 
+			_.bind(function(error){
+				alert(error);
+			},this), 
+			"CanvasCamera", "showCaptureView", [""]
+		);
 	},
 	onPageShowFocusInput:function(){
 		this.$el.find('input').val(getRandomPlaceholder());

@@ -28,4 +28,7 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <feature name="CanvasCamera">
+        <param name="ios-package" value="CanvasCamera" />
+    </feature>
 </widget>
