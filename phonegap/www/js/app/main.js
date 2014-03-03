@@ -7,8 +7,10 @@ function main(){
 }
 
 function initializeApp(){
+	initializeXhr();
 	initializeBackbone();
 	initializeHammer();
+	initializeCacheDatabase();
 
 	initializePlatformsSquirk();
 
@@ -17,12 +19,23 @@ function initializeApp(){
 	initializeRouterAfterEverythingElse();
 }
 
+function initializeXhr(){
+	$.ajaxSetup({ cache: false });
+}
+
 function initializeHammer(){
 	$("#viewport").hammer();
 }
 
 function initializeBackbone(){
 	Backbone.emulateHTTP = true;
+}
+
+function initializeCacheDatabase(){
+	app.db = openDatabase('mydb', '1.0', 'my first database', 5 * 1024 * 1024);
+	app.db.transaction(function (tx) {
+	  tx.executeSql('CREATE TABLE IF NOT EXISTS images (sha1 unique, base64)');
+	});
 }
 
 function initializePlatformsSquirk(){

@@ -9,15 +9,19 @@ var HammerScrollableView = Backbone.Marionette.CompositeView.extend({
         $('#scroll-back-to-top-helper').on('tap', _.bind(this.onTapScrollBackToTopHelper, this));
 	},
     events:{
-        'dragstart ol':'dragstart',
-		'touch ol':'dragstart',
-        'dragdown ol':'dragdown',
-        'dragup ol':'dragup',
-        'release ol':'release',
+        'dragstart .scroll-wrap':'dragstart',
+		'touch .scroll-wrap':'dragstart',
+        'dragdown .scroll-wrap':'dragdown',
+        'dragup .scroll-wrap':'dragup',
+        'release .scroll-wrap':'release',
         'pagebeforeshow':'pagebeforeshow',
         'pagebeforehide':'pagebeforehide'
 	},
+    onRender:function(){
+        this.$p2r = this.$el.find('.pull-to-refresh');
+    },
     pagebeforeshow:function(){
+
         // restore du height si présent
         if (app.scrollableViewHeightSave) {
             var potentialHeight = app.scrollableViewHeightSave[this.$el.attr('class').split(' ')[1]];
@@ -43,24 +47,24 @@ var HammerScrollableView = Backbone.Marionette.CompositeView.extend({
     },
     dragstart:function(ev){
         // nettoyage si en train de scroller
-        console.log('dragstart!');
+console.log('dragstart!');
         if (this.isScrolling==true) {
             clearTimeout(this.scrollingTimeout);
-            var currentTop = $('ol').position().top;
-            this.$el.find('ol')[0].className=''; 
+            var currentTop = $('.scroll-wrap').position().top;
+            this.$el.find('.scroll-wrap')[0].className='scroll-wrap'; 
             this.setHeight(currentTop);
             this._saved_height=currentTop;
             this.isScrolling=false;
         }
     },
 	dragup:function(ev){
-
+console.log('drag Up!');
         // stop browser scrolling
         ev.gesture.preventDefault();
 
         // update slidedown height
         // it will be updated when requestAnimationFrame is called
-        this._slide_height = this._saved_height  + ev.gesture.deltaY * 0.4;
+        this._slide_height = this._saved_height  + ev.gesture.deltaY * 0.9;
 		
         // no requestAnimationFrame instance is running, start one
         if(!this._anim) {
@@ -68,39 +72,76 @@ var HammerScrollableView = Backbone.Marionette.CompositeView.extend({
         }
 	},
 	dragdown:function(ev){
-
+console.log('drag Down!');
         // stop browser scrolling
         ev.gesture.preventDefault();
 
         // update slidedown height
         // it will be updated when requestAnimationFrame is called
-        this._slide_height = this._saved_height + ev.gesture.deltaY * 0.4;
-        
+        this._slide_height = this._saved_height + ev.gesture.deltaY * 0.9;
+
         // no requestAnimationFrame instance is running, start one
         if(!this._anim) {
             this.updateHeight();
         }
 	},
 	release:function(ev){
-        var bottomFrontier = -1*(this.$el.find('ol').height() - $(window).height() + 40);
-        if (this._slide_height > 0) {
-            this.scrollToWithAnim(0, 'back-to-top', 300);
-        } else if(this._slide_height < bottomFrontier) {
-            this.scrollToWithAnim(bottomFrontier, 'back-to-top', 300);
-        } else {
-            var hypotheticalVelocityDestination = ((ev.gesture.direction=='down')?-1:1)*ev.gesture.velocityY*this._slide_height + this._slide_height;
-            var velocityDestination = (bottomFrontier>hypotheticalVelocityDestination)?bottomFrontier:((hypotheticalVelocityDestination>0)?0:hypotheticalVelocityDestination);
-    		this.scrollToWithAnim(velocityDestination, 'velocity-scroll', 1000);
-        }
+console.log('release!');
+console.log('velocity:'+ev.gesture.velocityY);
 
+        if (ev.gesture.velocityY!=0) {
+            var bottomFrontier = -1*(this.$el.find('.scroll-wrap').height() - $(window).height() + 40);
+            if (this._slide_height > 0 && this._slide_height < this.breakpoint) { // top frontier sans breakpoint
+                this.scrollToWithAnim(0, 'back-to-top', 300);
+            } else if (this._slide_height > 0 && this._slide_height >= this.breakpoint) { // top frontier + bp
+                if (this.isFetching!=true) {
+                    this.isFetching=true;
+                    this.scrollToWithAnim(this.breakpoint, 'back-to-top', 300);
+                    this.updatePullToRefreshText();
+                    this.collection.fetch({
+                        success:_.bind(function(){
+                            this.$p2r.text("c'est fait");
+                            this.scrollToWithAnim(0, 'back-to-top', 300);
+                            this.isFetching=false;
+                        },this),
+                        error:_.bind(function(){
+                            this.$p2r.text('une erreur est survenue :(')
+                            this.isFetching=false;
+                        },this)
+                    ,remove: false});
+                } else {
+                    this.scrollToWithAnim(this.breakpoint, 'back-to-top', 300);
+                }
+            } else if(this._slide_height < bottomFrontier) { // bottom frontier
+                this.scrollToWithAnim(bottomFrontier, 'back-to-top', 300);
+            } else { // inside the scroll
+                var hypotheticalVelocityDestination = ((ev.gesture.direction=='down')?-1:1)*ev.gesture.velocityY*this._slide_height + this._slide_height;
+                var velocityDestination = (bottomFrontier>hypotheticalVelocityDestination)?bottomFrontier:((hypotheticalVelocityDestination>0)?0:hypotheticalVelocityDestination);
+        		this.scrollToWithAnim(velocityDestination, 'velocity-scroll', 1000);
+            }
+        }
         
 		// cancel animation
 		cancelAnimationFrame(this._anim);
         this._anim=undefined;
 		
 	},
+    updatePullToRefreshText:function(){
+
+
+        //console.log('updatePullToRefreshText', this._slide_height, this.$p2r.length)
+        if (this.isFetching==true) {
+            this.$p2r.text('en cours ...')
+        } else if (this._slide_height >= 0 && this._slide_height < this.breakpoint  && this.isFetching != true) { // entre 0 et breakpoint
+            this.$p2r.text(dots(parseInt(this._slide_height/2,10)));
+        } else if (this._slide_height >= this.breakpoint && this.isFetching != true) {
+            this.$p2r.text('lâcher pour rafraîchir')
+        }
+    },
 	updateHeight:function() {
         var self = this;
+
+        this.updatePullToRefreshText();
 
         this.setHeight(this._slide_height);
 
@@ -115,21 +156,21 @@ var HammerScrollableView = Backbone.Marionette.CompositeView.extend({
         });
     },
     setHeight:function(height) {
-        this.$el.find('ol').css('-webkit-transform', 'translate3d(0,'+height+'px,0) scale3d(1,1,1)');
-        if (height < -this.$el.find('ol').height()/2) {
+        this.$el.find('.scroll-wrap').css('-webkit-transform', 'translate3d(0,'+height+'px,0) scale3d(1,1,1)');
+        if (height < -this.$el.find('.scroll-wrap').height()/2) {
             $('body').addClass('bg-reverse');
         } else {
             $('body').removeClass('bg-reverse');
         }   
     },
     scrollToWithAnim:function(h, animClass, wait){
-        this.$el.find('ol')[0].className=animClass;
+        this.$el.find('.scroll-wrap')[0].className=animClass+' scroll-wrap';
         this.setHeight(h);
         this._saved_height=h;
         this.isScrolling=true;
         var self = this;
         this.scrollingTimeout=setTimeout(function(){ 
-            self.$el.find('ol')[0].className=''; 
+            self.$el.find('.scroll-wrap')[0].className='scroll-wrap'; 
             self.isScrolling=false;
         }, wait);
     }
@@ -159,3 +200,7 @@ var HammerScrollableView = Backbone.Marionette.CompositeView.extend({
             clearTimeout(id);
         };
 }());
+
+function dots(howmany) {
+    return Array(howmany).join().split(',').map(function(e, i) { return '.'; }).join(' ');
+}

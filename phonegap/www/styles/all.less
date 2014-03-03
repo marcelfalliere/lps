@@ -1,6 +1,9 @@
+@import "reset.css";
+@import "transitions.less";
+
 @headerBgColor: #ffffff;
 @headerShadowColor: #ffffff;
-@headerColor: #383851;
+@headerColor: #333;
 @contentBgColor: #333;
 @headerHeight: 40px;
 @headerPaddingTop: 0px;
@@ -9,6 +12,28 @@
 @font-face{
     font-family : "homizio";
     src : url('fonts/homizio-light.ttf')  format('truetype'); 
+}
+
+@font-face{
+    font-family : "birds";
+    src : url('fonts/birds.ttf')  format('truetype'); 
+}
+
+@font-face{
+    font-family : "chopin";
+    src : url('fonts/chopin.otf')  format('opentype'); 
+}
+
+@font-face{
+    font-family : "dragon";
+    src : url('fonts/dragon.ttf')  format('truetype'),
+    	url('fonts/dragon.otf')  format('opentype'); 
+}
+
+@font-face{
+    font-family : "wolf";
+    src : url('fonts/wolf.ttf')  format('truetype'),
+    	url('fonts/wolf.otf')  format('opentype'); 
 }
 
 html, body, #viewport { 
@@ -57,6 +82,13 @@ html[data-ios7] {
 	z-index:9999;
 	box-shadow:inset 1px -4px 5px -6px @headerColor;
 
+	-webkit-transition:background-color linear @normal, color linear @normal;
+	-webkit-transition-delay:0.1s;
+	&.transparent {
+		color:lighten(@contentBgColor, 4%);;
+		background-color:transparent;
+	}
+
 	.button {
 
 		margin:0px;
@@ -70,12 +102,18 @@ html[data-ios7] {
 			background-image:url('../images/icon-back.png');
 		}
 
+		&.close {
+			left:0px;
+			background-image:url('../images/icon-close.png');
+		}
+
 		&.post-thread {
 			right:0px;
 			background-image:url('../images/icon-post-thread.png');
 		}
 
 		&.publier {
+			width:60px;
 			right:0px;
 			height:100%;
 			color: white;
@@ -83,6 +121,12 @@ html[data-ios7] {
 			box-shadow:  0px -2px 4px -2px @headerColor;
 
 			background-size:100% 100%;
+			padding:0px;
+			text-align:center;
+
+			&.loading {
+				opacity:0.5;
+			}
 		}
 
 		&.hidden {
@@ -103,14 +147,20 @@ html[data-ios7] {
 		left:0;
 		text-align:center;
 		height:40px	;
-		font-size:20px;
 		vertical-align: middle;
 		line-height: 40px;
 		margin-left:20%;
 		text-overflow: ellipsis;
 		overflow: hidden;
 		white-space: nowrap;
+		font-family:'birds';
+		font-size:30px;
+		
+		&.main-title {
+			font-style:italic;
+		}
 	}
+
 
 	#scroll-back-to-top-helper {
 		position: absolute;	
@@ -126,6 +176,7 @@ html[data-ios7] {
 	background-color:@contentBgColor;
 
 	.page {
+		-webkit-transform-style: preserve-3d;
 		-webkit-transition: all 0.5s, top 0s;
 		position: absolute;
 		top: @headerHeight;
@@ -133,7 +184,7 @@ html[data-ios7] {
 		right: 0px;
 		bottom: 0px;
 		width: 100%;
-		background-color:@contentBgColor;
+		z-index:90;
 
 	}
 
@@ -159,44 +210,62 @@ html[data-ios7] {
 }
 
 .title-display {
-	position:absolute;
-	display: block;
+
+	vertical-align:middle;
+	display:inline-block;
+	line-height:1.2;
 	text-align: center;
-	height: 20px;
-	top: 50%;
-	margin-top: -10px;
 	width:100%;
 	color: white;
 	text-shadow: 1px 1px 0px black;
-	font-size:18px;
-	line-height:20px;
 }
 
+
 .page.home-vc {
+
 	ol {
-
-		&.pullrefresh-slideup,
-        &.pullrefresh-loading,
-        &.back-to-top {
-            -webkit-transition: -webkit-transform .3s;
-        }
-        &.velocity-scroll {
-        	-webkit-transition: -webkit-transform 1s ease;	
-        }
-
+		-webkit-transform-style: preserve-3d;
 		li {
 			background-color:#ccc;
 			position:relative;
+			background-size:contain;
 
-			&:nth-child(even) {
-				background-color:#eee;
-			}
+			-webkit-animation:all @normal ease-in-out;
+
 
 			h2 {
 				.title-display;
 			}
 		}
 	}	
+
+	&.slide .scroll-wrap .pull-to-refresh {
+		display:none;
+	}
+
+	.scroll-wrap {
+
+		@breakpoint: 80px;
+		.pull-to-refresh {
+			position:absolute;
+			top:-@breakpoint;
+			width:100%;
+			text-align:center;
+			color:white;
+			font-size:24px;
+			height:@breakpoint;
+			line-height:@breakpoint;
+		}
+
+		&.pullrefresh-slideup,
+	    &.pullrefresh-loading,
+	    &.back-to-top {
+	        -webkit-transition: -webkit-transform .3s;
+	    }
+	    &.velocity-scroll {
+	    	-webkit-transition: -webkit-transform 1s ease;	
+	    }	
+	}
 }
 
 .page.thread-vc {
@@ -209,10 +278,12 @@ html[data-ios7] {
 }
 
 .page.post-thread-vc {
+	
 	#input-wrap {
 		width:100%;
 		position:relative;
-		input {
+
+		[contentEditable] {
 			.title-display;
 			
 			background-color:transparent;
@@ -221,11 +292,23 @@ html[data-ios7] {
 			padding:0;
 			font-family:@mainFont;
 
-			&::-webkit-input-placeholder {
-				color:white;
-			}
+			-webkit-touch-callout: initial;
+			-webkit-text-size-adjust: initial;
+			-webkit-user-select: initial;
 		}
 		background-size:contain;
+
+		.upload-overlay {
+			position:absolute;
+			top:0;
+			right:0;
+			bottom:0px;
+			width:0px;
+			background-color:#fff;
+			opacity:0.5;
+			-webkit-transition:width .1s linear;
+			-webkit-transition:opacity .5s linear;
+		}
 	}
 	.post {
 		display:block;
@@ -234,4 +317,83 @@ html[data-ios7] {
 		padding:5px;
 		background-color:green;
 	}
+
+	#controls-wrap {
+		position: relative;
+
+		#control-hint {
+			position:absolute;
+			width:4px;
+			height:4px;
+			border-radius:2px;
+			top:40px;
+			background-color:darken(@headerBgColor, 30%);
+			-webkit-transition:all .3s;
+			opacity:0;
+
+			&.ready {
+				opacity:1;
+			}
+		}
+
+		#controls {
+			width:100%;
+			margin-top:16.666px;
+
+			li {
+				width:33%;
+				height:30px;
+				background-position: center center;
+				background-repeat:no-repeat;
+				background-size: contain;
+				display:inline-block;
+				&.picture { background-image:url('../images/icon-picture.png') }
+				&.bgcolor { background-image:url('../images/icon-bgcolor.png') }
+				&.police { background-image:url('../images/icon-police.png') }
+			}
+		}
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#easter{
+	position:fixed;
+	width:100%;
+	bottom:0px;
+	left:0;
+	text-align:center;
+	height:40px	;
+	vertical-align: middle;
+	line-height: 40px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	font-family:'birds';
+	font-size:30px;
+	color:lighten(@contentBgColor, 4%);
+	z-index:0;
 }

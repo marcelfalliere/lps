@@ -4,13 +4,15 @@ var HeaderView = Backbone.Marionette.ItemView.extend({
 	el:'#header',
 	events:{
 		'tap .button.back': 'onBackTapped',
+		'tap .button.close': 'onBackTapped',
 		'tap .button.post-thread': 'onPostThreadTapped',
 		'tap .button.publier':'onPublierTapped',
+
 		'newcolor':'updateButtonColor',
 		'newimage':'updateImageBackground',
-	},
-	initialize:function(){
-		this.$backButton = this.$el.find('.back.button');
+		'newmodel':'updateImageBackground',
+		'newpolice':'updateFont',
+		'saving':'lock'
 	},
 	onBackTapped:function(){
 		app.router.navigate('', {trigger:true});
@@ -21,10 +23,23 @@ var HeaderView = Backbone.Marionette.ItemView.extend({
 	onPublierTapped:function(){
 		app.content.currentView.$el.trigger('publiertapped')
 	},
+
 	updateButtonColor:function(e, color){
 		this.$el.find('.publier').css('background-color', color)
 	},
 	updateImageBackground:function(e, imagePath){
-		this.$el.find('.publier').css('background-image', 'url("'+imagePath+'")');
+		if (imagePath!==undefined)
+			this.$el.find('.publier').css('background-image', 'url("'+imagePath+'")');
+		else
+			this.$el.find('.publier').css('background-image', 'none');
+	},
+	updateFont:function(e, font){
+		this.$el.find('.publier').css({
+			'font-family': font.font,
+			'font-size': (parseInt(font.size,10)*0.7)+'px'
+		});
+	},
+	lock:function(){
+		this.$el.find('.publier').addClass('loading');
 	}
 });

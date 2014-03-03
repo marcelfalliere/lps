@@ -2,14 +2,17 @@
 	"name": "Server",
 	"scripts": {
 		"start": "clear; node main.js",
-		"test": "clear; mocha -w --compilers coffee:coffee-script tests/server.coffee"
+		"test": "clear; mocha -w --compilers coffee:coffee-script tests/*.coffee"
 	},
 	"dependencies" : {
 		"http":"*",
 		"express":"*",
 		"chai":"*",
 		"request":"*",
-		"underscore":"*"
+		"underscore":"*",
+		"multiparty":"*",
+		"gm":"*",
+		"sinon-chai":"*"
 	}
 }
 

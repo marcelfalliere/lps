@@ -5,7 +5,8 @@
   	"jquery":"*",
   	"backbone":"*",
   	"backbone.marionette":"*",
-  	"jquery-hammerjs":"*"
+  	"jquery-hammerjs":"*",
+  	"db.js":"*"
   }
 }
 

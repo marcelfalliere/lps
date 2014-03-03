@@ -11,8 +11,6 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, height=device-height, width=device-width" />
         
 
-        <link rel="stylesheet" href="styles/reset.css">
-        <link rel="stylesheet" href="styles/transitions.css">
         <link rel="stylesheet" href="styles/all.css">
         
     </head>
@@ -23,18 +21,24 @@
                 <div id="scroll-back-to-top-helper"></div>
                 <h1>phonegap</h1>
                 <div class="button back hidden"></div>
+                <div class="button close hidden"></div>
                 <div class="button post-thread"></div>
                 <div class="button text publier">publier</div>
             </section>
 
             <section id="content"></section>
+            
+            <h2 id="easter">la  petite salope</h2>
         </div>
 
 
         <script type="html/template" id="tpl-home">
-            <ol>
+            <div class="scroll-wrap">
+                <div class="pull-to-refresh">pull 2 refresh</div>
+                <ol>
 
-            </ol>
+                </ol>
+            </div>
         </script>
 
         <script type="html/template" id="tpl-home-item">
@@ -67,10 +71,15 @@
 
         <script type="html/template" id="tpl-post-thread-vc">
             <div id="input-wrap">
-                <input type='text' placeholder='~ ~ ~'/>
+                <p contentEditable></p>
             </div>
-            <div id="controls">
-                <button class="picture">start capture</button>
+            <div id="controls-wrap">
+                <div id="control-hint"></div>
+                <ul id="controls"><!--
+                    --><li class="picture"></li><!--
+                    --><li class="bgcolor"></li><!--
+                    --><li class="police"></li><!--
+                --></ul>
             </div>
         </script>
         
@@ -81,6 +90,7 @@
         <script type="text/javascript" src="js/bower_comps/backbone/backbone.js"></script>
         <script type="text/javascript" src="js/bower_comps/backbone.marionette/lib/backbone.marionette.min.js"></script>
         <script type="text/javascript" src="js/bower_comps/jquery-hammerjs/jquery.hammer-full.js"></script>
+        
 
         <script src="js/app/conf.js"></script>
 
@@ -92,7 +102,9 @@
         <script src="js/app/views/utils/hammerScrollableView.js"></script>   
         <script src="js/app/views/homeVC.js"></script>   
         <script src="js/app/views/threadVC.js"></script>   
-        <script src="js/app/views/postThreadVC.js"></script>   
+        <script src="js/app/views/postThreadVC-upload.js"></script>   
+        <script src="js/app/views/postThreadVC.js"></script>    
+
 
         <script src="js/app/views/headerView.js"></script>   
         <script src="js/app/regions/headerRegion.js"></script>    

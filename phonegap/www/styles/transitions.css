@@ -56,16 +56,16 @@
   -webkit-transition-duration: 0.3s;
 }
 .slide.in {
-  -webkit-animation: slideinfromright 0.5s ease;
+  -webkit-animation: slideinfromright 0.5s;
 }
 .slide.in.left {
-  -webkit-animation: slideinfromleft 0.5s ease;
+  -webkit-animation: slideinfromleft 0.5s;
 }
 .slide.out.easy {
-  -webkit-animation: slideouttolefteasy 0.5s ease;
+  -webkit-animation: slideouttolefteasy 0.5s;
 }
 .slide.out.easy.right {
-  -webkit-animation: slideouttorighteasy 0.5s ease;
+  -webkit-animation: slideouttorighteasy 0.5s;
 }
 .hidebuttonanim {
   position: absolute;

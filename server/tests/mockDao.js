@@ -129,7 +129,7 @@ module.exports = {
 			callback(thread);
 		});
 	},
-	post_thread:function(title, color, callback) {
+	post_thread:function(title, color, policeName, policeSize, imageUrl, callback) {
 		if (initial_threads.length == this._limit) {
 			var oldest_thread = _.max(initial_threads, function(t){ return -t.last_comment; })
 			initial_threads = _.reject(initial_threads, function(t){ return t.id==oldest_thread.id });
@@ -140,6 +140,9 @@ module.exports = {
 			comments:[],
 			title:title,
 			color:color,
+			policeName:policeName,
+			policeSize:policeSize,
+			imageUrl:imageUrl,
 			last_comment:new Date().getTime()
 		}
 

@@ -1,15 +1,23 @@
 var _ = require('underscore');
 var qs = require('querystring');
+var multiparty = require("multiparty");
+var util = require('util');
+var fs = require('fs');
+var gm = require('gm').subClass({ imageMagick: true });
 
-function Server(dao, limit) {
-  var http = require('http'), 
-  	  express = require('express');
 
-  this._app = express();
+function Server(dao, pushIntercace, limit, savePath) {
+  var http = require('http');
+  this.express = require('express');
+
+  this._app = this.express();
   this._dao = dao;
+  this._pushIntercace = pushIntercace;
   this._server = http.createServer(this._app);
   
   this._dao.setLimit(limit);
+
+  this._savePath = savePath;
 }
 
 Server.prototype.listen = function(port) {
@@ -82,12 +90,76 @@ Server.prototype.listen = function(port) {
 			}
 			var title = body_parsed.title;
 			var color = body_parsed.color;
+			var policeName = body_parsed.policeName;
+			var policeSize = body_parsed.policeSize;
+			var imageUrl = body_parsed.imageUrl;
 			
-			this._dao.post_thread(title, color, function(thread){
+			this._dao.post_thread(title, color, policeName, policeSize, imageUrl, _.bind(function(thread){
+				this._pushIntercace.push('newfalope', 'Une nouvelle falope est arrivé.');
 				res.send(thread);
-			})
+			},this));
 		},this));
 	},this));
+
+	// HTTP POST /save_image
+	// the body is the image I guess
+	this._app.post('/save_image', _.bind(function(req,res){
+		var form = new multiparty.Form();
+
+	    form.parse(req, _.bind(function(err, fields, files) {
+	    	var imageName = ((Math.random()*Math.random()+'').replace('.',''))+'.png';
+	    	var imageSavePath = this._savePath+imageName;
+	    	fs.createReadStream(files.image[0].path).pipe(fs.createWriteStream(imageSavePath));
+			
+	      	var o = {imageUrl:imageName};	
+	      	res.send(o);
+	    },this));
+
+	},this));
+
+	// HTTP GET /xxxx.png
+	this._app.get('/:image.png', _.bind(function(req,res){
+		var stat = fs.statSync(this._savePath+req.params.image+'.png');
+		res.writeHead(200, {
+		  'Content-Type' : 'image/png',
+		  'Content-Length': stat.size
+		});
+		fs.createReadStream(this._savePath+req.params.image+'.png').pipe(res);
+	},this));
+
+
+	// HTTP GET /xxxx.png/thumb
+	this._app.get('/:image.png/thumb', _.bind(function(req,res){
+		var imageOriginalPath = this._savePath+req.params.image+'.png';
+		var imageThumbPath = this._savePath+req.params.image+'_thumb.png';
+		fs.exists(imageThumbPath, function(exists){
+			if(!exists) {
+				// create and then return the think
+				gm(imageOriginalPath)
+				.thumb(50,50, imageThumbPath, 30, function(err){
+					if (!err) {
+						var stat = fs.statSync(imageThumbPath);
+						res.writeHead(200, {
+						  'Content-Type' : 'image/png',
+						  'Content-Length': stat.size
+						});
+						fs.createReadStream(imageThumbPath).pipe(res);
+					} else {
+						console.log('error'+err);
+					}
+				});
+			} else {
+				// return the thing
+				var stat = fs.statSync(imageThumbPath);
+				res.writeHead(200, {
+				  'Content-Type' : 'image/png',
+				  'Content-Length': stat.size
+				});
+				fs.createReadStream(imageThumbPath).pipe(res);
+			}
+		});
+	},this));
+
 }
 
 Server.prototype.close = function(callback) {
@@ -95,4 +167,7 @@ Server.prototype.close = function(callback) {
 }
 
 module.exports = Server;
+
+
+
 

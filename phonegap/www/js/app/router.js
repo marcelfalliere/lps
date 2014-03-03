@@ -7,20 +7,24 @@ var MainRouter = Backbone.Router.extend({
 		'post_thread':'postThread'
 	},
 	home:function(){
-		app.header.setTitle('léger')
+		app.header.setMainTitle()
 			.hideButton('back')
 			.showButton('postThread')
-			.hideButton('publier');
+			.hideButton('publier')
+			.hideButton('close')
+			.setTransparent(false);
 
 		app.content.slideInFromRight(new HomeVC({
 			collection:app.threads
 		}));
 	},
 	thread:function(thread_id) {
-		app.header.setTitle(app.threads.get(thread_id).get('title'))
+		app.header.setMainTitle()
 			.showButton('back')
 			.hideButton('postThread')
-			.hideButton('publier');
+			.hideButton('publier')
+			.hideButton('close')
+			.setTransparent(false);
 
 		app.content.slideIn(new ThreadVCLayout(
 			// will handle itself
@@ -28,13 +32,17 @@ var MainRouter = Backbone.Router.extend({
 	},
 	postThread:function() {
 		app.header.setTitle('')
-			.showButton('back')
+			.hideButton('back')
 			.hideButton('postThread')
-			.showButton('publier');
+			.showButton('publier')
+			.showButton('close')
+			.setTransparent(true)
+			.buttons.publier.removeClass('loading');
 
 		app.content.slideIn(new PostThreadVC({
 			model:new ThreadModel()
 		}));
+
 	}
 });
 

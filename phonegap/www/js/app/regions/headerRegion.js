@@ -6,9 +6,26 @@ var HeaderRegion = Backbone.Marionette.Region.extend({
 		this.headerView = new HeaderView();
 	},
 
+	setTransparent:function(shouldIt){
+		if (shouldIt==true) {
+			this.$el.addClass('transparent');
+		} else {
+			this.$el.removeClass('transparent');
+		}
+		return this;
+	},
+
 	setTitle:function(title){
 		this.ensureEl();
-		this.$title.html(title);
+		this.$title
+			.html(title)
+			.removeClass('main-title');
+		return this;
+	},
+
+	setMainTitle:function(title){
+		this.setTitle('la  petite falope');
+		this.$title.addClass('main-title');
 		return this;
 	},
 
@@ -57,7 +74,8 @@ var HeaderRegion = Backbone.Marionette.Region.extend({
 		this.buttons = {
 			back: this.$el.find('.button.back'),
 			postThread: this.$el.find('.button.post-thread'),
-			publier: this.$el.find('.button.publier')
+			publier: this.$el.find('.button.publier'),
+			close: this.$el.find('.button.close')
 		};
 		this.$title = this.$el.find('h1');
 	}
