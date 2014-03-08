@@ -3,8 +3,7 @@
 #import "AppDelegate.h"
 #import "MainViewController.h"
 #import <Cordova/CDVPlugin.h>
-
-#import "AFHTTPRequestOperationManager.h"
+#import "PushNotification.h"
 
 @implementation AppDelegate
 
@@ -114,26 +113,10 @@
                     stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]]
                    stringByReplacingOccurrencesOfString:@" "
                    withString:@""];
-	NSLog(@"deviceToken: %@",  deviceToken);
-	NSLog(@"dToken: %@",  dToken);
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSDictionary *parameters = @{@"proto": @"apns", @"token":dToken};
-    [manager POST:@"http://62.210.237.246/subscribers" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-        NSString* sessionId = [responseObject valueForKey:@"id"];
-        
-        [manager POST:[NSString stringWithFormat:@"http://62.210.237.246/subscriber/%@/subscriptions/%@", sessionId, @"newfalope"] parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-            NSLog(@"All went OK : %@", responseObject);
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error subscribing to newfalope event: %@", error);
-        }];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error subscribing to push server: %@", error);
-    }];
+    [[NSUserDefaults standardUserDefaults]setObject:dToken forKey:@"DEVICE_TOKEN"];
+    
+    [PushNotification subscribeWithEvent:@"newfalope"];
     
 }
 

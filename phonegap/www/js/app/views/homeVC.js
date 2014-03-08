@@ -1,23 +1,7 @@
 "use strict";
 
-var HomeItemView = Backbone.Marionette.ItemView.extend({
+var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
 	template:'#tpl-home-item',
-	tagName:'li',
-	events:{
-		'tap':'onTap'
-	},
-	onTap:function(ev){
-		ev.gesture.preventDefault();
-		app.thread = this.model;
-
-		app.homeViewScrollTop = $(window).scrollTop();
-
-		$(window).scrollTop(0);
-		$('.page.home-vc').css('top','-'+(app.homeViewScrollTop-$('#header').innerHeight())+'px')
-
-		app.router.navigate('thread/'+this.model.get('id'), {trigger:true});
-	},
-
 	onRender:function(){
 		
 		var size = $(window).width()+'px';
@@ -72,15 +56,39 @@ var HomeItemView = Backbone.Marionette.ItemView.extend({
 			
 		}
 	}
+});
+
+var HomeItemView = ItemReadOnlyView.extend({
+	template:'#tpl-home-item',
+	tagName:'li',
+	events:{
+		'tap':'onTap'
+	},
+	onTap:function(ev){
+		ev.gesture.preventDefault();
+		app.thread = this.model;
+
+		app.homeViewScrollTop = $(window).scrollTop();
+
+		$(window).scrollTop(0);
+		$('.page.home-vc').css('top','-'+(app.homeViewScrollTop-$('#header').innerHeight())+'px')
+
+		app.router.navigate('thread/'+this.model.get('id'), {trigger:true});
+	}
 
 });
 
-var HomeVC = HammerScrollableView.extend({
+var HomeVC = Backbone.Marionette.CompositeView.extend({
 	template:'#tpl-home',
 	className:'page home-vc',
 	itemViewContainer:'ol',
 	itemView:HomeItemView,
-	events:_.extend({}, HammerScrollableView.prototype.events, {}),
+	saveScrollHeight:true,
+	initialize:function(){
+		_.extend(this, _.omit(HammerScrollableView, ''));
+
+		_.bind(HammerScrollableView.initialize,this)();
+	},
 	appendHtml: function(collectionView, itemView, index){ // see https://github.com/marionettejs/backbone.marionette/wiki/Adding-support-for-sorted-collections
 		var childrenContainer = collectionView.itemViewContainer ? collectionView.$(collectionView.itemViewContainer) : collectionView.$el;
 		var children = childrenContainer.children();
@@ -91,6 +99,20 @@ var HomeVC = HammerScrollableView.extend({
 
 			children.eq(index).before(itemView.el);
 		}
+	},
+	refreshFunction:function(){
+		// toDO : please refactor the homescrollableviewcode
+		this.collection.fetch({
+            success:_.bind(function(){
+                this.$p2r.text("c'est fait");
+                this.scrollToWithAnim(0, 'back-to-top', 300);
+                this.isFetching=false;
+            },this),
+            error:_.bind(function(){
+                this.$p2r.text('une erreur est survenue :(')
+                this.isFetching=false;
+            },this)
+        ,remove: false});
 	}
 });
 

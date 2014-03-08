@@ -12,7 +12,8 @@
 		"underscore":"*",
 		"multiparty":"*",
 		"gm":"*",
-		"sinon-chai":"*"
+		"sinon-chai":"*",
+		"easymongo":"*"
 	}
 }
 

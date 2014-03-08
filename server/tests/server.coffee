@@ -16,6 +16,7 @@ savePath    = '/usr/local/legerUploads/'
 
 testServer  = new Server(mockDao, mockPI, 10, savePath)
 
+sinon.spy mockPI, 'push'
 
 describe 'Server ', ->
 
@@ -49,8 +50,10 @@ describe 'Server ', ->
             body.comments.should.be.empty
             done()
 
-    it 'should be able to post a comment', (done) ->
-        request.post uri:'http://localhost:8888/threads/2/post_comment', json:true, form:{text:'test'}, (err,res,body) ->
+    it 'should be able to post a comment, and send push while doing it', (done) ->
+        
+        request.post uri:'http://localhost:8888/threads/2/post_comment', json:true, form:{text:'test', color:'rgb(3,2,1)'}, (err,res,body) ->
+            mockPI.push.should.have.been.calledWith 'newcomments_2', "message lors d'un nouveau commentaire"
             res.statusCode.should.equal 200
             body.should.be.a 'object'
             body.should.have.property 'id', '2'
@@ -59,6 +62,8 @@ describe 'Server ', ->
             body.comments.should.have.property 'length', 1
             body.comments[0].should.have.property 'text'
             body.comments[0].text.should.equal 'test'
+            body.comments[0].should.have.property 'color'
+            body.comments[0].color.should.equal 'rgb(3,2,1)'
             done()
 
     it 'should have thread 2 in position 0', (done) ->
@@ -72,7 +77,6 @@ describe 'Server ', ->
             done()
 
     it 'should reorder and limit when posting a new thread', (done) ->
-        sinon.spy(mockPI, 'push')
         request.post uri:'http://localhost:8888/post_thread', json:true, form:{title:'foobar',color:'rgb(1,2,3)', policeName:'dragon',policeSize:'24px', imageUrl:'dummyImageUrl'}, (err, res, body) ->
             mockPI.push.should.have.been.calledWith 'newfalope', sinon.match.string
             res.statusCode.should.equal 200

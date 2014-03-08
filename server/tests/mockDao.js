@@ -82,11 +82,13 @@ var initial_threads = [
 var initial_comments = [
 	{
 		thread_id:'5',
-		text:'hey fifth'
+		text:'hey fifth',
+		color:'rgb(3,255,1)'
 	},
 	{
 		thread_id:'5',
-		text:'goog luck dude'
+		text:'goog luck dude',
+		color:'rgb(255,0,0)'
 	}
 ];
 
@@ -116,10 +118,11 @@ module.exports = {
 
 		callback(founds);
 	},
-	post_comment:function(id, text, callback){
+	post_comment:function(id, text, color, callback){
 		initial_comments.push({
 			thread_id:id,
-			text:text
+			text:text,
+			color:color
 		});
 
 		this.thread(id, function(thread){

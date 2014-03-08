@@ -223,6 +223,27 @@ html[data-ios7] #content .page {
   width: 100%;
   z-index: 90;
 }
+#content .page.slide .scroll-wrap .pull-to-refresh {
+  display: none;
+}
+#content .page .scroll-wrap .pull-to-refresh {
+  position: absolute;
+  top: -80px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  height: 80px;
+  line-height: 80px;
+}
+#content .page .scroll-wrap.pullrefresh-slideup,
+#content .page .scroll-wrap.pullrefresh-loading,
+#content .page .scroll-wrap.back-to-top {
+  -webkit-transition: -webkit-transform 0.3s;
+}
+#content .page .scroll-wrap.velocity-scroll {
+  -webkit-transition: -webkit-transform 1s ease;
+}
 .button {
   width: 20px;
   height: 20px;
@@ -266,27 +287,6 @@ html[data-ios7] #content .page {
   color: white;
   text-shadow: 1px 1px 0px black;
 }
-.page.home-vc.slide .scroll-wrap .pull-to-refresh {
-  display: none;
-}
-.page.home-vc .scroll-wrap .pull-to-refresh {
-  position: absolute;
-  top: -80px;
-  width: 100%;
-  text-align: center;
-  color: white;
-  font-size: 24px;
-  height: 80px;
-  line-height: 80px;
-}
-.page.home-vc .scroll-wrap.pullrefresh-slideup,
-.page.home-vc .scroll-wrap.pullrefresh-loading,
-.page.home-vc .scroll-wrap.back-to-top {
-  -webkit-transition: -webkit-transform 0.3s;
-}
-.page.home-vc .scroll-wrap.velocity-scroll {
-  -webkit-transition: -webkit-transform 1s ease;
-}
 .page.thread-vc #thread-title {
   position: relative;
 }
@@ -298,6 +298,67 @@ html[data-ios7] #content .page {
   width: 100%;
   color: white;
   text-shadow: 1px 1px 0px black;
+}
+.page.thread-vc #post-comment {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  height: 37px;
+}
+.page.thread-vc #post-comment .post-comment-wrap {
+  height: 37px;
+}
+.page.thread-vc #post-comment .post-comment-wrap .input-wrap {
+  width: 80%;
+  float: left;
+  height: 100%;
+  background-color: #ffffff;
+}
+.page.thread-vc #post-comment .post-comment-wrap .input-wrap input {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  width: 94%;
+  height: 100%;
+  padding: 0 3%;
+  line-height: 25px;
+  font-size: 13px;
+  color: #333333;
+  font-family: 'Helvetica';
+}
+.page.thread-vc #post-comment .post-comment-wrap a {
+  float: right;
+  display: block;
+  width: 20%;
+  height: 100%;
+  background-color: #333333;
+  color: #ffffff;
+  text-align: center;
+  font-family: 'birds';
+  line-height: 37px;
+}
+.page.thread-vc #thread-comments ol {
+  margin-bottom: 37px;
+}
+.page.thread-vc #thread-comments ol li {
+  padding: 1.2em 0.9em;
+  margin: 0.3em 0;
+  font-family: 'homizio';
+  font-size: 15px;
+  color: #ffffff;
+  background-color: #333333;
+  position: relative;
+  display: block;
+}
+.page.thread-vc #thread-comments ol li .triangle {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 10px 10px 0 0;
+  border-color: #335d8a transparent transparent transparent;
 }
 .page.post-thread-vc #input-wrap {
   width: 100%;
@@ -377,7 +438,7 @@ html[data-ios7] #content .page {
   background-image: url('../images/icon-police.png');
 }
 #easter {
-  position: fixed;
+  position: absolute;
   width: 100%;
   bottom: 0px;
   left: 0;

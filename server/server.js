@@ -49,7 +49,7 @@ Server.prototype.listen = function(port) {
 		});
 	},this));
 
-	// HTTP GET /threads/<thread_id>/post_comment
+	// HTTP POST /threads/<thread_id>/post_comment
 	// with data : text(required)
 	this._app.post('/threads/:id/post_comment', _.bind(function(req,res){
 		var body = '';
@@ -64,13 +64,18 @@ Server.prototype.listen = function(port) {
 				var body_parsed = qs.parse(body);
 			}
 			var text = body_parsed.text;
+			var color = body_parsed.color;
 			
-			this._dao.post_comment(req.params.id, text, function(thread){
+			this._dao.post_comment(req.params.id, text, color, _.bind(function(thread){
+				
+				
 				if (thread.length != 1) 
 					res.status(404).send('Not found');
-				else
+				else {
+					this._pushIntercace.push('newcomments_'+thread[0].id, "message lors d'un nouveau commentaire");
 					res.send(thread[0]);
-			})
+				}
+			},this))
 		},this));
 	},this));
 
@@ -95,6 +100,7 @@ Server.prototype.listen = function(port) {
 			var imageUrl = body_parsed.imageUrl;
 			
 			this._dao.post_thread(title, color, policeName, policeSize, imageUrl, _.bind(function(thread){
+				// TODO : reactivate in prod
 				this._pushIntercace.push('newfalope', 'Une nouvelle falope est arrivé.');
 				res.send(thread);
 			},this));

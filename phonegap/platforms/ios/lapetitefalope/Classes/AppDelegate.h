@@ -28,7 +28,7 @@
 #import <UIKit/UIKit.h>
 
 #import <Cordova/CDVViewController.h>
-
+#import "AFHTTPRequestOperationManager.h"
 @interface AppDelegate : NSObject <UIApplicationDelegate>{}
 
 // invoke string is passed to your app on launch, this is only valid if you

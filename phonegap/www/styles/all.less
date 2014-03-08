@@ -186,6 +186,33 @@ html[data-ios7] {
 		width: 100%;
 		z-index:90;
 
+		&.slide .scroll-wrap .pull-to-refresh {
+			display:none;
+		}
+
+		.scroll-wrap {
+
+			@breakpoint: 80px;
+			.pull-to-refresh {
+				position:absolute;
+				top:-@breakpoint;
+				width:100%;
+				text-align:center;
+				color:white;
+				font-size:24px;
+				height:@breakpoint;
+				line-height:@breakpoint;
+			}
+
+			&.pullrefresh-slideup,
+		    &.pullrefresh-loading,
+		    &.back-to-top {
+		        -webkit-transition: -webkit-transform .3s;
+		    }
+		    &.velocity-scroll {
+		    	-webkit-transition: -webkit-transform 1s ease;	
+		    }	
+		}
 	}
 
 }
@@ -238,34 +265,6 @@ html[data-ios7] {
 			}
 		}
 	}	
-
-	&.slide .scroll-wrap .pull-to-refresh {
-		display:none;
-	}
-
-	.scroll-wrap {
-
-		@breakpoint: 80px;
-		.pull-to-refresh {
-			position:absolute;
-			top:-@breakpoint;
-			width:100%;
-			text-align:center;
-			color:white;
-			font-size:24px;
-			height:@breakpoint;
-			line-height:@breakpoint;
-		}
-
-		&.pullrefresh-slideup,
-	    &.pullrefresh-loading,
-	    &.back-to-top {
-	        -webkit-transition: -webkit-transform .3s;
-	    }
-	    &.velocity-scroll {
-	    	-webkit-transition: -webkit-transform 1s ease;	
-	    }	
-	}
 }
 
 .page.thread-vc {
@@ -275,6 +274,93 @@ html[data-ios7] {
 			.title-display;
 		}
 	}
+
+	@postCommentHeight:37px;
+	
+	#post-comment {
+		
+		position:fixed;
+		bottom:0px;
+
+
+		width:100%;
+		height:@postCommentHeight;
+
+		.post-comment-wrap {
+			height:@postCommentHeight;
+
+			.input-wrap {
+				width:80%;
+				float:left;
+				height:100%;
+				background-color: @headerBgColor;
+				
+				input {
+					margin:0;
+					border:0;
+					border-radius:0;
+					width:94%;
+					height:100%;
+					padding:0 3%;
+
+					line-height:25px;
+					font-size:13px;
+					color:@headerColor;
+					font-family: 'Helvetica';
+				}
+				
+			}
+
+			a {
+				float:right;
+				display:block;
+				width:20%;
+				height:100%;
+				background-color:@contentBgColor;
+				color:@headerBgColor;
+				text-align:center;
+				font-family:'birds';
+				line-height: @postCommentHeight;
+			}
+			
+		}
+	}
+
+	#thread-comments {
+		
+		
+		ol {
+
+			margin-bottom:@postCommentHeight;
+			
+			li {
+				
+				padding:1.2em 0.9em;
+				margin:0.3em 0;
+				font-family:'homizio';
+				font-size:15px;
+				color:@headerBgColor;
+				background-color:@headerColor;
+				position:relative;
+				display:block;
+
+				@triangleWidth:2px;
+				.triangle {
+					position: absolute; top:0px; left:0px;
+				    width: 0px;
+					height: 0px;
+					border-style: solid;
+					border-width: 10px 10px 0 0;
+					border-color: #335d8a transparent transparent transparent;
+				}
+
+
+					
+			}
+		}
+
+	}
+
 }
 
 .page.post-thread-vc {
@@ -381,7 +467,7 @@ html[data-ios7] {
 
 
 #easter{
-	position:fixed;
+	position:absolute;
 	width:100%;
 	bottom:0px;
 	left:0;

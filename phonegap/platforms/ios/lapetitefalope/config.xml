@@ -37,7 +37,12 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <preference name="HideKeyboardFormAccessoryBar" value="true" />
+    <preference name="KeyboardShrinksView" value="false" />
     <feature name="CanvasCamera">
         <param name="ios-package" value="CanvasCamera" />
+    </feature>
+    <feature name="PushNotification">
+        <param name="ios-package" value="PushNotification" />
     </feature>
 </widget>

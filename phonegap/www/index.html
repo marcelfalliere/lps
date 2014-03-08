@@ -8,8 +8,7 @@
         
         phonestrap did it, so...
         -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, height=device-height, width=device-width" />
-        
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />        
 
         <link rel="stylesheet" href="styles/all.css">
         
@@ -34,7 +33,7 @@
 
         <script type="html/template" id="tpl-home">
             <div class="scroll-wrap">
-                <div class="pull-to-refresh">pull 2 refresh</div>
+                <div class="pull-to-refresh"></div>
                 <ol>
 
                 </ol>
@@ -47,9 +46,12 @@
 
 
         <script type="html/template" id="tpl-thread-layout">
-            <div id="thread-title"></div>
-            <div id="thread-comments"></div>
-            <div id="post-comment"></div>
+            <div class="scroll-wrap">
+                <div class="pull-to-refresh"></div>
+                <div id="thread-title"></div>
+                <div id="thread-comments"></div>
+                <div id="post-comment"></div>
+            </div>
         </script>
         
 
@@ -62,11 +64,14 @@
         </script>
         <script type="html/template" id="tpl-thread-comment-item-view">
             <%= text %>
+            <div class="triangle" style="border-color: <%= color %> transparent transparent transparent;"></div>
         </script>
         
         <script type="html/template" id="tpl-post-comment-view">
-            <input type='text' />
-            <a class="post">post</a>
+            <div class="input-wrap">
+                <input type='text' />
+            </div>
+            <a class="post">répondre</a>
         </script>
 
         <script type="html/template" id="tpl-post-thread-vc">

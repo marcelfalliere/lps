@@ -1,9 +1,5 @@
 "use strict";
 
-var ThreadTitleView = Backbone.Marionette.ItemView.extend({
-	template:'#tpl-thread-title-view'
-})
-
 var CommentItemView = Backbone.Marionette.ItemView.extend({
 	template:'#tpl-thread-comment-item-view',
 	tagName:'li'
@@ -12,9 +8,13 @@ var CommentItemView = Backbone.Marionette.ItemView.extend({
 var ThreadCommentsView = Backbone.Marionette.CollectionView.extend({
 	template:'#tpl-thread-comments-view',
 	itemViewContainer:'ol',
+	tagName:'ol',
 	itemView:CommentItemView,
 	initialize:function(){
 		this.fetchComments();
+	},
+	onRender:function(){
+		
 	},
 	fetchComments:function(){
 		this.collection.thread_id = this.options.thread_id;
@@ -25,9 +25,11 @@ var ThreadCommentsView = Backbone.Marionette.CollectionView.extend({
 
 var PostCommentView = Backbone.Marionette.ItemView.extend({
 	template:'#tpl-post-comment-view',
+	className:'post-comment-wrap',
 	events:{
 		'keyup input':'onKeyupSaveUserInput',
-		'tap .post':'onTapToPost'
+		'tap .post':'onTapToPost',
+		'tap input':'onFocusInput',
 	},
 	onKeyupSaveUserInput:function(){
 		this.model.set('text', this.$el.find('input').val());
@@ -37,7 +39,14 @@ var PostCommentView = Backbone.Marionette.ItemView.extend({
 		this.updateLocalCommentsCollection();
 		this.cleanAndPrepareNewModel();
 	},
+	onFocusInput:function(ev){
+		ev.gesture.preventDefault();
+		this.$el.find('input').focus();
+	},
 	postModelToServer:function(){
+		var randomColor = getColorFromPercentage(Math.floor(Math.random() * 100) + 1);
+		console.log('random color : '+randomColor);
+		this.model.set('color', randomColor);
 		this.model.on('sync',_.bind(this.updateLocalThreadsList,this));
 		this.model.save();
 	},
@@ -64,17 +73,19 @@ var ThreadVCLayout = Backbone.Marionette.Layout.extend({
 		comments:'#thread-comments',
 		postComment:'#post-comment'
 	},
+	initialize:function(){
+		_.extend(this, _.omit(HammerScrollableView, ['onRender']));
+
+		_.bind(HammerScrollableView.initialize,this)();
+	},
 	onRender:function(){
+
 		var comments = new CommentsCollection();
 
-		this.title.show(new ThreadTitleView({
+		this.title.show(new ItemReadOnlyView({
 			model:app.thread
 		}));
 		
-		this.title.$el
-			.css('background-color', app.thread.get('color'))
-			.height($(window).width()+'px');
-
 		this.comments.show(new ThreadCommentsView({
 			thread_id:app.thread.get('id'),
 			collection:comments
@@ -85,6 +96,8 @@ var ThreadVCLayout = Backbone.Marionette.Layout.extend({
 				thread_id:app.thread.get('id')
 			}),
 			comments:comments
-		}))
+		}));
+
+		_.bind(HammerScrollableView.onRender,this)();
 	}
 });

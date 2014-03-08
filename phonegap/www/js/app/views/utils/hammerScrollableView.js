@@ -1,5 +1,5 @@
 
-var HammerScrollableView = Backbone.Marionette.CompositeView.extend({
+var HammerScrollableView = {
 	breakpoint:80,
 	initialize:function(){
 		this.headerHeight = $('#header').innerHeight();
@@ -23,7 +23,7 @@ var HammerScrollableView = Backbone.Marionette.CompositeView.extend({
     pagebeforeshow:function(){
 
         // restore du height si présent
-        if (app.scrollableViewHeightSave) {
+        if (this.saveScrollHeight==true && app.scrollableViewHeightSave) {
             var potentialHeight = app.scrollableViewHeightSave[this.$el.attr('class').split(' ')[1]];
             if (potentialHeight) {
                 this.setHeight(potentialHeight);
@@ -37,7 +37,7 @@ var HammerScrollableView = Backbone.Marionette.CompositeView.extend({
         $('#scroll-back-to-top-helper').off('tap');
 
         // sauvegarde dans le global namespace de la hauteur
-        if (app.scrollableViewHeightSave===undefined) {
+        if (this.saveScrollHeight==true && app.scrollableViewHeightSave===undefined) {
             app.scrollableViewHeightSave = {};
         }
         app.scrollableViewHeightSave[this.$el.attr('class').split(' ')[1]] = this._saved_height;
@@ -47,7 +47,6 @@ var HammerScrollableView = Backbone.Marionette.CompositeView.extend({
     },
     dragstart:function(ev){
         // nettoyage si en train de scroller
-console.log('dragstart!');
         if (this.isScrolling==true) {
             clearTimeout(this.scrollingTimeout);
             var currentTop = $('.scroll-wrap').position().top;
@@ -58,7 +57,7 @@ console.log('dragstart!');
         }
     },
 	dragup:function(ev){
-console.log('drag Up!');
+
         // stop browser scrolling
         ev.gesture.preventDefault();
 
@@ -72,7 +71,6 @@ console.log('drag Up!');
         }
 	},
 	dragdown:function(ev){
-console.log('drag Down!');
         // stop browser scrolling
         ev.gesture.preventDefault();
 
@@ -86,29 +84,27 @@ console.log('drag Down!');
         }
 	},
 	release:function(ev){
-console.log('release!');
-console.log('velocity:'+ev.gesture.velocityY);
 
         if (ev.gesture.velocityY!=0) {
-            var bottomFrontier = -1*(this.$el.find('.scroll-wrap').height() - $(window).height() + 40);
+            var bottomFrontier = -1*(this.$el.find('.scroll-wrap').height() - $(window).height() + $('#viewport > #header').innerHeight());
+            
+            if (this.$el.find('.scroll-wrap').height() < $(window).height() - $('#viewport > #header').innerHeight()) 
+                bottomFrontier=0;
+            
             if (this._slide_height > 0 && this._slide_height < this.breakpoint) { // top frontier sans breakpoint
                 this.scrollToWithAnim(0, 'back-to-top', 300);
             } else if (this._slide_height > 0 && this._slide_height >= this.breakpoint) { // top frontier + bp
                 if (this.isFetching!=true) {
-                    this.isFetching=true;
-                    this.scrollToWithAnim(this.breakpoint, 'back-to-top', 300);
-                    this.updatePullToRefreshText();
-                    this.collection.fetch({
-                        success:_.bind(function(){
-                            this.$p2r.text("c'est fait");
-                            this.scrollToWithAnim(0, 'back-to-top', 300);
-                            this.isFetching=false;
-                        },this),
-                        error:_.bind(function(){
-                            this.$p2r.text('une erreur est survenue :(')
-                            this.isFetching=false;
-                        },this)
-                    ,remove: false});
+
+                    if (this.refreshFunction) {
+                        this.isFetching=true;
+                        this.scrollToWithAnim(this.breakpoint, 'back-to-top', 300);
+                        this.updatePullToRefreshText();
+                        
+                        this.refreshFunction();
+                    } else {
+                        this.scrollToWithAnim(0, 'back-to-top', 300);
+                    }
                 } else {
                     this.scrollToWithAnim(this.breakpoint, 'back-to-top', 300);
                 }
@@ -127,9 +123,6 @@ console.log('velocity:'+ev.gesture.velocityY);
 		
 	},
     updatePullToRefreshText:function(){
-
-
-        //console.log('updatePullToRefreshText', this._slide_height, this.$p2r.length)
         if (this.isFetching==true) {
             this.$p2r.text('en cours ...')
         } else if (this._slide_height >= 0 && this._slide_height < this.breakpoint  && this.isFetching != true) { // entre 0 et breakpoint
@@ -174,7 +167,7 @@ console.log('velocity:'+ev.gesture.velocityY);
             self.isScrolling=false;
         }, wait);
     }
-});
+};
 
 (function() {
     var lastTime = 0;
