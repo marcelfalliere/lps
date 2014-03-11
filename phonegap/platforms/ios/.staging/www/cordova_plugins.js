@@ -163,6 +163,13 @@ module.exports = [
         "merges": [
             "navigator.notification"
         ]
+    },
+    {
+        "file": "plugins/com.danielcwilson.plugins.googleanalytics/www/analytics.js",
+        "id": "com.danielcwilson.plugins.googleanalytics.UniversalAnalytics",
+        "clobbers": [
+            "analytics"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -171,7 +178,8 @@ module.exports.metadata =
     "org.apache.cordova.device": "0.2.8",
     "org.apache.cordova.file": "1.0.0",
     "org.apache.cordova.file-transfer": "0.4.1",
-    "org.apache.cordova.dialogs": "0.2.6"
+    "org.apache.cordova.dialogs": "0.2.6",
+    "com.danielcwilson.plugins.googleanalytics": "0.1.2"
 }
 // BOTTOM OF METADATA
 });

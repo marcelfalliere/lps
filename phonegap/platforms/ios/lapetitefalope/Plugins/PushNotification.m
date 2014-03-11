@@ -10,6 +10,8 @@
 #import "PushNotification.h"
 #import "AFHTTPRequestOperationManager.h"
 
+static NSString* PUSH_BASE_URL = @"http://cp.lapetitefalope.fr/";
+
 @implementation PushNotification
 
 
@@ -21,15 +23,16 @@
 
 + (void)subscribeWithEvent:(NSString*)event {
     NSString* dToken = [[NSUserDefaults standardUserDefaults]valueForKey:@"DEVICE_TOKEN"];
-    
+    NSLog(@"devicetoken : %@", dToken);
     if (dToken!=nil){
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        //manager.securityPolicy.allowInvalidCertificates = YES;
         NSDictionary *parameters = @{@"proto": @"apns", @"token":dToken};
-        [manager POST:@"http://62.210.237.246:8888/subscribers" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager POST:[NSString stringWithFormat:@"%@subscribers",PUSH_BASE_URL] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
             NSString* sessionId = [responseObject valueForKey:@"id"];
             
-            [manager POST:[NSString stringWithFormat:@"http://62.210.237.246:8888/subscriber/%@/subscriptions/%@", sessionId, event] parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [manager POST:[NSString stringWithFormat:@"%@subscriber/%@/subscriptions/%@", PUSH_BASE_URL, sessionId, event] parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 
                 NSLog(@"All went OK : %@", responseObject);
                 

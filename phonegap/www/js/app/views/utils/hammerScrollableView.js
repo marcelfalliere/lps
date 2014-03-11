@@ -87,10 +87,8 @@ var HammerScrollableView = {
 
         if (ev.gesture.velocityY!=0) {
             var bottomFrontier = -1*(this.$el.find('.scroll-wrap').height() - $(window).height() + $('#viewport > #header').innerHeight());
-            
             if (this.$el.find('.scroll-wrap').height() < $(window).height() - $('#viewport > #header').innerHeight()) 
                 bottomFrontier=0;
-            
             if (this._slide_height > 0 && this._slide_height < this.breakpoint) { // top frontier sans breakpoint
                 this.scrollToWithAnim(0, 'back-to-top', 300);
             } else if (this._slide_height > 0 && this._slide_height >= this.breakpoint) { // top frontier + bp
@@ -123,6 +121,9 @@ var HammerScrollableView = {
 		
 	},
     updatePullToRefreshText:function(){
+
+
+        //console.log('updatePullToRefreshText', this._slide_height, this.$p2r.length)
         if (this.isFetching==true) {
             this.$p2r.text('en cours ...')
         } else if (this._slide_height >= 0 && this._slide_height < this.breakpoint  && this.isFetching != true) { // entre 0 et breakpoint

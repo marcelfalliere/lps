@@ -11,6 +11,7 @@ function initializeApp(){
 	initializeBackbone();
 	initializeHammer();
 	initializeCacheDatabase();
+	initializeGoogleAnalytics();
 
 	initializePlatformsSquirk();
 
@@ -43,6 +44,12 @@ function initializePlatformsSquirk(){
 		if (parseFloat(device.version)>=7) {
 			$('html').attr('data-ios7',true);
 		}
+	});
+}
+
+function initializeGoogleAnalytics(){
+	$(document).on('deviceready', function(){
+		analytics.startTrackerWithId('UA-48753141-1')
 	});
 }
 

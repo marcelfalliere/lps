@@ -23,6 +23,7 @@
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
 		5AEE5B35173C68D80009041E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AEE5B34173C68D80009041E /* CoreLocation.framework */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
+		7034D790DFF24A69A6750492 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A323DE73D73843ADA1F998CB /* libz.dylib */; };
 		82B426AD5EB94EC6A8112EC8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46B2AAAD67143BCBCAB2650 /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		867D9E8118CAE55E003C7541 /* icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 867D9E8018CAE55E003C7541 /* icon-120.png */; };
 		867E4C2218B5D85E00791714 /* CanvasCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 867E4C2118B5D85E00791714 /* CanvasCamera.m */; };
@@ -49,9 +50,13 @@
 		86A27E2A18BCED34009F27F1 /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 86A27E2918BCED34009F27F1 /* CDVNotification.m */; };
 		86A27E2C18BCED40009F27F1 /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 86A27E2B18BCED40009F27F1 /* CDVNotification.bundle */; };
 		86ABF88018CAE93A00940FDB /* PushNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 86ABF87F18CAE93A00940FDB /* PushNotification.m */; };
+		86ABF8DA18CCED7900940FDB /* UniversalAnalyticsPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 86ABF8D918CCED7900940FDB /* UniversalAnalyticsPlugin.m */; };
+		86ABF8E318CCEE4C00940FDB /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86ABF8E218CCEE4C00940FDB /* libGoogleAnalyticsServices.a */; };
 		86BCEC1418B7E8EF00C8AF3E /* ohlavache.png in Resources */ = {isa = PBXBuildFile; fileRef = 86BCEC1318B7E8EF00C8AF3E /* ohlavache.png */; };
 		86DF1AF118BD901500B3A212 /* icon-close.png in Resources */ = {isa = PBXBuildFile; fileRef = 86DF1AF018BD901500B3A212 /* icon-close.png */; };
+		B9543616CE034F2E91872674 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93DF4BE4BD34420AA591E7D5 /* AdSupport.framework */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
+		E368C893478B42F2AAC9EB98 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69E14BCA28FD4F13A36F9C54 /* CoreData.framework */; };
 		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
 /* End PBXBuildFile section */
 
@@ -97,6 +102,7 @@
 		32CA4F630368D1EE00C91783 /* lapetitefalope-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "lapetitefalope-Prefix.pch"; sourceTree = "<group>"; };
 		5AEE5B34173C68D80009041E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		69E14BCA28FD4F13A36F9C54 /* CoreData.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		867D9E8018CAE55E003C7541 /* icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-120.png"; sourceTree = "<group>"; };
 		867E4C2018B5D85E00791714 /* CanvasCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasCamera.h; sourceTree = "<group>"; };
 		867E4C2118B5D85E00791714 /* CanvasCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasCamera.m; sourceTree = "<group>"; };
@@ -140,9 +146,20 @@
 		86A27E2B18BCED40009F27F1 /* CDVNotification.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = CDVNotification.bundle; path = ../../../../plugins/org.apache.cordova.dialogs/src/ios/CDVNotification.bundle; sourceTree = "<group>"; };
 		86ABF87E18CAE93A00940FDB /* PushNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushNotification.h; sourceTree = "<group>"; };
 		86ABF87F18CAE93A00940FDB /* PushNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushNotification.m; sourceTree = "<group>"; };
+		86ABF8D818CCED7900940FDB /* UniversalAnalyticsPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UniversalAnalyticsPlugin.h; path = ../../../../plugins/com.danielcwilson.plugins.googleanalytics/ios/UniversalAnalyticsPlugin.h; sourceTree = "<group>"; };
+		86ABF8D918CCED7900940FDB /* UniversalAnalyticsPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UniversalAnalyticsPlugin.m; path = ../../../../plugins/com.danielcwilson.plugins.googleanalytics/ios/UniversalAnalyticsPlugin.m; sourceTree = "<group>"; };
+		86ABF8DC18CCEE4600940FDB /* GAI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
+		86ABF8DD18CCEE4600940FDB /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		86ABF8DE18CCEE4600940FDB /* GAIFields.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
+		86ABF8DF18CCEE4600940FDB /* GAILogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
+		86ABF8E018CCEE4600940FDB /* GAITrackedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
+		86ABF8E118CCEE4600940FDB /* GAITracker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
+		86ABF8E218CCEE4C00940FDB /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
 		86BCEC1318B7E8EF00C8AF3E /* ohlavache.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ohlavache.png; path = ../../../../../../../Pictures/ohlavache.png; sourceTree = "<group>"; };
 		86DF1AF018BD901500B3A212 /* icon-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-close.png"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* lapetitefalope-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "lapetitefalope-Info.plist"; path = "../lapetitefalope-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		93DF4BE4BD34420AA591E7D5 /* AdSupport.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		A323DE73D73843ADA1F998CB /* libz.dylib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
 		F46B2AAAD67143BCBCAB2650 /* AudioToolbox.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = lapetitefalope/config.xml; sourceTree = "<group>"; };
@@ -156,6 +173,7 @@
 				86A1796C18C1EE9100BAB19C /* SystemConfiguration.framework in Frameworks */,
 				86A1796A18C1EE8700BAB19C /* Security.framework in Frameworks */,
 				867E4C2B18B79C2700791714 /* ImageIO.framework in Frameworks */,
+				86ABF8E318CCEE4C00940FDB /* libGoogleAnalyticsServices.a in Frameworks */,
 				867E4C2418B5D89800791714 /* CoreVideo.framework in Frameworks */,
 				5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */,
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
@@ -163,6 +181,9 @@
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 				5AEE5B35173C68D80009041E /* CoreLocation.framework in Frameworks */,
 				82B426AD5EB94EC6A8112EC8 /* AudioToolbox.framework in Frameworks */,
+				E368C893478B42F2AAC9EB98 /* CoreData.framework in Frameworks */,
+				B9543616CE034F2E91872674 /* AdSupport.framework in Frameworks */,
+				7034D790DFF24A69A6750492 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +286,9 @@
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
 				F46B2AAAD67143BCBCAB2650 /* AudioToolbox.framework */,
+				69E14BCA28FD4F13A36F9C54 /* CoreData.framework */,
+				93DF4BE4BD34420AA591E7D5 /* AdSupport.framework */,
+				A323DE73D73843ADA1F998CB /* libz.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -296,6 +320,7 @@
 				867E4C2118B5D85E00791714 /* CanvasCamera.m */,
 				86ABF87E18CAE93A00940FDB /* PushNotification.h */,
 				86ABF87F18CAE93A00940FDB /* PushNotification.m */,
+				86ABF8DB18CCEE3300940FDB /* GoogleAnalytics */,
 			);
 			name = Plugins;
 			path = lapetitefalope/Plugins;
@@ -363,6 +388,22 @@
 				86A1795E18C1EC0D00BAB19C /* AFURLSessionManager.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		86ABF8DB18CCEE3300940FDB /* GoogleAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				86ABF8E218CCEE4C00940FDB /* libGoogleAnalyticsServices.a */,
+				86ABF8DC18CCEE4600940FDB /* GAI.h */,
+				86ABF8DD18CCEE4600940FDB /* GAIDictionaryBuilder.h */,
+				86ABF8DE18CCEE4600940FDB /* GAIFields.h */,
+				86ABF8DF18CCEE4600940FDB /* GAILogger.h */,
+				86ABF8E018CCEE4600940FDB /* GAITrackedViewController.h */,
+				86ABF8E118CCEE4600940FDB /* GAITracker.h */,
+				86ABF8D818CCED7900940FDB /* UniversalAnalyticsPlugin.h */,
+				86ABF8D918CCED7900940FDB /* UniversalAnalyticsPlugin.m */,
+			);
+			name = GoogleAnalytics;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -496,6 +537,7 @@
 				86A1796718C1EC0D00BAB19C /* AFURLSessionManager.m in Sources */,
 				86A1796618C1EC0D00BAB19C /* AFURLResponseSerialization.m in Sources */,
 				86ABF88018CAE93A00940FDB /* PushNotification.m in Sources */,
+				86ABF8DA18CCED7900940FDB /* UniversalAnalyticsPlugin.m in Sources */,
 				86A27E2A18BCED34009F27F1 /* CDVNotification.m in Sources */,
 				86A27E2118BC8868009F27F1 /* CDVFileTransfer.m in Sources */,
 				86A1796518C1EC0D00BAB19C /* AFURLRequestSerialization.m in Sources */,
@@ -567,6 +609,10 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "lapetitefalope/lapetitefalope-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/fredericfalliere/Dev/secrets/phonegap/platforms/ios/lapetitefalope/Plugins,
+				);
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					CoreFoundation,
@@ -600,6 +646,10 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "lapetitefalope/lapetitefalope-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/fredericfalliere/Dev/secrets/phonegap/platforms/ios/lapetitefalope/Plugins,
+				);
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					CoreFoundation,
