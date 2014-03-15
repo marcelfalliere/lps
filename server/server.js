@@ -6,13 +6,13 @@ var fs = require('fs');
 var gm = require('gm').subClass({ imageMagick: true });
 
 
-function Server(dao, pushIntercace, limit, savePath) {
+function Server(dao, pushInterface, limit, savePath) {
   var http = require('http');
   this.express = require('express');
 
   this._app = this.express();
   this._dao = dao;
-  this._pushIntercace = pushIntercace;
+  this._pushInterface = pushInterface;
   this._server = http.createServer(this._app);
   
   this._dao.setLimit(limit);
@@ -72,7 +72,7 @@ Server.prototype.listen = function(port) {
 				if (thread.length != 1) 
 					res.status(404).send('Not found');
 				else {
-					this._pushIntercace.push('newcomments_'+thread[0].id, "message lors d'un nouveau commentaire");
+					this._pushInterface.push('newcomments'+thread[0].id, "Un anonyme vient de contribuer à une \"discussion\" sur laquelle vous avez participé !");
 					res.send(thread[0]);
 				}
 			},this))
@@ -100,8 +100,7 @@ Server.prototype.listen = function(port) {
 			var imageUrl = body_parsed.imageUrl;
 			
 			this._dao.post_thread(title, color, policeName, policeSize, imageUrl, _.bind(function(thread){
-				// TODO : reactivate in prod
-				this._pushIntercace.push('newfalope', 'Une nouvelle falope est arrivé.');
+				this._pushInterface.push('newfalope', 'Un nouveau contenu vient d\'être posté...');
 				res.send(thread);
 			},this));
 		},this));

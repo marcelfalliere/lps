@@ -8,7 +8,7 @@
         
         phonestrap did it, so...
         -->
-        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />        
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />        
 
         <link rel="stylesheet" href="styles/all.css">
         
@@ -33,10 +33,12 @@
 
         <script type="html/template" id="tpl-home">
             <div class="scroll-wrap">
-                <div class="pull-to-refresh"></div>
-                <ol>
+                <div class="scroll-inner">
+                    <div class="pull-to-refresh"></div>
+                    <ol>
 
-                </ol>
+                    </ol>
+                </div>
             </div>
         </script>
 
@@ -46,12 +48,15 @@
 
 
         <script type="html/template" id="tpl-thread-layout">
+            <div id="thread-title"></div>
             <div class="scroll-wrap">
-                <div class="pull-to-refresh"></div>
-                <div id="thread-title"></div>
-                <div id="thread-comments"></div>
-                <div id="post-comment"></div>
+                <div class="scroll-inner">
+                    <div class="item-read-only-placeholder" style="height:<%= $(window).width()+'px' %>"></div>
+                    <div id="thread-comments"></div>
+                    <div class="post-comment-placeholder" style="height:<%= ($(window).height()-$(window).width()-$('#header').innerHeight()-37)+'px' %>"></div>
+                </div>
             </div>
+            <div id="post-comment"></div>
         </script>
         
 
@@ -88,33 +93,41 @@
             </div>
         </script>
         
+        <!-- libs -->
         <script type="text/javascript" src="cordova.js"></script>
-        
         <script type="text/javascript" src="js/bower_comps/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="js/bower_comps/underscore/underscore-min.js"></script>
         <script type="text/javascript" src="js/bower_comps/backbone/backbone.js"></script>
         <script type="text/javascript" src="js/bower_comps/backbone.marionette/lib/backbone.marionette.min.js"></script>
         <script type="text/javascript" src="js/bower_comps/jquery-hammerjs/jquery.hammer-full.js"></script>
-        <script type="text/javascript" src="js/bower_comps/iscroll/build/iscroll.js"></script>
+        <script type="text/javascript" src="js/bower_comps/iscroll/build/iscroll-probe.js"></script>
         
-
+        <!-- conf -->
         <script src="js/app/conf.js"></script>
 
+        <!-- models, collections -->
         <script src="js/app/models/thread.js"></script>   
         <script src="js/app/collections/threads.js"></script>   
         <script src="js/app/models/comment.js"></script>   
         <script src="js/app/collections/comments.js"></script>   
 
-        <script src="js/app/views/utils/hammerScrollableView.js"></script>   
+        <!-- views -->
+        <script src="js/app/views/utils/itemReadOnlyView.js"></script>   
         <script src="js/app/views/homeVC.js"></script>   
         <script src="js/app/views/threadVC.js"></script>   
-        <script src="js/app/views/postThreadVC-upload.js"></script>   
+            <script src="js/app/views/threadVC-postCommentView.js"></script>   
+            <script src="js/app/views/threadVC-commentsView.js"></script>   
         <script src="js/app/views/postThreadVC.js"></script>    
-
-
+            <script src="js/app/views/postThreadVC-upload.js"></script>   
+            <script src="js/app/views/postThreadVC-modeValueFromPercentageFunctions.js"></script>   
+            <script src="js/app/views/postThreadVC-randomFunctions.js"></script>   
         <script src="js/app/views/headerView.js"></script>   
+
+        <!-- regions -->
         <script src="js/app/regions/headerRegion.js"></script>    
         <script src="js/app/regions/contentRegion.js"></script>   
+
+        <!-- router and main -->
         <script src="js/app/router.js"></script>  
         <script src="js/app/main.js"></script>
 

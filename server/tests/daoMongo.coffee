@@ -1,3 +1,5 @@
+EasyMongo 	= require('easymongo')
+
 chai        = require('chai')
 sinon       = require("sinon")
 sinonChai   = require("sinon-chai")
@@ -7,6 +9,12 @@ chai.use(sinonChai)
 DaoMongo	= require '../daoMongo.js'
 
 describe 'DaoMongo ', ->
+
+	afterEach (done) ->
+		testDaoMongo = new DaoMongo('dummyDatabase');
+		threads = testDaoMongo._mongo.collection 'threads'
+		threads.remove {}, () ->
+			done()
 
 	it 'should create a mongo instance with options', ->
 		testDaoMongo = new DaoMongo('dummyDatabase');
@@ -45,5 +53,8 @@ describe 'DaoMongo ', ->
 		obj.should.have.property 'id', 'dummy1'
 		obj.should.not.have.property '_id'
 		obj.should.have.property 'foo', 'bar'
-		
 		return
+
+
+
+

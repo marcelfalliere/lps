@@ -82,14 +82,16 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 			navigator.notification.alert(
 			    "La photo est en train d'être envoyée ... Patience!",  
 			    function(){},         
-			    '',            
-			    'Ok'                  
+			    '~ ~ ~',            
+			    'Ben j\'attends'                  
 			);
 		} else if (this.model.get('isSaving')!=true) {
 			this.postModelToServer();
 		}
 	},
 	postModelToServer:function(){
+		analytics.trackEvent('PostThread', 'postModelToServer', this.model.get('title'));
+
 		app.header.headerView.$el.trigger('saving');
 		this.model.set('isSaving',true);
 		this.model.on('sync', _.bind(this.updateLocalThreadsCollectionAndLeaveScreen,this));
@@ -103,6 +105,8 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 	},
 
 	startCapture:function(){
+		analytics.trackEvent('PostThread', 'startCapture', 'Prise de photo');
+
 		this.model.set('mode', 'picture');
 
 		cordova.exec(
@@ -146,6 +150,7 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 	},
 
 	bgcolor:function(){
+		analytics.trackEvent('PostThread', 'bgcolor', 'Couleur de fond');
 		if(this.model.get('imagePath')!==undefined) {
 			navigator.notification.confirm(
 			    "Utiliser une couleur de fond à la place de la photo ?",  
@@ -163,6 +168,7 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 		}
 	},
 	police:function(){
+		analytics.trackEvent('PostThread', 'police', 'Police de caractère');
 		this.model.set('mode', 'police');
 	},
 	newImagePath:function(){
@@ -176,101 +182,4 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 		this.$controlHint.css('-webkit-transform', 'translateX('+offsetX+'px)');
 	}
 });
-
-
-// helper methods : gives from a percentage the appropriate onDragUpOrDownUpdateColor
-function getColorFromPercentage(percentage) {
-	var from255To0=function(){
-		return 110;
-	};
-	var fromZeroTo255=function(){
-		return 140;
-	};
-	var aSixth = 100/6;
-	var model = [
-		{ from:0, 		to:aSixth, 		r:255, 			g:0, 			b:fromZeroTo255 },
-		{ from:aSixth, 	to:2*aSixth, 	r:from255To0, 	g:0, 			b:255 			},
-		{ from:2*aSixth,to:3*aSixth, 	r:0, 			g:fromZeroTo255,b:255 			},
-		{ from:3*aSixth,to:4*aSixth, 	r:0, 			g:255,			b:from255To0	},
-		{ from:4*aSixth,to:5*aSixth, 	r:fromZeroTo255,g:255,			b:0				},
-		{ from:5*aSixth,to:100,			r:255,			g:from255To0,	b:0				}
-	];
-
-	var step = _.reject(model, function(m){ return !(percentage >= m.from && percentage <= m.to) })[0];
-
-	var color = {
-		r: (typeof(step.r)=='function')?step.r():step.r,
-		g: (typeof(step.g)=='function')?step.g():step.g,
-		b: (typeof(step.b)=='function')?step.b():step.b
-	}
-
-	return 'rgb('+color.r+','+color.g+','+color.b+')'
-}
-
-function getPoliceFromPercentage(percentage) {
-	if (0 <= percentage && percentage < 33) {
-		return {
-			font:'dragon',
-			size:'12px'
-		};
-	} else if (33 <= percentage && percentage < 66) {
-		return { 
-			font:'wolf',
-			size:'40px'
-		};
-	} else {
-		return {
-			font:'homizio',
-			size:'20px'
-		};
-	}
-}
-
-// helper : get random placeholder
-
-var randomPlaceholders = [
-	'éh toi tabernac',
-	'test1',
-	'test2',
-	'test3',
-	'test4',
-	'test5',
-	'test6',
-	'test7',
-	'test8',
-];
-
-function getRandomPlaceholder(){
-	var lastRandomPlaceholder = localStorage.getItem('lastRandomPlaceholder')
-	if (lastRandomPlaceholder==null || lastRandomPlaceholder==undefined) {
-		lastRandomPlaceholder=0;
-	} else {
-		lastRandomPlaceholder=parseInt(lastRandomPlaceholder,10);
-	}
-
-	var placeholder = '';
-	if (lastRandomPlaceholder+1 < randomPlaceholders.length) {
-		placeholder = randomPlaceholders[lastRandomPlaceholder+1];
-		localStorage.setItem('lastRandomPlaceholder', lastRandomPlaceholder+1);
-	} else {
-		placeholder = randomPlaceholders[0];
-		localStorage.setItem('lastRandomPlaceholder', 0);
-	}
-
-	return placeholder;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

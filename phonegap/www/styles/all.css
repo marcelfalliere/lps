@@ -1,4 +1,8 @@
+@import "scrollbar.css";
 @import "reset.css";
+@import "fonts.css";
+/* iScroll 5 scrollbar styles */
+/* user agent css reset */
 @-webkit-keyframes slideinfromright {
   from {
     -webkit-transform: translate3d(100%, 0, 0);
@@ -75,26 +79,8 @@
 .showbuttonanim {
   -webkit-animation: showbutton 0.3s ease;
 }
-@font-face {
-  font-family: "homizio";
-  src: url('fonts/homizio-light.ttf') format('truetype');
-}
-@font-face {
-  font-family: "birds";
-  src: url('fonts/birds.ttf') format('truetype');
-}
-@font-face {
-  font-family: "chopin";
-  src: url('fonts/chopin.otf') format('opentype');
-}
-@font-face {
-  font-family: "dragon";
-  src: url('fonts/dragon.ttf') format('truetype'), url('fonts/dragon.otf') format('opentype');
-}
-@font-face {
-  font-family: "wolf";
-  src: url('fonts/wolf.ttf') format('truetype'), url('fonts/wolf.otf') format('opentype');
-}
+/* page transitions */
+/* app fonts */
 html,
 body,
 #viewport {
@@ -226,6 +212,10 @@ html[data-ios7] #content .page {
 #content .page.slide .scroll-wrap .pull-to-refresh {
   display: none;
 }
+#content .page .scroll-wrap {
+  height: 100%;
+  overflow: hidden;
+}
 #content .page .scroll-wrap .pull-to-refresh {
   position: absolute;
   top: -80px;
@@ -269,16 +259,17 @@ html[data-ios7] #content .page {
   color: white;
   text-shadow: 1px 1px 0px black;
 }
-.page.home-vc ol {
+/* phonestrap stuff */
+#content .page.home-vc ol {
   -webkit-transform-style: preserve-3d;
 }
-.page.home-vc ol li {
+#content .page.home-vc ol li {
   background-color: #ccc;
   position: relative;
   background-size: contain;
   -webkit-animation: all 0.5s ease-in-out;
 }
-.page.home-vc ol li h2 {
+#content .page.home-vc ol li h2 {
   vertical-align: middle;
   display: inline-block;
   line-height: 1.2;
@@ -287,10 +278,14 @@ html[data-ios7] #content .page {
   color: white;
   text-shadow: 1px 1px 0px black;
 }
-.page.thread-vc #thread-title {
-  position: relative;
+#content .page.thread-vc {
+  bottom: 37px;
 }
-.page.thread-vc #thread-title h2 {
+#content .page.thread-vc #thread-title {
+  position: absolute;
+  width: 100%;
+}
+#content .page.thread-vc #thread-title h2 {
   vertical-align: middle;
   display: inline-block;
   line-height: 1.2;
@@ -299,22 +294,25 @@ html[data-ios7] #content .page {
   color: white;
   text-shadow: 1px 1px 0px black;
 }
-.page.thread-vc #post-comment {
-  position: fixed;
-  bottom: 0px;
+#content .page.thread-vc .post-comment-placeholder {
+  height: 37px;
+}
+#content .page.thread-vc #post-comment {
+  position: absolute;
+  bottom: -37px;
   width: 100%;
   height: 37px;
 }
-.page.thread-vc #post-comment .post-comment-wrap {
+#content .page.thread-vc #post-comment .post-comment-wrap {
   height: 37px;
 }
-.page.thread-vc #post-comment .post-comment-wrap .input-wrap {
+#content .page.thread-vc #post-comment .post-comment-wrap .input-wrap {
   width: 80%;
   float: left;
   height: 100%;
   background-color: #ffffff;
 }
-.page.thread-vc #post-comment .post-comment-wrap .input-wrap input {
+#content .page.thread-vc #post-comment .post-comment-wrap .input-wrap input {
   margin: 0;
   border: 0;
   border-radius: 0;
@@ -326,7 +324,7 @@ html[data-ios7] #content .page {
   color: #333333;
   font-family: 'Helvetica';
 }
-.page.thread-vc #post-comment .post-comment-wrap a {
+#content .page.thread-vc #post-comment .post-comment-wrap a {
   float: right;
   display: block;
   width: 20%;
@@ -337,20 +335,17 @@ html[data-ios7] #content .page {
   font-family: 'birds';
   line-height: 37px;
 }
-.page.thread-vc #thread-comments ol {
-  margin-bottom: 37px;
-}
-.page.thread-vc #thread-comments ol li {
+#content .page.thread-vc #thread-comments ol li {
   padding: 1.2em 0.9em;
-  margin: 0.3em 0;
+  margin: 1.5em;
   font-family: 'homizio';
   font-size: 15px;
   color: #ffffff;
   background-color: #333333;
   position: relative;
-  display: block;
+  display: inline-block;
 }
-.page.thread-vc #thread-comments ol li .triangle {
+#content .page.thread-vc #thread-comments ol li .triangle {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -360,12 +355,12 @@ html[data-ios7] #content .page {
   border-width: 10px 10px 0 0;
   border-color: #335d8a transparent transparent transparent;
 }
-.page.post-thread-vc #input-wrap {
+#content .page.post-thread-vc #input-wrap {
   width: 100%;
   position: relative;
   background-size: contain;
 }
-.page.post-thread-vc #input-wrap [contentEditable] {
+#content .page.post-thread-vc #input-wrap [contentEditable] {
   vertical-align: middle;
   display: inline-block;
   line-height: 1.2;
@@ -382,7 +377,7 @@ html[data-ios7] #content .page {
   -webkit-text-size-adjust: initial;
   -webkit-user-select: initial;
 }
-.page.post-thread-vc #input-wrap .upload-overlay {
+#content .page.post-thread-vc #input-wrap .upload-overlay {
   position: absolute;
   top: 0;
   right: 0;
@@ -393,17 +388,17 @@ html[data-ios7] #content .page {
   -webkit-transition: width .1s linear;
   -webkit-transition: opacity .5s linear;
 }
-.page.post-thread-vc .post {
+#content .page.post-thread-vc .post {
   display: block;
   text-align: center;
   width: 100%;
   padding: 5px;
   background-color: green;
 }
-.page.post-thread-vc #controls-wrap {
+#content .page.post-thread-vc #controls-wrap {
   position: relative;
 }
-.page.post-thread-vc #controls-wrap #control-hint {
+#content .page.post-thread-vc #controls-wrap #control-hint {
   position: absolute;
   width: 4px;
   height: 4px;
@@ -413,14 +408,14 @@ html[data-ios7] #content .page {
   -webkit-transition: all .3s;
   opacity: 0;
 }
-.page.post-thread-vc #controls-wrap #control-hint.ready {
+#content .page.post-thread-vc #controls-wrap #control-hint.ready {
   opacity: 1;
 }
-.page.post-thread-vc #controls-wrap #controls {
+#content .page.post-thread-vc #controls-wrap #controls {
   width: 100%;
   margin-top: 16.666px;
 }
-.page.post-thread-vc #controls-wrap #controls li {
+#content .page.post-thread-vc #controls-wrap #controls li {
   width: 33%;
   height: 30px;
   background-position: center center;
@@ -428,13 +423,13 @@ html[data-ios7] #content .page {
   background-size: contain;
   display: inline-block;
 }
-.page.post-thread-vc #controls-wrap #controls li.picture {
+#content .page.post-thread-vc #controls-wrap #controls li.picture {
   background-image: url('../images/icon-picture.png');
 }
-.page.post-thread-vc #controls-wrap #controls li.bgcolor {
+#content .page.post-thread-vc #controls-wrap #controls li.bgcolor {
   background-image: url('../images/icon-bgcolor.png');
 }
-.page.post-thread-vc #controls-wrap #controls li.police {
+#content .page.post-thread-vc #controls-wrap #controls li.police {
   background-image: url('../images/icon-police.png');
 }
 #easter {

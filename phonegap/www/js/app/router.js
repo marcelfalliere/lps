@@ -17,6 +17,8 @@ var MainRouter = Backbone.Router.extend({
 		app.content.slideInFromRight(new HomeVC({
 			collection:app.threads
 		}));
+
+		if (analytics!==undefined) analytics.trackView('Home');
 	},
 	thread:function(thread_id) {
 		app.header.setMainTitle()
@@ -29,6 +31,8 @@ var MainRouter = Backbone.Router.extend({
 		app.content.slideIn(new ThreadVCLayout(
 			// will handle itself
 		));
+
+		if (analytics!==undefined) analytics.trackView('Thread-'+thread_id);
 	},
 	postThread:function() {
 		app.header.setTitle('')
@@ -43,6 +47,7 @@ var MainRouter = Backbone.Router.extend({
 			model:new ThreadModel()
 		}));
 
+		if (analytics!==undefined) analytics.trackView('PostThread');
 	}
 });
 

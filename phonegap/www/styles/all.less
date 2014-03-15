@@ -1,254 +1,11 @@
-@import "reset.css";
-@import "transitions.less";
-
-@headerBgColor: #ffffff;
-@headerShadowColor: #ffffff;
-@headerColor: #333;
-@contentBgColor: #333;
-@headerHeight: 40px;
-@headerPaddingTop: 0px;
-@mainFont : homizio, 'Helvetica Neue', 'Helvetica', Arial;
-
-@font-face{
-    font-family : "homizio";
-    src : url('fonts/homizio-light.ttf')  format('truetype'); 
-}
-
-@font-face{
-    font-family : "birds";
-    src : url('fonts/birds.ttf')  format('truetype'); 
-}
-
-@font-face{
-    font-family : "chopin";
-    src : url('fonts/chopin.otf')  format('opentype'); 
-}
-
-@font-face{
-    font-family : "dragon";
-    src : url('fonts/dragon.ttf')  format('truetype'),
-    	url('fonts/dragon.otf')  format('opentype'); 
-}
-
-@font-face{
-    font-family : "wolf";
-    src : url('fonts/wolf.ttf')  format('truetype'),
-    	url('fonts/wolf.otf')  format('opentype'); 
-}
-
-html, body, #viewport { 
-	background-color:@contentBgColor;
-	font-family:@mainFont;
-	overflow:hidden;
-	height: 100%;
-	max-height: 100%;
-}
-
-body {
-	overflow:scroll;
-}
-
-html[data-ios7] {
-	#header {
-		height:@headerHeight+20;
-		h1 {
-			top:@headerPaddingTop+20;
-		}
-		.button {
-			top:@headerPaddingTop+20;
-			&.text {
-				line-height: @headerHeight+30;
-			}
-			&.publier {
-				top:0px;
-			}
-		}
-	}
-	#content {
-		.page {
-			top:@headerHeight+20;
-		}
-	}
-}
+@import "scrollbar.css";	/* iScroll 5 scrollbar styles */
+@import "reset.css";		/* user agent css reset */
+@import "transitions.less";	/* page transitions */
+@import "fonts.css";		/* app fonts */
+@import "phonestrap.less";	/* phonestrap stuff */
 
 
-#header { 
-	height:@headerHeight; 
-	width:100%;
-	color:@headerColor;
-	padding-top:@headerPaddingTop;
-	background-color:@headerBgColor;
-	position:fixed;
-	z-index:9999;
-	box-shadow:inset 1px -4px 5px -6px @headerColor;
-
-	-webkit-transition:background-color linear @normal, color linear @normal;
-	-webkit-transition-delay:0.1s;
-	&.transparent {
-		color:lighten(@contentBgColor, 4%);;
-		background-color:transparent;
-	}
-
-	.button {
-
-		margin:0px;
-		width:40px;
-		height:40px;
-		position:absolute;
-		top:@headerPaddingTop;
-
-		&.back {
-			left:0px;
-			background-image:url('../images/icon-back.png');
-		}
-
-		&.close {
-			left:0px;
-			background-image:url('../images/icon-close.png');
-		}
-
-		&.post-thread {
-			right:0px;
-			background-image:url('../images/icon-post-thread.png');
-		}
-
-		&.publier {
-			width:60px;
-			right:0px;
-			height:100%;
-			color: white;
-			text-shadow: 1px 1px 0px black;
-			box-shadow:  0px -2px 4px -2px @headerColor;
-
-			background-size:100% 100%;
-			padding:0px;
-			text-align:center;
-
-			&.loading {
-				opacity:0.5;
-			}
-		}
-
-		&.hidden {
-			display:none;
-		}
-
-		&.text {
-			text-indent:0px;
-			line-height: 40px;
-			padding: 0 8px;
-		}
-	} 
-
-	h1 {
-		position:absolute;
-		width:60%;
-		top:@headerPaddingTop;
-		left:0;
-		text-align:center;
-		height:40px	;
-		vertical-align: middle;
-		line-height: 40px;
-		margin-left:20%;
-		text-overflow: ellipsis;
-		overflow: hidden;
-		white-space: nowrap;
-		font-family:'birds';
-		font-size:30px;
-		
-		&.main-title {
-			font-style:italic;
-		}
-	}
-
-
-	#scroll-back-to-top-helper {
-		position: absolute;	
-		width: 60%;
-		height: 95%;
-		left: 20%;
-		z-index: 9999999999999;
-		background-color: transparent;
-	}
-}
-
-#content { 
-	background-color:@contentBgColor;
-
-	.page {
-		-webkit-transform-style: preserve-3d;
-		-webkit-transition: all 0.5s, top 0s;
-		position: absolute;
-		top: @headerHeight;
-		left: 0px;
-		right: 0px;
-		bottom: 0px;
-		width: 100%;
-		z-index:90;
-
-		&.slide .scroll-wrap .pull-to-refresh {
-			display:none;
-		}
-
-		.scroll-wrap {
-
-			@breakpoint: 80px;
-			.pull-to-refresh {
-				position:absolute;
-				top:-@breakpoint;
-				width:100%;
-				text-align:center;
-				color:white;
-				font-size:24px;
-				height:@breakpoint;
-				line-height:@breakpoint;
-			}
-
-			&.pullrefresh-slideup,
-		    &.pullrefresh-loading,
-		    &.back-to-top {
-		        -webkit-transition: -webkit-transform .3s;
-		    }
-		    &.velocity-scroll {
-		    	-webkit-transition: -webkit-transform 1s ease;	
-		    }	
-		}
-	}
-
-}
-
-.button {
-	width:20px;
-	height:20px;
-	text-indent:-99999px;
-	background-size:20px;
-	background-repeat:no-repeat;
-	background-position:center center;
-
-	&.hidden {
-		display:none;
-	}
-} 
-
-.form-button {
-	display:inline-block;
-	border:1px solid green;
-	padding:5px 1px;
-}
-
-.title-display {
-
-	vertical-align:middle;
-	display:inline-block;
-	line-height:1.2;
-	text-align: center;
-	width:100%;
-	color: white;
-	text-shadow: 1px 1px 0px black;
-}
-
-
-.page.home-vc {
+#content .page.home-vc {
 
 	ol {
 		-webkit-transform-style: preserve-3d;
@@ -267,21 +24,28 @@ html[data-ios7] {
 	}	
 }
 
-.page.thread-vc {
+#content .page.thread-vc {
+
+	@postCommentHeight:37px;
+	
+	bottom:@postCommentHeight;
+
 	#thread-title {
-		position:relative;
+		position:absolute;
+		width:100%;
 		h2 {
 			.title-display;
 		}
 	}
 
-	@postCommentHeight:37px;
+	.post-comment-placeholder {
+		height:@postCommentHeight;
+	}
 	
 	#post-comment {
 		
-		position:fixed;
-		bottom:0px;
-
+		position:absolute;
+		bottom:-@postCommentHeight;
 
 		width:100%;
 		height:@postCommentHeight;
@@ -331,18 +95,16 @@ html[data-ios7] {
 		
 		ol {
 
-			margin-bottom:@postCommentHeight;
-			
 			li {
 				
 				padding:1.2em 0.9em;
-				margin:0.3em 0;
+				margin:1.5em;
 				font-family:'homizio';
 				font-size:15px;
 				color:@headerBgColor;
 				background-color:@headerColor;
 				position:relative;
-				display:block;
+				display:inline-block;
 
 				@triangleWidth:2px;
 				.triangle {
@@ -354,16 +116,13 @@ html[data-ios7] {
 					border-color: #335d8a transparent transparent transparent;
 				}
 
-
-					
 			}
 		}
 
 	}
-
 }
 
-.page.post-thread-vc {
+#content .page.post-thread-vc {
 	
 	#input-wrap {
 		width:100%;
@@ -438,32 +197,8 @@ html[data-ios7] {
 				&.police { background-image:url('../images/icon-police.png') }
 			}
 		}
-	}
-	
+	}	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #easter{

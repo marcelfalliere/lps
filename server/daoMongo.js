@@ -19,6 +19,8 @@ DaoMongo.prototype.threads = function(callback) {
 		this._transformMongoId(threads);
 		if(err==null)
 			callback(threads);
+		else
+			callback(err);
 	},this));
 }
 
@@ -26,7 +28,7 @@ DaoMongo.prototype.thread = function(id, callback){
 	var _threads = this._mongo.collection('threads');
 	_threads.findById(id, _.bind(function(err, thread){
 		this._transformMongoId(thread);
-		if (err==null) {
+		if (err==null && thread!=false) {
 			var _comments = this._mongo.collection('comments');
 			var threadId = thread.id+'';
 			_comments.find({thread_id:threadId}, _.bind(function(err, comments){
@@ -34,31 +36,49 @@ DaoMongo.prototype.thread = function(id, callback){
 				thread.comments=comments;
 				callback([thread]);
 			},this));
-
+		} else {
+			callback([]);
 		}
 	},this));
 }
 
 DaoMongo.prototype.post_thread = function(title, color, policeName, policeSize, imageUrl, callback) {
 	var _threads = this._mongo.collection('threads');
+
+	var insert_new_threads = _.bind(function(){
+		var new_thread = {
+			comments:[],
+			title:title,
+			color:color,
+			policeName:policeName,
+			policeSize:policeSize,
+			imageUrl:imageUrl,
+			last_comment:new Date().getTime()
+		}
+
+		_threads.save(new_thread, _.bind(function(err, thread){
+			this._transformMongoId(thread);
+			if (err==null) 
+				callback(thread); 
+		},this));
+	}, this);
 	
-	// TODO : implement size limit
+	// limit
+	_threads.count({}, _.bind(function(err, count_threads){
+		if (count_threads >= this._limit) {
+			_threads.find({}, {sort:{last_comment:1}}, _.bind(function(err, threads){
+				if (err==null) {
+					_threads.remove({_id:threads[0]._id}, insert_new_threads)
+				} else {
+					insert_new_threads();
+				}
+			}));
+		} else {
+			insert_new_threads();
+		}
 
-	var new_thread = {
-		comments:[],
-		title:title,
-		color:color,
-		policeName:policeName,
-		policeSize:policeSize,
-		imageUrl:imageUrl,
-		last_comment:new Date().getTime()
-	}
-
-	_threads.save(new_thread, _.bind(function(err, thread){
-		this._transformMongoId(thread);
-		if (err==null) 
-			callback(thread); 
 	},this));
+
 }
 
 DaoMongo.prototype.post_comment = function(id, text, color, callback) {
@@ -70,12 +90,9 @@ DaoMongo.prototype.post_comment = function(id, text, color, callback) {
 		color:color
 	}
 
-	// TODO : update thread last_comment
-
 	_comments.save(new_comment, _.bind(function(err, comment) {
 		this._transformMongoId(comment);
 		if (err==null) {
-			callback([comment])
 			
 			var _threads = this._mongo.collection('threads');
 			_threads.findById(id, _.bind(function(err, thread){
@@ -84,7 +101,7 @@ DaoMongo.prototype.post_comment = function(id, text, color, callback) {
 
 					thread.last_comment = new Date().getTime();
 					_threads.save(thread, function(err, res){
-						// 
+						callback([comment]);
 					});
 				}
 			},this));

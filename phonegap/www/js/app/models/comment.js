@@ -8,7 +8,7 @@ var CommentModel = Backbone.Model.extend({
 		return conf.server.base_url+'threads/'+this.get('thread_id')+'/post_comment';
 	},
 	subscribeToNewCommentsPush:function(){
-		var thread = new Thread({id:this.get('thread_id')});
+		var thread = new ThreadModel({id:this.get('thread_id')});
 		thread.subscribeToNewCommentsPush();
 	}
 });

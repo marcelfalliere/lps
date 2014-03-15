@@ -16,11 +16,12 @@ var ThreadModel = Backbone.Model.extend({
 		}
 	},
 	subscribeToNewCommentsPush:function(){
+		// TODO : 2 channel : 1 pour le créateur et 1 pour les participants
 		cordova.exec(function(){
 			console.log('success subscribeToNewCommentsPush');
 		}, function(){
 			console.warn('error subscribeToNewCommentsPush');
-		}, 'PushNotification', 'subscribe', ['newcomments_'+this.id]);	
+		}, 'PushNotification', 'subscribe', ['newcomments'+this.id]);	
 	
 	}
 });

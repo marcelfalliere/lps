@@ -10,7 +10,7 @@
 #import "PushNotification.h"
 #import "AFHTTPRequestOperationManager.h"
 
-static NSString* PUSH_BASE_URL = @"http://cp.lapetitefalope.fr/";
+static NSString* PUSH_BASE_URL = @"https://cp.lapetitefalope.fr/";
 
 @implementation PushNotification
 
@@ -26,7 +26,7 @@ static NSString* PUSH_BASE_URL = @"http://cp.lapetitefalope.fr/";
     NSLog(@"devicetoken : %@", dToken);
     if (dToken!=nil){
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        //manager.securityPolicy.allowInvalidCertificates = YES;
+        manager.securityPolicy.allowInvalidCertificates = YES;
         NSDictionary *parameters = @{@"proto": @"apns", @"token":dToken};
         [manager POST:[NSString stringWithFormat:@"%@subscribers",PUSH_BASE_URL] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
@@ -37,7 +37,7 @@ static NSString* PUSH_BASE_URL = @"http://cp.lapetitefalope.fr/";
                 NSLog(@"All went OK : %@", responseObject);
                 
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                NSLog(@"Error subscribing to newfalope event: %@", error);
+                
             }];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

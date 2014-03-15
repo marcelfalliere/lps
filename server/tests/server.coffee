@@ -51,9 +51,8 @@ describe 'Server ', ->
             done()
 
     it 'should be able to post a comment, and send push while doing it', (done) ->
-        
         request.post uri:'http://localhost:8888/threads/2/post_comment', json:true, form:{text:'test', color:'rgb(3,2,1)'}, (err,res,body) ->
-            mockPI.push.should.have.been.calledWith 'newcomments_2', "message lors d'un nouveau commentaire"
+            mockPI.push.should.have.been.calledWith 'newcomments2', "Nouvelle participation à la discussion sur \"second\" ..."
             res.statusCode.should.equal 200
             body.should.be.a 'object'
             body.should.have.property 'id', '2'

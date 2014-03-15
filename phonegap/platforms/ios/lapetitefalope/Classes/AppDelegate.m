@@ -126,6 +126,6 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    NSLog(@"there! %@", userInfo);
+    // todo ?
 }
 @end
