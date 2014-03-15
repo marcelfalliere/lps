@@ -72,7 +72,7 @@ Server.prototype.listen = function(port) {
 				if (thread.length != 1) 
 					res.status(404).send('Not found');
 				else {
-					this._pushInterface.push('newcomments'+thread[0].id, "Un anonyme vient de contribuer à une \"discussion\" sur laquelle vous avez participé !");
+					this._pushInterface.push('newcomments'+thread[0].thread_id, "Un anonyme vient de contribuer à une \"discussion\" sur laquelle vous avez participé !");
 					res.send(thread[0]);
 				}
 			},this))

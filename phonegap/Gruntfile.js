@@ -29,7 +29,14 @@ module.exports = function(grunt) {
                 'www/js/app/regions/*.js',
                 'www/js/app/views/*.js'
             ]
-        }
+        },
+
+        clean: {
+            ios: [
+                'platforms/ios/**/*.psd',
+                'platforms/ios/**/*.less'
+            ],
+        },
     });
 
     grunt.registerTask('prepare', 'Cordova prepare', function(){
@@ -40,9 +47,9 @@ module.exports = function(grunt) {
         });
     }); 
 
-    grunt.registerTask('clean', 'Clean platforms www folder', function(){
+    grunt.registerTask('ios', ['prepare', 'clean:ios'])
 
-    });
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
 
