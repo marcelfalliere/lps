@@ -1,0 +1,45 @@
+Nom de l'app 
+---
+
+  - léger
+  - traduction "off my chest"
+  - "la petite salope" avec l'histoire de Lauren
+
+  winner so far :
+  => la petite falope - parlez sans tabous ni narcissisme
+
+Inspirations
+---
+
+  - Ghérasim Luca
+  - confessionnal 
+  - 4chan
+  - l'app Secret, seulement aux US
+
+
+Description
+---
+
+
+Mais Je ne vais pas vous mentir, ce
+
+
+Keywords
+---
+* http://www.pocketgamer.biz/r/PG.Biz/App+Store/feature.asp?c=52922 *
+
+---------------------------------------------------------------------------------------------------
+secret,confession,léger,of my chest,la petite falope,lpf,falope,4chan,anonyme,photo,salope,ghérasim
+
+Urls
+---
+http://www.lapetitefalope.fr/
+http://www.lapetitefalope.fr/privacy
+http://www.lapetitefalope.fr/support
+
+Assets ios
+---
+
+ - large icon 1024x1024
+ - 3.5 inches screen : 640x960
+ - 4 inches screen : 640x1136

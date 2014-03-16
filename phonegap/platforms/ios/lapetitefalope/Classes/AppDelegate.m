@@ -126,6 +126,10 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    // todo ?
+    NSString* thread_id = (NSString*)[userInfo  valueForKey:@"thread_id"];
+    NSString* title = [userInfo valueForKeyPath:@"aps.alert"];
+    
+    NSString * jsCallBack = [NSString stringWithFormat:@"app.trigger('push', {thread_id:'%@', title:'%@'});", thread_id,   [title stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"] ];
+    [self.viewController.webView stringByEvaluatingJavaScriptFromString:jsCallBack];
 }
 @end

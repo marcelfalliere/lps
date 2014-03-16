@@ -1,12 +1,7 @@
 Nom de l'app 
 ---
 
-  - léger
-  - traduction "off my chest"
-  - "la petite salope" avec l'histoire de Lauren
-
-  winner so far :
-  => la petite falope - parlez sans tabous ni narcissisme
+  la petite falope - parlez sans tabous ni narcissisme
 
 Inspirations
 ---
@@ -16,15 +11,39 @@ Inspirations
   - 4chan
   - l'app Secret, seulement aux US
 
-
 Description
 ---
 
-Mais Je ne vais pas vous mentir, ce
+Un forum qui veut tirer le meilleur du réseau social, en retirant le pire : "l'identité numérique". Tout ces réseaux sociaux où je suis identifié tel arrêté par un policier et "montrez vos papiers". J'ai voulu faire un lieu d'échange et de créativité sans possibilité narcissique (phrase bien alambiqué!) ; le but, s'il y en a un, est de poster quelque chose qui "fait parler". On peut poster une photo ou un fond de couleur, accompagné d'un texte pour lequel on peut choisir sa police de caractère. Toutes les options (et plus à venir!) pour pouvoir faire passer son message (que l'on apelle aussi "carte", dans quelques lettres), quel qu'il soit. Plus il y a de commentaires, plus une carte reste en vie. Sinon, elle se fait dé-piler par les nouvelles cartes, plus ou moins "concurentes" pour être présente sur la page principale. 
 
+On sauvegarde au maximum 20 cartes dans nos datecenters (humhum). Selon une pile fifo, c'est à dire le premier qui rentre est le premier qui sort,... c'est comme une fin de dentifrice infinie, où l'on viendrait injecter de la pâte (ie le nouveau contenu), ce qui ferait sortir le contenu "ancien"... le fait de commenter sur une carte la remet sur le haut de la pile, c'est à dire quelle sera sauvegardée un peu plus longtemps. On a déjà eu des cartes qui ont survécu plusieurs mois (si si je vous jure).
+
+Important ! Lors de la création d'une carte, vous pouvez changer :
+ - la couleur de fond (si vous ne souhaitez pas utiliser de photo)
+ - la police de caractères
+Tapez (doucement) le pictogramme associé et puis sur la carte en elle même effleurez (oui c'est le mot) de haut en bas (ou de bas en haut) pour régler la valeur du mode actuel. Voyez la carte comme une molette pour le réglage actuel. L'axe de la molette est de haut en bas.
+
+Influences:
+  - Ghérasim Luca
+  - un genre de "confessionnal"
+  - 4chan
+  - l'app Secret, seulement aux US
+ 
 
 Keywords
 ---
-* http://www.pocketgamer.biz/r/PG.Biz/App+Store/feature.asp?c=52922 *
+|-------------------------------------------------------------------------------------------------|
+secret,confession,léger,off my chest,la petite falope,lpf,falope,4chan,anonyme,salope,ghérasim luca
 
+Urls
+---
+http://www.lapetitefalope.fr/
+http://www.lapetitefalope.fr/privacy
+http://www.lapetitefalope.fr/support
 
+Assets ios
+---
+
+ - large icon 1024x1024
+ - 3.5 inches screen : 640x960
+ - 4 inches screen : 640x1136

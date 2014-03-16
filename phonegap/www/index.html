@@ -16,6 +16,9 @@
     <body>
 
         <div id="viewport">
+
+            <section id="push"></section>
+
             <section id="header">
                 <div id="scroll-back-to-top-helper"></div>
                 <h1>phonegap</h1>
@@ -92,6 +95,10 @@
                 --></ul>
             </div>
         </script>
+
+        <script type="html/template" id="tpl-push">
+            <%= title %>
+        </script>
         
         <!-- libs -->
         <script type="text/javascript" src="cordova.js"></script>
@@ -122,10 +129,12 @@
             <script src="js/app/views/postThreadVC-modeValueFromPercentageFunctions.js"></script>   
             <script src="js/app/views/postThreadVC-randomFunctions.js"></script>   
         <script src="js/app/views/headerView.js"></script>   
+        <script src="js/app/views/pushView.js"></script>   
 
         <!-- regions -->
         <script src="js/app/regions/headerRegion.js"></script>    
         <script src="js/app/regions/contentRegion.js"></script>   
+        <script src="js/app/regions/pushRegion.js"></script>   
 
         <!-- router and main -->
         <script src="js/app/router.js"></script>  

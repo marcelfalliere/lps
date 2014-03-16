@@ -5,11 +5,17 @@ function PushInterface(request, endPoint){
 	this._endPoint=endPoint;
 }
 
-PushInterface.prototype.push = function(event, msg) {
+PushInterface.prototype.push = function(event, msg, thread_id) {
+	var form = {  msg: msg };
+
+	if (thread_id != undefined) {
+		form['data.thread_id'] = thread_id;
+	}	
+
 	this._request.post({
 		uri:this._endPoint+'event/'+event,
 		json:true,
-		form: { msg: msg }
+		form: form
 	}, _.bind(function(){
 		// what do ?
 	},this));

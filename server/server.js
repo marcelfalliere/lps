@@ -72,7 +72,7 @@ Server.prototype.listen = function(port) {
 				if (thread.length != 1) 
 					res.status(404).send('Not found');
 				else {
-					this._pushInterface.push('newcomments'+thread[0].thread_id, "Un anonyme vient de contribuer à une \"discussion\" sur laquelle vous avez participé !");
+					this._pushInterface.push('newcomments'+thread[0].thread_id, "Un anonyme vient de contribuer à une \"discussion\" sur laquelle vous avez participé !", thread[0].thread_id);
 					res.send(thread[0]);
 				}
 			},this))
@@ -100,7 +100,8 @@ Server.prototype.listen = function(port) {
 			var imageUrl = body_parsed.imageUrl;
 			
 			this._dao.post_thread(title, color, policeName, policeSize, imageUrl, _.bind(function(thread){
-				this._pushInterface.push('newfalope', 'Un nouveau contenu vient d\'être posté...');
+				console.log(thread);
+				this._pushInterface.push('newfalope', 'Un nouveau contenu vient d\'être posté...', thread.id+'');
 				res.send(thread);
 			},this));
 		},this));

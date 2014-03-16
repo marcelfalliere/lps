@@ -18,6 +18,8 @@ function initializeApp(){
 	initializeRegions();
 	initializeCollections();
 	initializeRouterAfterEverythingElse();
+	
+	initializeInAppPush();
 }
 
 function initializeXhr(){
@@ -51,10 +53,26 @@ function initializeGoogleAnalytics(){
 	});
 }
 
+function initializeInAppPush() {
+	app.on('push', function(data){
+		var thread_id = data.thread_id;
+		var title = data.title;
+		app.push.show(
+			new PushView({model:
+				new Backbone.Model({
+					thread_id:thread_id,
+					title:title
+				})
+			})
+		)
+	});
+}
+
 function initializeRegions(){
 	app.addRegions({
 		header:HeaderRegion,
-		content:ContentRegion
+		content:ContentRegion,
+		push:PushRegion
 	});
 }
 

@@ -1,5 +1,7 @@
 @import "scrollbar.css";
+
 @import "reset.css";
+
 @import "fonts.css";
 /* iScroll 5 scrollbar styles */
 /* user agent css reset */
@@ -233,6 +235,19 @@ html[data-ios7] #content .page {
 }
 #content .page .scroll-wrap.velocity-scroll {
   -webkit-transition: -webkit-transform 1s ease;
+}
+#push {
+  position: fixed;
+  top: 0;
+  color: #333333;
+  padding-top: 0px;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 99999999999;
+  right: 0px;
+  left: 0px;
+}
+#push div {
+  margin: 30px;
 }
 .button {
   width: 20px;
