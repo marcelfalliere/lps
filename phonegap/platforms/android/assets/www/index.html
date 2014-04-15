@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 
+        
+        phonestrap did it, so...
+        -->
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />        
+
+        <link rel="stylesheet" href="styles/all.css">
+        
+    </head>
+    <body>
+
+        <div id="viewport">
+
+            <section id="push"></section>
+
+            <section id="header">
+                <div id="scroll-back-to-top-helper"></div>
+                <h1>phonegap</h1>
+                <div class="button back hidden"></div>
+                <div class="button close hidden"></div>
+                <div class="button post-thread"></div>
+                <div class="button text publier">publier</div>
+            </section>
+
+            <section id="content"></section>
+            
+            <h2 id="easter">la  petite salope</h2>
+        </div>
+
+
+        <script type="html/template" id="tpl-home">
+            <div class="scroll-wrap">
+                <div class="scroll-inner">
+                    <div class="pull-to-refresh"></div>
+                    <ol>
+
+                    </ol>
+                </div>
+            </div>
+        </script>
+
+        <script type="html/template" id="tpl-home-item">
+            <h2><%= title %></h2>
+        </script>
+
+
+        <script type="html/template" id="tpl-thread-layout">
+            <div id="thread-title"></div>
+            <div class="scroll-wrap">
+                <div class="scroll-inner">
+                    <div class="item-read-only-placeholder" style="height:<%= $(window).width()+'px' %>"></div>
+                    <div id="thread-comments"></div>
+                    <div class="post-comment-placeholder" style="height:<%= ($(window).height()-$(window).width()-$('#header').innerHeight()-37)+'px' %>"></div>
+                </div>
+            </div>
+            <div id="post-comment"></div>
+        </script>
+        
+
+        <script type="html/template" id="tpl-thread-title-view">
+            <h2><%= title %></h2>
+        </script>
+
+        <script type="html/template" id="tpl-thread-comments-view">
+            <ol></ol>
+        </script>
+        <script type="html/template" id="tpl-thread-comment-item-view">
+            <%= text %>
+            <div class="triangle" style="border-color: <%= color %> transparent transparent transparent;"></div>
+        </script>
+        
+        <script type="html/template" id="tpl-post-comment-view">
+            <div class="input-wrap">
+                <input type='text' />
+            </div>
+            <a class="post">répondre</a>
+        </script>
+
+        <script type="html/template" id="tpl-post-thread-vc">
+            <div id="input-wrap">
+                <p contentEditable></p>
+            </div>
+            <div id="controls-wrap">
+                <div id="control-hint"></div>
+                <ul id="controls"><!--
+                    --><li class="picture"></li><!--
+                    --><li class="bgcolor"></li><!--
+                    --><li class="police"></li><!--
+                --></ul>
+            </div>
+        </script>
+
+        <script type="html/template" id="tpl-push">
+            <%= title %>
+        </script>
+        
+        <!-- libs -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/bower_comps/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bower_comps/underscore/underscore-min.js"></script>
+        <script type="text/javascript" src="js/bower_comps/backbone/backbone.js"></script>
+        <script type="text/javascript" src="js/bower_comps/backbone.marionette/lib/backbone.marionette.min.js"></script>
+        <script type="text/javascript" src="js/bower_comps/jquery-hammerjs/jquery.hammer-full.js"></script>
+        <script type="text/javascript" src="js/bower_comps/iscroll/build/iscroll-probe.js"></script>
+        
+        <!-- conf -->
+        <script src="js/app/conf.js"></script>
+
+        <!-- models, collections -->
+        <script src="js/app/models/thread.js"></script>   
+        <script src="js/app/collections/threads.js"></script>   
+        <script src="js/app/models/comment.js"></script>   
+        <script src="js/app/collections/comments.js"></script>   
+
+        <!-- views -->
+        <script src="js/app/views/utils/itemReadOnlyView.js"></script>   
+        <script src="js/app/views/homeVC.js"></script>   
+        <script src="js/app/views/threadVC.js"></script>   
+            <script src="js/app/views/threadVC-postCommentView.js"></script>   
+            <script src="js/app/views/threadVC-commentsView.js"></script>   
+        <script src="js/app/views/postThreadVC.js"></script>    
+            <script src="js/app/views/postThreadVC-upload.js"></script>   
+            <script src="js/app/views/postThreadVC-modeValueFromPercentageFunctions.js"></script>   
+            <script src="js/app/views/postThreadVC-randomFunctions.js"></script>   
+        <script src="js/app/views/headerView.js"></script>   
+        <script src="js/app/views/pushView.js"></script>   
+
+        <!-- regions -->
+        <script src="js/app/regions/headerRegion.js"></script>    
+        <script src="js/app/regions/contentRegion.js"></script>   
+        <script src="js/app/regions/pushRegion.js"></script>   
+
+        <!-- router and main -->
+        <script src="js/app/router.js"></script>  
+        <script src="js/app/main.js"></script>
+
+    </body>
+</html>

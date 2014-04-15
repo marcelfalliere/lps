@@ -1,0 +1,102 @@
+"use strict";
+
+function main(){
+	window.app = new Backbone.Marionette.Application();
+	initializeApp();
+	app.start();
+}
+
+function initializeApp(){
+	initializeXhr();
+	initializeBackbone();
+	initializeHammer();
+	initializeCacheDatabase();
+	initializeGoogleAnalytics();
+
+	initializePlatformsSquirk();
+
+	initializeRegions();
+	initializeCollections();
+	initializeRouterAfterEverythingElse();
+	
+	initializeInAppPush();
+}
+
+function initializeXhr(){
+	$.ajaxSetup({ cache: false });
+}
+
+function initializeHammer(){
+	$("#viewport").hammer();
+}
+
+function initializeBackbone(){
+	Backbone.emulateHTTP = true;
+}
+
+function initializeCacheDatabase(){
+	app.db = openDatabase('mydb', '1.0', 'my first database', 5 * 1024 * 1024);
+	app.db.transaction(function (tx) {
+	  tx.executeSql('CREATE TABLE IF NOT EXISTS images (sha1 unique, base64)');
+	});
+}
+
+function initializePlatformsSquirk(){
+	if (isIOS7()) {
+		$('html').attr('data-ios7',true);
+	}
+}
+
+function initializeGoogleAnalytics(){
+	$(document).on('deviceready', function(){
+		analytics.startTrackerWithId('UA-48753141-1');
+	});
+}
+
+function initializeInAppPush() {
+	app.on('push', function(data){
+		var thread_id = data.thread_id;
+		var title = data.title;
+		app.push.show(
+			new PushView({model:
+				new Backbone.Model({
+					thread_id:thread_id,
+					title:title
+				})
+			})
+		)
+	});
+}
+
+function initializeRegions(){
+	app.addRegions({
+		header:HeaderRegion,
+		content:ContentRegion,
+		push:PushRegion
+	});
+}
+
+
+function initializeCollections() {
+	app.addInitializer(function(){
+		this.threads = new ThreadsCollection();
+		this.threads.fetch();
+	});
+}
+
+
+function initializeRouterAfterEverythingElse() {
+	app.on("initialize:after", function(options){
+	  location.hash='';
+	  this.router = new MainRouter();
+	  Backbone.history.start({pushState: false});
+	});
+}
+
+document.querySelector("body").onload = main;
+
+/* this js file utils function */
+
+function isIOS7(){
+	return navigator.userAgent.match(/(iPad|iPhone|iPod touch);.*CPU.*OS 7_\d/i)!=null
+}

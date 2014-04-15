@@ -8,6 +8,10 @@ var ContentRegion = Backbone.Marionette.Region.extend({
 	slideInFromRight:function(view) {
 		this.transition(view, 'slide in left', 'slide out easy right');
 	},
+
+	slideInFromBottom:function(view) {
+		this.transition(view, 'slide in bottom', 'slide up easy');
+	},
 	transition:function(view, animIn, animOut) {
 		this.ensureEl();
 

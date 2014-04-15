@@ -8,6 +8,9 @@ var ThreadVCLayout = Backbone.Marionette.Layout.extend({
 		comments:'#thread-comments',
 		postComment:'#post-comment'
 	},
+	events:{
+		'raporttapped':'onReportTapped'
+	},
 	onRender:function(){
 		
 		this.iScrollInstance = new IScroll(this.$el.find('.scroll-wrap')[0], {
@@ -42,5 +45,13 @@ var ThreadVCLayout = Backbone.Marionette.Layout.extend({
 		comments.thread_id = app.thread.get('id');
 		comments.fetch();
 		
+	},
+	onReportTapped:function(){
+		navigator.notification.prompt('Expliquez en quoi cette image est choquante. Par exemple: photo à caractère pornographique, texte très choquant...', function(obj){
+			if (obj.buttonIndex==1) {
+				var text = obj.input1;
+				app.thread.report(text);
+			}
+		}, 'Reportez cette image aux modérateurs', ['Envoyer', 'Annuler'], '');
 	}
 });

@@ -13,7 +13,8 @@
 		"multiparty":"*",
 		"gm":"*",
 		"sinon-chai":"*",
-		"easymongo":"*"
+		"easymongo":"*",
+		"nodemailer":"*"
 	}
 }
 

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        
+        <style type="text/css">
+        	li { margin-bottom:10px; }
+        	button { display:block; }
+        </style>
+    </head>
+    <body>
+
+    	<h1>Threads</h1>
+    	<h2 id="count"></h2>
+    	<div id="threads">
+
+    	</div>
+        
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.marionette/1.6.4-bundled/backbone.marionette.min.js"></script>
+
+        <script type="html/template" id="threadViewTpl">
+        	<%= title %>
+        	<%= id %>
+        	<% if (imageUrl) { %>
+        		<img src="<%= imageUrl %>" />
+        	<% } %>
+        	<button class="delete">Delete</button>
+        	<div class="delete-feedback"></div>
+        	<button class="ban">Ban user for this</button>
+        	<div class="ban-feedback"></div>
+        </script>
+
+        <script type="text/javascript">
+        	var ThreadDelete = Backbone.Model.extend({
+        		url:function(){
+        			return '/threads/'+this.get('id')+'/delete'
+        		}
+        	});
+        	var ThreadBan = Backbone.Model.extend({
+        		url:function(){
+        			return '/threads/'+this.get('id')+'/banuser'
+        		}
+        	});
+
+        	var Threads = Backbone.Collection.extend({
+        		url:'/threads'
+        	});
+        	var ThreadView = Backbone.Marionette.ItemView.extend({
+        		template:'#threadViewTpl',
+        		tagName:'li',
+        		events:{
+        			'click .delete':'deleteThread',
+        			'click .ban':'banUser'
+        		},
+        		deleteThread:function(){
+        			if (confirm('delete this thread for shizel ?')) {
+        				this.$el.find('.delete-feedback').html('deleting...');
+        				var model = new ThreadDelete({
+        					id:this.model.get('id')
+        				});
+        				model.on('error', _.bind(function(err){
+        					console.log(err);
+        					this.$el.find('.delete-feedback').html('error deleting this thread :(');
+        				},this));
+        				model.on('sync', _.bind(function(){
+        					console.log('synced')
+        					this.$el.find('.delete-feedback').html('Thread deleted !');
+        				},this));
+        				model.save();
+        			}
+        		},
+        		banUser:function(){
+        			if (confirm('ban the user who created this post ?')) {
+        				this.$el.find('.ban-feedback').html('banning...');
+        				var model = new ThreadBan({
+        					id:this.model.get('id')
+        				});
+        				model.on('error', _.bind(function(err){
+        					console.log(err);
+        					this.$el.find('.ban-feedback').html('error banning  the user :(');
+        				},this));
+        				model.on('sync', _.bind(function(){
+        					console.log('synced')
+        					this.$el.find('.ban-feedback').html('User banned !');
+        				},this));
+        				model.save();
+        			}
+        		}
+        	})
+        	var ThreadsView = Backbone.Marionette.CollectionView.extend({
+        		itemView: ThreadView,
+        		tagName:'ul',
+        		el:'#threads',
+        		initialize:function(){
+        			this.on('all', function(){
+        				$('#count').html(this.collection.length);
+        			})
+        			this.collection.fetch();
+        		}
+        	})
+        </script>
+        <script type="text/javascript">
+        	$(document).ready(function(){
+        		Backbone.emulateHTTP = true;
+        		$.ajaxSetup({ 
+					cache: false,
+					headers:{
+						'X-PASSCODE':'fifoupresident'
+					}
+				});
+
+
+        		var threads = new Threads();
+        		var view = new ThreadsView({
+        			collection:threads
+        		});
+        		
+        	})
+        </script>
+
+    </body>
+</html>

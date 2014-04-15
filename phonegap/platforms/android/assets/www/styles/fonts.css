@@ -1,0 +1,52 @@
+
+@font-face{
+    font-family : "homizio";
+    src : url('fonts/homizio-light.ttf')  format('truetype'); 
+}
+
+@font-face{
+    font-family : "birds";
+    src : url('fonts/birds.ttf')  format('truetype'); 
+}
+
+@font-face{
+    font-family : "chopin";
+    src : url('fonts/chopin.otf')  format('opentype'); 
+}
+
+@font-face{
+    font-family : "dragon";
+    src : url('fonts/dragon.ttf')  format('truetype'),
+    	url('fonts/dragon.otf')  format('opentype'); 
+}
+
+@font-face{
+    font-family : "wolf";
+    src : url('fonts/wolf.ttf')  format('truetype'),
+    	url('fonts/wolf.otf')  format('opentype'); 
+}
+
+@font-face{
+    font-family : "typewriterforme";
+    src : url('fonts/typewriterforme.ttf')  format('truetype');
+}
+
+
+@font-face{
+    font-family : "bombard";
+    src : url('fonts/bombard.ttf')  format('truetype'),
+    	url('fonts/bombard.otf')  format('opentype'); 
+}
+
+
+@font-face{
+    font-family : "edmunds";
+    src : url('fonts/edmunds.ttf')  format('truetype'),
+    	url('fonts/edmunds.otf')  format('opentype'); 
+}
+
+@font-face{
+    font-family : "dienasty";
+    src : url('fonts/dienasty.ttf')  format('truetype'),
+    	url('fonts/dienasty.otf')  format('opentype'); 
+}

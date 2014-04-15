@@ -33,6 +33,11 @@
 	#thread-title {
 		position:absolute;
 		width:100%;
+
+		div {
+			background-size:contain;
+		}
+
 		h2 {
 			.title-display;
 		}
@@ -200,6 +205,137 @@
 	}	
 }
 
+#content .page.banned-vc {
+	h4 {
+		color:white;
+		text-align: center;
+		margin:2em 0;
+		font-size: 2em;
+	}
+}
+
+#content .page.eula-vc {
+	color:white;
+
+	#banderolle {
+		position:absolute;
+		top:0px;
+		width:3197px;
+		left:-180px;
+		background-image:url('../images/banderolle.png');
+		background-repeat:repeat-x;
+		background-size: contain;
+		
+		height:160px;
+		@media @iphone4 {
+        	height:80px;
+        }
+	}
+
+	.report-icon {
+		background-image:url('../images/icon-report-white.png');
+		width:20px;
+		height:20px;
+		background-size: contain;
+		background-repeat: no-repeat;
+		display:inline-block;
+	}
+
+	.pane-container {
+		-webkit-transform: translate3d(0%,0,0) scale3d(1,1,1);
+		-webkit-backface-visibility: hidden;
+        -webkit-transform-style: preserve-3d;
+        position:relative;
+        height:100%;
+
+		.pane {
+			float:left;
+			display:inline-block;
+	        -webkit-transform-style: preserve-3d;
+	        -webkit-transform: translate3d(0,0,0);
+	        height:100%;
+
+	        padding-top:160px;
+	        @media @iphone4 {
+	        	padding-top:80px;
+	        }
+
+	        .pane-inside {
+		        color:white;
+		        padding:0.8em;
+		        font-size:1.8em;
+		        line-height:1.2em;
+		        text-align:center;
+
+		        em {
+		        	font-family:'birds';
+		        	color:#eee;
+		        	font-size:1.8em;
+		        	display:block;
+		        	margin-bottom:25px;
+		        }
+
+		        i {
+		        	font-size:0.7em;
+		        	text-transform: uppercase;
+		        	margin:20px 0;
+		        	display:block;
+		        }
+
+		        ul {
+		        	font-family:'birds';
+		        	margin-left:20px;
+		        	text-align:left;
+		        	li {
+		        		font-size:0.7em;
+		        		list-style-type:square;
+		        	}
+		        }
+
+		        ol {
+		        	margin-left:20px;
+		        	li {
+		        		font-size:0.6em;
+		        		line-height:1em;
+		        		list-style-type: decimal;
+		        		text-align:left;
+		        	}
+		        }
+
+		        strong {
+		        	font-size:1.3em;
+		        	font-weight:bold;
+		        }
+
+		        .button {
+		        	-webkit-transition: all .3s .8s;
+		        	width:80%;
+		        	height:auto;
+		        	text-indent:0;
+		        	background-color:white;
+		        	box-shadow:inset 1px -4px 5px -6px @headerColor;
+		        	display:inline-block;	
+					margin-top:20px;
+					color:#333;
+
+					&.disabled {
+						color:#aaa;
+						background-color:#eee;
+					}
+		        }
+	        	
+	        }
+
+		}
+
+		&.animate {
+			-webkit-transition: all .3s;
+            -moz-transition: all .3s;
+            -o-transition: all .3s;
+            transition: all .3s;
+		}
+	}
+}
 
 #easter{
 	position:absolute;

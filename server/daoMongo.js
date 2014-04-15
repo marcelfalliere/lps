@@ -42,7 +42,7 @@ DaoMongo.prototype.thread = function(id, callback){
 	},this));
 }
 
-DaoMongo.prototype.post_thread = function(title, color, policeName, policeSize, imageUrl, callback) {
+DaoMongo.prototype.post_thread = function(title, color, policeName, policeSize, imageUrl, duid, callback) {
 	var _threads = this._mongo.collection('threads');
 
 	var insert_new_threads = _.bind(function(){
@@ -53,6 +53,7 @@ DaoMongo.prototype.post_thread = function(title, color, policeName, policeSize, 
 			policeName:policeName,
 			policeSize:policeSize,
 			imageUrl:imageUrl,
+			duid:duid,
 			last_comment:new Date().getTime()
 		}
 
@@ -112,6 +113,50 @@ DaoMongo.prototype.post_comment = function(id, text, color, callback) {
 
 }
 
+DaoMongo.prototype.report_thread = function(thread_id, text, callback) {
+	var _reports = this._mongo.collection('reports');
+
+	var new_report = {
+		thread_id:thread_id,
+		text:text
+	}
+
+	_reports.save(new_report, _.bind(function(err) {
+		callback(err);
+	},this));
+}
+
+DaoMongo.prototype.delete_thread = function(thread_id, callback) {
+	var _threads = this._mongo.collection('threads');
+
+	_threads.remove({_id:thread_id}, function(error, results){
+		callback(results);
+	});
+}
+
+DaoMongo.prototype.ban_user = function(thread_id, callback) {
+	var _threads = this._mongo.collection('threads');
+
+	_threads.findById(thread_id, _.bind(function(error, result){
+		if (error!=null) {
+			callback(false)
+		} else {
+			var _bans = this._mongo.collection('bans');
+			_bans.save({duid:result.duid, creation_date:new Date().getTime()}, function(error, results){
+				callback(error==null);
+			});
+		}
+
+	},this));
+}
+
+DaoMongo.prototype.is_banned = function(duid, callback) {
+	var _bans = this._mongo.collection('bans');
+	_bans.find({duid:duid}, {limit:1}, _.bind(function(error, results){
+		callback(results.length != 0)
+	},this));
+}
+
 DaoMongo.prototype._transformMongoId = function(obj) {
 	if (_.isArray(obj)) {
 		_.each(obj, function(o){
@@ -119,12 +164,16 @@ DaoMongo.prototype._transformMongoId = function(obj) {
 				o.id = o._id;
 				delete o._id;
 			}
+			if (o.duid)
+				delete o.duid;
 		});
 	} else if (_.isObject(obj)) {
 		if (obj._id) {
 			obj.id = obj._id;
 			delete obj._id;
 		}
+		if (obj.duid)
+			delete obj.duid;
 	}
 		
 }

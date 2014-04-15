@@ -1,0 +1,29 @@
+Hello Cathy,
+
+thank you for calling me. I was a bit upset about the 3 weeks delay, but I'm not anymore ! I implemented some new features that I think will fit the AppStore Guidelines regarding user sent content perfectly.
+
+Here's the backlog I implemented. You will be able to test it today, I'll upload it as soon as I finish a little polishing.
+
+- First, there's some OnBoarding screens at first launch. These first time user experience screens contains explanation about the report mechanism, and then it ends with the EULA. It's 3 bullets points 
+    1. one asks the user to not post inappropriate photo (pronography, violence...).
+    2. the second informs the user he will get banned
+
+- The only way to enter the real app is to accept these terms. So the user is warned.
+
+- In the app itself, the report is inside a "card" (or a "message", the detail screen). It looks like a hand. Any user can tap it, explain why he reports it. Then we receive a mail, connect to our moderation zone and act accordingly. When the user reports a post, it is deleted from his phone.
+
+I'd like to point out that the process is pretty fast :
+- a user reports -> a mail is send to my moderation team
+- the moderator can then delete the post 
+freaking fast ;)
+
+For information, my moderation team consists of me, a friend (in the paris time zone) and my brother (in Mountain View, a neighbor of yours :p). So with to Euro zone modo and one Us, we cover our users.
+
+When a user is banned, there's a "You are banned screen". And no way for him to workaround that, except changing phone.
+
+I've attached a poorly made image of our moderation zone and an example email we get from a user report. I could give you access if you'd like to tests some things.
+
+
+Best regards.
+Frédéric.
+

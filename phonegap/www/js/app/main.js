@@ -20,10 +20,19 @@ function initializeApp(){
 	initializeRouterAfterEverythingElse();
 	
 	initializeInAppPush();
+
+	checkIfUserIsBanned();
 }
 
 function initializeXhr(){
-	$.ajaxSetup({ cache: false });
+	$.ajaxSetup(
+		{ 
+			cache: false,
+			beforeSend:function(xhr){
+				xhr.setRequestHeader('X-DUID', device.uuid);
+			}
+		}
+	);
 }
 
 function initializeHammer(){
@@ -87,10 +96,43 @@ function initializeCollections() {
 
 function initializeRouterAfterEverythingElse() {
 	app.on("initialize:after", function(options){
-	  location.hash='';
-	  this.router = new MainRouter();
-	  Backbone.history.start({pushState: false});
+		if (hasNotSeenEula()){
+			location.hash = 'eula';
+		}
+
+		this.router = new MainRouter();
+	 	Backbone.history.start({pushState: false});
 	});
+}
+
+function checkIfUserIsBanned() {
+	var potentialInformation = localStorage.getItem('banned');
+	if (potentialInformation == 'true') {
+		whenIsBanned();
+	} else {
+		$.ajax({
+			url:conf.server.base_url+'banned',
+			success:function(data){
+				if (data.banned === true) {
+					localStorage.setItem('banned', 'true');
+					whenIsBanned();
+				}
+			}
+		})
+	}
+}
+
+function whenIsBanned() {
+	location.hash = 'banned';
+}
+
+function hasNotSeenEula(){
+	var potentialInformation = localStorage.getItem('hasSeenEula');
+	return potentialInformation !== 'true'
+}
+
+function hasAcceptedEula(){
+	localStorage.setItem('hasSeenEula', 'true')
 }
 
 document.querySelector("body").onload = main;

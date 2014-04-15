@@ -1,0 +1,24 @@
+TODO
+---
+- vérifier au post_thread et post_comment si l'user est banni
+
+IN PROGRES
+---
+- 
+
+DONE
+---
+
+
+TESTED
+---
+- sauvegarde du device unique id au post
+- bouton de report dans une falope
+- zone d'admin coté web 
+- url exposé pour savoir si l'user est banni
+- email à bibi quand il y a un report
+- ban d'user
+- eula au premier lancement
+- suppression d'une falope
+- si l'user est banni, sauvegarder en local et afficher une page spécial "vous etes banni"
+

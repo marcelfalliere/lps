@@ -28,6 +28,9 @@ html[data-ios7] #header .button.publier {
 html[data-ios7] #content .page {
   top: 60px;
 }
+html[data-ios7] #content .page.no-header {
+  top: 20px;
+}
 #header {
   height: 40px;
   width: 100%;
@@ -37,12 +40,15 @@ html[data-ios7] #content .page {
   position: fixed;
   z-index: 9999;
   box-shadow: inset 1px -4px 5px -6px #333333;
-  -webkit-transition: background-color linear 0.5s, color linear 0.5s;
+  -webkit-transition: background-color linear 0.5s, color linear 0.5s, -webkit-transform linear 0.8s;
   -webkit-transition-delay: 0.1s;
 }
 #header.transparent {
   color: #3d3d3d;
   background-color: transparent;
+}
+#header.gone-up {
+  -webkit-transform: translateY(-100px);
 }
 #header .button {
   margin: 0px;
@@ -62,6 +68,10 @@ html[data-ios7] #content .page {
 #header .button.post-thread {
   right: 0px;
   background-image: url('../images/icon-post-thread.png');
+}
+#header .button.report {
+  right: 0px;
+  background-image: url('../images/icon-report.png');
 }
 #header .button.publier {
   width: 60px;
@@ -126,6 +136,9 @@ html[data-ios7] #content .page {
   width: 100%;
   z-index: 90;
 }
+#content .page.no-header {
+  top: 0px;
+}
 #content .page.slide .scroll-wrap .pull-to-refresh {
   display: none;
 }
@@ -188,4 +201,5 @@ html[data-ios7] #content .page {
   width: 100%;
   color: white;
   text-shadow: 1px 1px 0px black;
+  background-size: contain;
 }
