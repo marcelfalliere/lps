@@ -7,11 +7,17 @@ var HeaderRegion = Backbone.Marionette.Region.extend({
 	},
 
 	setTransparent:function(shouldIt){
+		this.$el.removeClass('gone-up');
 		if (shouldIt==true) {
 			this.$el.addClass('transparent');
 		} else {
 			this.$el.removeClass('transparent');
 		}
+		return this;
+	},
+
+	goUp:function(){
+		this.$el.addClass('gone-up');
 		return this;
 	},
 
@@ -75,7 +81,8 @@ var HeaderRegion = Backbone.Marionette.Region.extend({
 			back: this.$el.find('.button.back'),
 			postThread: this.$el.find('.button.post-thread'),
 			publier: this.$el.find('.button.publier'),
-			close: this.$el.find('.button.close')
+			close: this.$el.find('.button.close'),
+			report: this.$el.find('.button.report')
 		};
 		this.$title = this.$el.find('h1');
 	}

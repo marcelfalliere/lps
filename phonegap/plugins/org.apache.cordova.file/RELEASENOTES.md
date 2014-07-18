@@ -124,3 +124,52 @@
 * CB-5406: Update iOS native code to use filesystem URLs internally
 * CB-5405: Update JS code to use URLs exclusively
 * CB-4816 Fix file creation outside sandbox for BB10
+
+### 1.0.1 (Feb 28, 2014)
+* CB-6116 Fix error where resolveLocalFileSystemURL would fail
+* CB-6106 Add support for nativeURL attribute on Entry objects
+* CB-6110 iOS: Fix typo in filesystemPathForURL: method
+* Android: Use most specific FS match when resolving file: URIs
+* iOS: Update fileSystemURLforLocalPath: to return the most match url.
+* Allow third-party plugin registration, and the total count of fs type is not limited to just 4.
+* CB-6097 Added missing files for amazon-fireos platform. Added onLoad flag to true.
+* CB-6087 Android, iOS: Load file plugin on startup
+* CB-6013 BlackBerry10: wrap webkit prefixed called in requestAnimationFrame
+* Update plugin writers' documentation
+* CB-6080 Fix file copy when src and dst are on different local file systems
+* CB-6057 Add methods for plugins to convert between URLs and paths
+* CB-6050 Public method for returning a FileEntry from a device file path
+* CB-2432 CB-3185, CB-5975: Fix Android handling of content:// URLs
+* CB-6022 Add upgrade notes to doc
+* CB-5233 Make asset-library urls work properly on iOS
+* CB-6012 Preserve query strings on cdvfile:// URLs where necessary
+* CB-6010 Test properly for presence of URLforFilesystemPath method
+* CB-5959 Entry.getMetadata should return size attribute
+
+### 1.1.0 (Apr 17, 2014)
+* CB-4965: Remove tests from file plugin
+* Android: Allow file:/ URLs
+* CB-6422: [windows8] use cordova/exec/proxy
+* CB-6249: [android] Opportunistically resolve content urls to file
+* CB-6394: [ios, android] Add extra filesystem roots
+* CB-6394: [ios, android] Fix file resolution for the device root case
+* CB-6394: [ios] Return ENCODING_ERR when fs name is not valid
+* CB-6393: Change behaviour of toURL and toNativeURL
+* ios: Style: plugin initialization
+* ios: Fix handling of file URLs with encoded spaces
+* Always use Android's recommended temp file location for temporary file system
+* CB-6352: Allow FileSystem objects to be serialized to JSON
+* CB-5959: size is explicitly 0 if not set, file.spec.46&47 are testing the type of size
+* CB-6242: [BlackBerry10] Add deprecated version of resolveLocalFileSystemURI
+* CB-6242: [BlackBerry10] add file:/// prefix for toURI / toURL
+* CB-6242: [BlackBerry10] Polyfill window.requestAnimationFrame for OS < 10.2
+* CB-6242: [BlackBerry10] Override window.resolveLocalFileSystemURL
+* CB-6212: [iOS] fix warnings compiled under arm64 64-bit
+* ios: Don't cache responses from CDVFile's URLProtocol
+* CB-6199: [iOS] Fix toNativeURL() not escaping characters properly
+* CB-6148: Fix cross-filesystem copy and move
+* fixed setMetadata() to use the formatted fullPath
+* corrected typo which leads to a "comma expression"
+* CB-4952: ios: Resolve symlinks in file:// URLs
+* Add docs about the extraFileSystems <preference>
+* CB-6460: Update license headers

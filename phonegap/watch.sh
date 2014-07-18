@@ -1,1 +1,0 @@
-fswatch www/ "cordova prepare ios; clear; echo Done; afplay /System/Library/Sounds/Hero.aiff "

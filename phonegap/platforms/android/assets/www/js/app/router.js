@@ -4,16 +4,19 @@ var MainRouter = Backbone.Router.extend({
 	routes:{
 		'':'home',
 		'thread/:thread_id':'thread',
-		'post_thread':'postThread'
+		'post_thread':'postThread',
+		'banned':'banned',
+		'eula':'eula'
 	},
 	home:function(){
 		app.header.setMainTitle()
 			.hideButton('back')
 			.showButton('postThread')
 			.hideButton('publier')
+			.hideButton('report')
 			.hideButton('close')
 			.setTransparent(false);
-
+// anim sympa après les ftue ?
 		app.content.slideInFromRight(new HomeVC({
 			collection:app.threads
 		}));
@@ -25,6 +28,7 @@ var MainRouter = Backbone.Router.extend({
 			.showButton('back')
 			.hideButton('postThread')
 			.hideButton('publier')
+			.showButton('report')
 			.hideButton('close')
 			.setTransparent(false);
 
@@ -39,6 +43,7 @@ var MainRouter = Backbone.Router.extend({
 			.hideButton('back')
 			.hideButton('postThread')
 			.showButton('publier')
+			.hideButton('report')
 			.showButton('close')
 			.setTransparent(true)
 			.buttons.publier.removeClass('loading');
@@ -48,6 +53,29 @@ var MainRouter = Backbone.Router.extend({
 		}));
 
 		if (analytics!==undefined) analytics.trackView('PostThread');
+	},
+	banned:function(){
+		app.header.setMainTitle()
+			.hideButton('back')
+			.hideButton('postThread')
+			.hideButton('publier')
+			.hideButton('report')
+			.hideButton('close')
+			.setTransparent(false)
+			.buttons.publier.removeClass('loading');
+
+		app.content.slideIn(new BannedVC());
+
+		if (analytics!==undefined) analytics.trackView('Banned');
+	},
+	eula:function(){
+		app.header.setMainTitle()
+			.goUp()
+			.buttons.publier.removeClass('loading');
+
+		app.content.slideIn(new EulaVC());
+
+		if (analytics!==undefined) analytics.trackView('Eula');
 	}
 });
 

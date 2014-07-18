@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -41,7 +42,6 @@
 		86A1796718C1EC0D00BAB19C /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 86A1795E18C1EC0D00BAB19C /* AFURLSessionManager.m */; };
 		86A1796A18C1EE8700BAB19C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86A1796918C1EE8700BAB19C /* Security.framework */; };
 		86A1796C18C1EE9100BAB19C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86A1796B18C1EE9100BAB19C /* SystemConfiguration.framework */; };
-		86A27E1018BC84A7009F27F1 /* notpenny.png in Resources */ = {isa = PBXBuildFile; fileRef = 86A27E0F18BC84A7009F27F1 /* notpenny.png */; };
 		86A27E1518BC884B009F27F1 /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 86A27E1418BC884B009F27F1 /* CDVDevice.m */; };
 		86A27E1C18BC885D009F27F1 /* CDVAssetLibraryFilesystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 86A27E1718BC885D009F27F1 /* CDVAssetLibraryFilesystem.m */; };
 		86A27E1D18BC885D009F27F1 /* CDVFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 86A27E1918BC885D009F27F1 /* CDVFile.m */; };
@@ -52,7 +52,6 @@
 		86ABF88018CAE93A00940FDB /* PushNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 86ABF87F18CAE93A00940FDB /* PushNotification.m */; };
 		86ABF8DA18CCED7900940FDB /* UniversalAnalyticsPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 86ABF8D918CCED7900940FDB /* UniversalAnalyticsPlugin.m */; };
 		86ABF8E318CCEE4C00940FDB /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86ABF8E218CCEE4C00940FDB /* libGoogleAnalyticsServices.a */; };
-		86BCEC1418B7E8EF00C8AF3E /* ohlavache.png in Resources */ = {isa = PBXBuildFile; fileRef = 86BCEC1318B7E8EF00C8AF3E /* ohlavache.png */; };
 		86DF1AF118BD901500B3A212 /* icon-close.png in Resources */ = {isa = PBXBuildFile; fileRef = 86DF1AF018BD901500B3A212 /* icon-close.png */; };
 		B9543616CE034F2E91872674 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93DF4BE4BD34420AA591E7D5 /* AdSupport.framework */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
@@ -130,7 +129,6 @@
 		86A1795E18C1EC0D00BAB19C /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		86A1796918C1EE8700BAB19C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		86A1796B18C1EE9100BAB19C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		86A27E0F18BC84A7009F27F1 /* notpenny.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = notpenny.png; path = ../../../../../../../Pictures/notpenny.png; sourceTree = "<group>"; };
 		86A27E1318BC884B009F27F1 /* CDVDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVDevice.h; path = ../../../../plugins/org.apache.cordova.device/src/ios/CDVDevice.h; sourceTree = "<group>"; };
 		86A27E1418BC884B009F27F1 /* CDVDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVDevice.m; path = ../../../../plugins/org.apache.cordova.device/src/ios/CDVDevice.m; sourceTree = "<group>"; };
 		86A27E1618BC885D009F27F1 /* CDVAssetLibraryFilesystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVAssetLibraryFilesystem.h; path = ../../../../plugins/org.apache.cordova.file/src/ios/CDVAssetLibraryFilesystem.h; sourceTree = "<group>"; };
@@ -155,7 +153,6 @@
 		86ABF8E018CCEE4600940FDB /* GAITrackedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
 		86ABF8E118CCEE4600940FDB /* GAITracker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
 		86ABF8E218CCEE4C00940FDB /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
-		86BCEC1318B7E8EF00C8AF3E /* ohlavache.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ohlavache.png; path = ../../../../../../../Pictures/ohlavache.png; sourceTree = "<group>"; };
 		86DF1AF018BD901500B3A212 /* icon-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-close.png"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* lapetitefalope-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "lapetitefalope-Info.plist"; path = "../lapetitefalope-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		93DF4BE4BD34420AA591E7D5 /* AdSupport.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -259,8 +256,6 @@
 			children = (
 				86DF1AF018BD901500B3A212 /* icon-close.png */,
 				86A27E2B18BCED40009F27F1 /* CDVNotification.bundle */,
-				86A27E0F18BC84A7009F27F1 /* notpenny.png */,
-				86BCEC1318B7E8EF00C8AF3E /* ohlavache.png */,
 				867E4C2818B796FA00791714 /* icon-camera.png */,
 				30A0434214DC770100060A13 /* de.lproj */,
 				30A0434514DC770100060A13 /* se.lproj */,
@@ -490,8 +485,6 @@
 				308D05371370CCF300D202BF /* icon-72.png in Resources */,
 				308D05381370CCF300D202BF /* icon.png in Resources */,
 				308D05391370CCF300D202BF /* icon@2x.png in Resources */,
-				86A27E1018BC84A7009F27F1 /* notpenny.png in Resources */,
-				86BCEC1418B7E8EF00C8AF3E /* ohlavache.png in Resources */,
 				1F766FE113BBADB100FB74C0 /* Localizable.strings in Resources */,
 				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
 				30A0434814DC770100060A13 /* Localizable.strings in Resources */,

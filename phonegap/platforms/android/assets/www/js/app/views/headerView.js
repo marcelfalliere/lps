@@ -7,6 +7,7 @@ var HeaderView = Backbone.Marionette.ItemView.extend({
 		'tap .button.close': 'onBackTapped',
 		'tap .button.post-thread': 'onPostThreadTapped',
 		'tap .button.publier':'onPublierTapped',
+		'tap .button.report':'onReportTapped',
 
 		'newcolor':'updateButtonColor',
 		'newimage':'updateImageBackground',
@@ -22,6 +23,9 @@ var HeaderView = Backbone.Marionette.ItemView.extend({
 	},
 	onPublierTapped:function(){
 		app.content.currentView.$el.trigger('publiertapped')
+	},
+	onReportTapped:function(){
+		app.content.currentView.$el.trigger('raporttapped');
 	},
 
 	updateButtonColor:function(e, color){

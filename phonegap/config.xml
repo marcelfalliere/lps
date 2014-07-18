@@ -12,6 +12,7 @@
     
     <preference name="HideKeyboardFormAccessoryBar" value="true" />
     <preference name="KeyboardShrinksView" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
 
     <feature name="CanvasCamera">
         <param name="ios-package" value="CanvasCamera" />

@@ -23,5 +23,13 @@ var ThreadModel = Backbone.Model.extend({
 			console.warn('error subscribeToNewCommentsPush');
 		}, 'PushNotification', 'subscribe', ['newcomments'+this.id]);	
 	
+	},
+	report:function(text){
+		var report = new ReportModel({
+			thread_id:this.get('id'),
+			text:text
+		});
+		report.save();
+		app.threads.report(this.get('id'));
 	}
 });

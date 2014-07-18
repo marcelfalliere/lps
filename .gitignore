@@ -5,3 +5,5 @@ phonegap/node_modules/
 phonegap/platforms/ios/build
 phonegap/platforms/ios/DerivedData
 phonegap/platforms/ios/www
+
+uploaded_pictures/**

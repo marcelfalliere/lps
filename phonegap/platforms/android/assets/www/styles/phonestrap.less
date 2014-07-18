@@ -1,5 +1,6 @@
 @normal: 0.5s;
 @quick: 0.3s;
+@slow: 0.8s;
 @headerBgColor: #ffffff;
 @headerShadowColor: #ffffff;
 @headerColor: #333;
@@ -8,6 +9,7 @@
 @headerPaddingTop: 0px;
 @mainFont : homizio, 'Helvetica Neue', 'Helvetica', Arial;
 
+@iphone4:  ~"screen and (max-height: 480px)";
 
 html, body, #viewport { 
 	background-color:@contentBgColor;
@@ -40,6 +42,10 @@ html[data-ios7] {
 	#content {
 		.page {
 			top:@headerHeight+20;
+
+			&.no-header {
+				top:20px;
+			}
 		}
 	}
 }
@@ -55,11 +61,14 @@ html[data-ios7] {
 	z-index:9999;
 	box-shadow:inset 1px -4px 5px -6px @headerColor;
 
-	-webkit-transition:background-color linear @normal, color linear @normal;
+	-webkit-transition:background-color linear @normal, color linear @normal, -webkit-transform linear @slow;
 	-webkit-transition-delay:0.1s;
 	&.transparent {
 		color:lighten(@contentBgColor, 4%);;
 		background-color:transparent;
+	}
+	&.gone-up {
+		-webkit-transform:translateY(-100px);
 	}
 
 	.button {
@@ -83,6 +92,11 @@ html[data-ios7] {
 		&.post-thread {
 			right:0px;
 			background-image:url('../images/icon-post-thread.png');
+		}
+
+		&.report {
+			right:0px;
+			background-image:url('../images/icon-report.png');
 		}
 
 		&.publier {
@@ -158,6 +172,10 @@ html[data-ios7] {
 		bottom: 0px;
 		width: 100%;
 		z-index:90;
+
+		&.no-header {
+			top:0px;
+		}
 
 		&.slide .scroll-wrap .pull-to-refresh {
 			display:none;
@@ -236,4 +254,5 @@ html[data-ios7] {
 	width:100%;
 	color: white;
 	text-shadow: 1px 1px 0px black;
+	background-size: contain;
 }

@@ -86,7 +86,7 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 	                this.$p2r.text('une erreur est survenue :(')
 	                this.isFetching=false;
 	            },this)
-	        ,remove: false});
+	        ,remove: true});
 			
 		},this),100);
 	}
