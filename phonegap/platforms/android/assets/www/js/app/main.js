@@ -141,5 +141,5 @@ document.querySelector("body").onload = main;
 /* this js file utils function */
 
 function isIOS7(){
-	return navigator.userAgent.match(/(iPad|iPhone|iPod touch);.*CPU.*OS 7_\d/i)!=null
+	return navigator.userAgent.match(/(iPad|iPhone|iPod touch);.*CPU.*OS 7_\d/i)!=null || navigator.userAgent.match(/(iPad|iPhone|iPod touch);.*CPU.*OS 8_\d/i)!=null
 }

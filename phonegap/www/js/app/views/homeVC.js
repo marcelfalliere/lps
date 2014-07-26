@@ -25,6 +25,12 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 	className:'page home-vc',
 	itemViewContainer:'ol',
 	itemView:HomeItemView,
+	events:{
+		'scrollBackToTop':'scrollBackToTop'
+	},
+	scrollBackToTop:function(){
+		this.iScrollInstance.scrollTo(0,0, 300)
+	},
 	onRender:function(){
 		console.log("list height:",this.$el.find('.scroll-wrap ol').innerHeight());
 

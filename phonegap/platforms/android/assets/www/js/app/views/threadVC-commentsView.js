@@ -17,7 +17,7 @@ var ThreadCommentsView = Backbone.Marionette.CollectionView.extend({
 	},
 	renderError:function(){
 		navigator.notification.alert(
-			    "Cette falope n'existe plus, et tant mieux !",  
+			    "Cette page n'existe plus, et tant mieux !",  
 			    function(){},         
 			    '~ ~ ~',            
 			    'C\'est la vie'                  

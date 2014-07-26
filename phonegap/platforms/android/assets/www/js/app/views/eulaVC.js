@@ -3,9 +3,14 @@
 var EulaVC = Backbone.Marionette.ItemView.extend({
 	template:'#tpl-eula-vc',
 	className:'page no-header eula-vc',
+	touching:false,
 	events:{
 		'dragright':'drag',
 		'dragleft':'drag',
+
+		'touchstart':'touchstart',
+		'touchend':'touchend',
+
 		'swipeleft':'swipeleft',
 		'swiperight':'swiperight',
 		'release':'release',
@@ -32,6 +37,7 @@ var EulaVC = Backbone.Marionette.ItemView.extend({
 		this.container = $paneContainer;
 	},
 	drag:function(ev) {
+		console.log('drag');
 
 	    var pane_offset = -(100/this.pane_count)*this.current_pane;
 	    var drag_offset = ((100/this.pane_width)*ev.gesture.deltaX) / this.pane_count;
@@ -43,17 +49,28 @@ var EulaVC = Backbone.Marionette.ItemView.extend({
 
 	    this._setContainerOffset(drag_offset + pane_offset);
 	},
+	touchend:function(ev) {
+		console.log('touchend');
+		this.touching = false;
+		this.release();
+	},
+	touchstart:function(ev) {
+		console.log('touchstart');
+		this.touching = true;
+	},
 	release:function(ev) {
 		console.log('release');
-        if(Math.abs(ev.gesture.deltaX) > this.pane_width/2) {
-            if(ev.gesture.direction == 'right') {
-                this._prev();
-            } else {
-                this._next();
-            }
-        }
-        else {
-            this._showPane(this.current_pane, true);
+		if (this.touching == false) {
+	        if(Math.abs(ev.gesture.deltaX) > this.pane_width/2) {
+	            if(ev.gesture.direction == 'right') {
+	                this._prev();
+	            } else {
+	                this._next();
+	            }
+	        }
+	        else {
+	            this._showPane(this.current_pane, true);
+	        }
         }
 	},
 	swipeleft:function(ev) {
@@ -64,6 +81,7 @@ var EulaVC = Backbone.Marionette.ItemView.extend({
 		this._prev();
 		ev.gesture.stopDetect();
 	},
+
 
 	_next:function(){
 		this._showPane(this.current_pane+1, true);

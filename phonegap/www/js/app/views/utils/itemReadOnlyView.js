@@ -31,7 +31,13 @@ var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
 			// de base, chargement de l'image thumb
 			this.$el.css('background-image', 'url("'+this.model.get('imageUrl')+'/thumb'+'")')
 			
+			var newImg = new Image();
 			var imageUrl = this.model.get('imageUrl');
+			newImg.onload = _.bind(function() {
+				this.$el.css('background-image', 'url("'+imageUrl+'")')    
+			},this)
+			newImg.src = imageUrl;
+
 			var imageThumbUrl = this.model.get('imageUrl')+'/thumb';
 			var sha1 = SHA1(imageUrl);
 			

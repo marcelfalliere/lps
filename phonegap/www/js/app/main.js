@@ -18,7 +18,8 @@ function initializeApp(){
 	initializeRegions();
 	initializeCollections();
 	initializeRouterAfterEverythingElse();
-	
+	initializeScrollBackToTopHelper();
+
 	initializeInAppPush();
 
 	checkIfUserIsBanned();
@@ -103,6 +104,8 @@ function initializeRouterAfterEverythingElse() {
 
 		this.router = new MainRouter();
 	 	Backbone.history.start({pushState: false});
+
+	 	navigator.splashscreen.hide();
 	});
 }
 
@@ -134,6 +137,14 @@ function hasNotSeenEula(){
 
 function hasAcceptedEula(){
 	localStorage.setItem('hasSeenEula', 'true')
+}
+
+function initializeScrollBackToTopHelper(){
+	$('#scroll-back-to-top-helper').on('click', function(){
+		$('#content .page').trigger('scrollBackToTop')
+	})
+	
+	
 }
 
 document.querySelector("body").onload = main;

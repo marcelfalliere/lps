@@ -13,6 +13,7 @@
     <preference name="HideKeyboardFormAccessoryBar" value="true" />
     <preference name="KeyboardShrinksView" value="false" />
     <preference name="DisallowOverscroll" value="true" />
+    <preference name="AutoHideSplashScreen" value="false" />
 
     <feature name="CanvasCamera">
         <param name="ios-package" value="CanvasCamera" />
@@ -20,4 +21,6 @@
     <feature name="PushNotification">
         <param name="ios-package" value="PushNotification" />
     </feature>
+
+
 </widget>
