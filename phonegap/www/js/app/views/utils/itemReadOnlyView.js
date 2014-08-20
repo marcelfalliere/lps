@@ -29,15 +29,36 @@ var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
 			this.$el.css('background-color', 'transparent');
 
 			// de base, chargement de l'image thumb
-			this.$el.css('background-image', 'url("'+this.model.get('imageUrl')+'/thumb'+'")')
-			
-			var newImg = new Image();
 			var imageUrl = this.model.get('imageUrl');
-			newImg.onload = _.bind(function() {
-				this.$el.css('background-image', 'url("'+imageUrl+'")')    
-			},this)
-			newImg.src = imageUrl;
+			var imageThumbUrl = this.model.get('imageUrl')+'/thumb';
 
+			// si l'image est présente dans le div #cache-images, alors mettre directement la normale
+			if ($('#cache-images').find('img[src="'+imageUrl+'"]').length > 0) {
+				console.log('reusing '+this.model.get('title'));
+
+				this.$el.find('.normal-image').css('background-image', 'url("'+imageUrl+'")')
+			} else {
+				// sinon, charger et cacher
+				console.log('caching '+this.model.get('title'));
+
+				var cacheImages = document.getElementById('cache-images');
+				var thumbImage = new Image();
+				thumbImage.onload = _.bind(function() {
+					this.$el.css('background-image', 'url("'+thumbImage.src+'")')
+					
+					var normalImage = new Image();
+					normalImage.onload = _.bind(function() {
+						this.$el.find('.normal-image').css('background-image', 'url("'+normalImage.src+'")')
+					},this)
+					normalImage.src = imageUrl;
+					cacheImages.appendChild(normalImage);	
+				},this)
+				thumbImage.src = imageThumbUrl;
+				cacheImages.appendChild(thumbImage);
+			}
+
+
+/*
 			var imageThumbUrl = this.model.get('imageUrl')+'/thumb';
 			var sha1 = SHA1(imageUrl);
 			
@@ -62,7 +83,7 @@ var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
 
 				  }
 				},this));
-			},this));
+			},this));*/
 			
 		}
 	}

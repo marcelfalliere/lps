@@ -4,11 +4,11 @@ var EulaVC = Backbone.Marionette.ItemView.extend({
 	template:'#tpl-eula-vc',
 	className:'page no-header eula-vc',
 	events:{
-		'dragright':'drag',
+		/*'dragright':'drag',
 		'dragleft':'drag',
 		'swipeleft':'swipeleft',
 		'swiperight':'swiperight',
-		'release':'release',
+		'release':'release',*/
 		'tap .eula .button:not(.disabled)':'acceptEula'
 	},
 	acceptEula:function(){
@@ -16,6 +16,8 @@ var EulaVC = Backbone.Marionette.ItemView.extend({
 		location.hash='';
 	},
 	onRender:function(){
+
+		/*
 		var $paneContainer = this.$el.find('.pane-container');
 		var $panes = this.$el.find('.pane');
 		var windowW = $(window).width();
@@ -29,8 +31,11 @@ var EulaVC = Backbone.Marionette.ItemView.extend({
 		this.pane_count = $panes.length;
 		this.pane_width = windowW;
 		this.current_pane = 0;
-		this.container = $paneContainer;
+		this.container = $paneContainer;*/
+
+		
 	},
+	/*
 	drag:function(ev) {
 
 	    var pane_offset = -(100/this.pane_count)*this.current_pane;
@@ -97,5 +102,5 @@ var EulaVC = Backbone.Marionette.ItemView.extend({
         } else {
         	this.container.children('.pane.eula').find('.button').addClass('disabled');
         }
-    }
+    }*/
 });

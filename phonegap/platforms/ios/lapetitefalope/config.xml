@@ -12,8 +12,7 @@
     <preference name="GapBetweenPages" value="0" />
     <preference name="PageLength" value="0" />
     <preference name="PaginationBreakingMode" value="page" />
-    <preference namThread 1, Queue : com.apple.main-thread
-e="PaginationMode" value="unpaginated" />
+    <preference name="PaginationMode" value="unpaginated" />
     <feature name="LocalStorage">
         <param name="ios-package" value="CDVLocalStorage" />
     </feature>
@@ -22,7 +21,7 @@ e="PaginationMode" value="unpaginated" />
     </feature>
     <feature name="File">
         <param name="ios-package" value="CDVFile" />
-    </feature>  
+    </feature>
     <feature name="FileTransfer">
         <param name="ios-package" value="CDVFileTransfer" />
     </feature>

@@ -138,7 +138,8 @@ Server.prototype.listen = function(port) {
 		var stat = fs.statSync(this._savePath+req.params.image+'.png');
 		res.writeHead(200, {
 		  'Content-Type' : 'image/png',
-		  'Content-Length': stat.size
+		  'Content-Length': stat.size,
+		  'Cache-Control': 'public, max-age=3600'
 		});
 		fs.createReadStream(this._savePath+req.params.image+'.png').pipe(res);
 	},this));
@@ -157,7 +158,8 @@ Server.prototype.listen = function(port) {
 						var stat = fs.statSync(imageThumbPath);
 						res.writeHead(200, {
 						  'Content-Type' : 'image/png',
-						  'Content-Length': stat.size
+						  'Content-Length': stat.size,
+						  'Cache-Control': 'public, max-age=3600'
 						});
 						fs.createReadStream(imageThumbPath).pipe(res);
 					} else {
@@ -169,7 +171,8 @@ Server.prototype.listen = function(port) {
 				var stat = fs.statSync(imageThumbPath);
 				res.writeHead(200, {
 				  'Content-Type' : 'image/png',
-				  'Content-Length': stat.size
+				  'Content-Length': stat.size,
+				  'Cache-Control': 'public, max-age=3600'
 				});
 				fs.createReadStream(imageThumbPath).pipe(res);
 			}

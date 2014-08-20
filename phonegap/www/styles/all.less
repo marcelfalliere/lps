@@ -16,10 +16,13 @@
 
 			-webkit-animation:all @normal ease-in-out;
 
-
+			/*
 			h2 {
 				.title-display;
-			}
+			}*/
+
+			.item-display;
+
 		}
 	}	
 }
@@ -38,9 +41,12 @@
 			background-size:contain;
 		}
 
+		/*
 		h2 {
 			.title-display;
-		}
+		}*/
+
+		.item-display;
 	}
 
 	.post-comment-placeholder {
@@ -134,7 +140,12 @@
 		position:relative;
 
 		[contentEditable] {
-			.title-display;
+			/*
+			h2 {
+				.title-display;
+			}*/
+
+			.item-display;
 			
 			background-color:transparent;
 			border:none;
@@ -353,4 +364,13 @@
 	font-size:30px;
 	color:lighten(@contentBgColor, 4%);
 	z-index:0;
+}
+
+#cache-images {
+	position: absolute;
+	left: -999999px;
+	top:  -999999px;
+	img {
+		display:block;
+	}
 }

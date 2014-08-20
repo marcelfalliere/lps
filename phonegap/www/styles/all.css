@@ -278,7 +278,10 @@ html[data-ios7] #content .page.no-header {
   border: 1px solid green;
   padding: 5px 1px;
 }
-.title-display {
+.item-display .normal-image {
+  background-size: contain;
+}
+.item-display .normal-image h2 {
   vertical-align: middle;
   display: inline-block;
   line-height: 1.2;
@@ -297,8 +300,16 @@ html[data-ios7] #content .page.no-header {
   position: relative;
   background-size: contain;
   -webkit-animation: all 0.5s ease-in-out;
+  /*
+			h2 {
+				.title-display;
+			}*/
+
 }
-#content .page.home-vc ol li h2 {
+#content .page.home-vc ol li .normal-image {
+  background-size: contain;
+}
+#content .page.home-vc ol li .normal-image h2 {
   vertical-align: middle;
   display: inline-block;
   line-height: 1.2;
@@ -314,11 +325,19 @@ html[data-ios7] #content .page.no-header {
 #content .page.thread-vc #thread-title {
   position: absolute;
   width: 100%;
+  /*
+		h2 {
+			.title-display;
+		}*/
+
 }
 #content .page.thread-vc #thread-title div {
   background-size: contain;
 }
-#content .page.thread-vc #thread-title h2 {
+#content .page.thread-vc #thread-title .normal-image {
+  background-size: contain;
+}
+#content .page.thread-vc #thread-title .normal-image h2 {
   vertical-align: middle;
   display: inline-block;
   line-height: 1.2;
@@ -395,14 +414,11 @@ html[data-ios7] #content .page.no-header {
   background-size: contain;
 }
 #content .page.post-thread-vc #input-wrap [contentEditable] {
-  vertical-align: middle;
-  display: inline-block;
-  line-height: 1.2;
-  text-align: center;
-  width: 100%;
-  color: white;
-  text-shadow: 1px 1px 0px black;
-  background-size: contain;
+  /*
+			h2 {
+				.title-display;
+			}*/
+
   background-color: transparent;
   border: none;
   box-shadow: none;
@@ -411,6 +427,19 @@ html[data-ios7] #content .page.no-header {
   -webkit-touch-callout: initial;
   -webkit-text-size-adjust: initial;
   -webkit-user-select: initial;
+}
+#content .page.post-thread-vc #input-wrap [contentEditable] .normal-image {
+  background-size: contain;
+}
+#content .page.post-thread-vc #input-wrap [contentEditable] .normal-image h2 {
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 1.2;
+  text-align: center;
+  width: 100%;
+  color: white;
+  text-shadow: 1px 1px 0px black;
+  background-size: contain;
 }
 #content .page.post-thread-vc #input-wrap .upload-overlay {
   position: absolute;
@@ -598,4 +627,12 @@ html[data-ios7] #content .page.no-header {
   font-size: 30px;
   color: #3d3d3d;
   z-index: 0;
+}
+#cache-images {
+  position: absolute;
+  left: -999999px;
+  top: -999999px;
+}
+#cache-images img {
+  display: block;
 }

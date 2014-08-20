@@ -10,7 +10,6 @@ function initializeApp(){
 	initializeXhr();
 	initializeBackbone();
 	initializeHammer();
-	initializeCacheDatabase();
 	initializeGoogleAnalytics();
 
 	initializePlatformsSquirk();
@@ -42,13 +41,6 @@ function initializeHammer(){
 
 function initializeBackbone(){
 	Backbone.emulateHTTP = true;
-}
-
-function initializeCacheDatabase(){
-	app.db = openDatabase('mydb', '1.0', 'my first database', 5 * 1024 * 1024);
-	app.db.transaction(function (tx) {
-	  tx.executeSql('CREATE TABLE IF NOT EXISTS images (sha1 unique, base64)');
-	});
 }
 
 function initializePlatformsSquirk(){
@@ -104,8 +96,6 @@ function initializeRouterAfterEverythingElse() {
 
 		this.router = new MainRouter();
 	 	Backbone.history.start({pushState: false});
-
-	 	navigator.splashscreen.hide();
 	});
 }
 

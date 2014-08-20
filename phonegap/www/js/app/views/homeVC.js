@@ -32,7 +32,6 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 		this.iScrollInstance.scrollTo(0,0, 300)
 	},
 	onRender:function(){
-		console.log("list height:",this.$el.find('.scroll-wrap ol').innerHeight());
 
 		this.iScrollInstance = new IScroll(this.$el.find('.scroll-wrap')[0], {
 		    fadeScrollbars:true,
