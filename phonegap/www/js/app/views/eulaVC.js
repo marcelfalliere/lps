@@ -17,6 +17,10 @@ var EulaVC = Backbone.Marionette.ItemView.extend({
 	},
 	onRender:function(){
 
+		setTimeout(_.bind(function(){
+			
+		}, this));
+
 		/*
 		var $paneContainer = this.$el.find('.pane-container');
 		var $panes = this.$el.find('.pane');
@@ -33,7 +37,7 @@ var EulaVC = Backbone.Marionette.ItemView.extend({
 		this.current_pane = 0;
 		this.container = $paneContainer;*/
 
-		
+
 	},
 	/*
 	drag:function(ev) {

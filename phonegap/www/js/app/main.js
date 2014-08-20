@@ -90,9 +90,9 @@ function initializeCollections() {
 
 function initializeRouterAfterEverythingElse() {
 	app.on("initialize:after", function(options){
-		if (hasNotSeenEula()){
+		//if (hasNotSeenEula()){
 			location.hash = 'eula';
-		}
+		//}
 
 		this.router = new MainRouter();
 	 	Backbone.history.start({pushState: false});

@@ -504,6 +504,7 @@ html[data-ios7] #content .page.no-header {
 }
 #content .page.eula-vc {
   color: white;
+  opacity: 0;
 }
 #content .page.eula-vc #banderolle {
   position: absolute;
