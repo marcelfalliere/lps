@@ -52,6 +52,7 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 		this.$input.text(getRandomPlaceholder());
 		this.onKeyupSaveUserInputAndUpdateTitle();
 		
+		this.startCapture();
 	},
 	focus:function(){
 		this.$input.focus();
@@ -161,7 +162,7 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 			    		this.model.set('imagePath', '');
 			    	}
 			    },this),         
-			    '',            
+			    'Confirmez-vous ?',            
 			    ['Oui', 'Non']);   
 		} else {
 			this.model.set('mode', 'bgcolor');

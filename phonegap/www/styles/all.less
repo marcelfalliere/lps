@@ -1,8 +1,8 @@
 @import "scrollbar.css";	/* iScroll 5 scrollbar styles */
 @import "reset.css";		/* user agent css reset */
+@import "phonestrap.less";	/* phonestrap stuff */
 @import "transitions.less";	/* page transitions */
 @import "fonts.css";		/* app fonts */
-@import "phonestrap.less";	/* phonestrap stuff */
 
 
 #content .page.home-vc {
@@ -140,12 +140,9 @@
 		position:relative;
 
 		[contentEditable] {
-			/*
-			h2 {
-				.title-display;
-			}*/
+			
 
-			.item-display;
+			.title-display;
 			
 			background-color:transparent;
 			border:none;
@@ -156,6 +153,9 @@
 			-webkit-touch-callout: initial;
 			-webkit-text-size-adjust: initial;
 			-webkit-user-select: initial;
+
+			text-align: center;
+			color:white;
 		}
 		background-size:contain;
 
@@ -229,7 +229,18 @@
 	color:white;
 
 	opacity: 0;
-	
+	-webkit-transform: translateY(-100px);
+
+	&.ready {
+		opacity:1;
+		-webkit-transform: translateY(0px) 
+	}
+
+	@-webkit-keyframes banderolle {
+	    0% { 	-webkit-transform: translateX(0px); }
+	    50% { 	-webkit-transform: translateX(-2300px); }
+	    100% { 	-webkit-transform: translateX(0px); }
+	}
 
 	#banderolle {
 		position:absolute;
@@ -239,20 +250,18 @@
 		background-image:url('../images/banderolle.png');
 		background-repeat:repeat-x;
 		background-size: contain;
+
+		&.animate {
+			-webkit-animation-name: banderolle;
+		    -webkit-animation-duration: 140s;
+		    -webkit-animation-iteration-count: infinite;
+		    -webkit-animation-timing-function: ease-in-out;
+		}
 		
 		height:160px;
 		@media @iphone4 {
         	height:80px;
         }
-	}
-
-	.report-icon {
-		background-image:url('../images/icon-report-white.png');
-		width:20px;
-		height:20px;
-		background-size: contain;
-		background-repeat: no-repeat;
-		display:inline-block;
 	}
 
 	.pane-container {
@@ -308,9 +317,12 @@
 
 		        ol {
 		        	margin-left:20px;
+		        	margin-top:10px;
+
 		        	li {
 		        		font-size:0.6em;
-		        		line-height:1em;
+		        		line-height: 1.1em;
+						margin:0.2em 0;
 		        		list-style-type: decimal;
 		        		text-align:left;
 		        	}
@@ -340,13 +352,6 @@
 	        	
 	        }
 
-		}
-
-		&.animate {
-			-webkit-transition: all .3s;
-            -moz-transition: all .3s;
-            -o-transition: all .3s;
-            transition: all .3s;
 		}
 	}
 }

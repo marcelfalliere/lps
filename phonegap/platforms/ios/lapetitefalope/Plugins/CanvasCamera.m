@@ -8,6 +8,7 @@
 
 #import "CanvasCamera.h"
 #import <ImageIO/CGImageProperties.h>
+#import <TargetConditionals.h>
 
 #define DEGREES_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
@@ -75,8 +76,18 @@
     // Add the take picture button and gesture recog
     UIButton* capture = [[UIButton alloc]initWithFrame:CGRectMake(rectangle.size.width/2 - 20, rectangle.size.width+70, 40, 40)];
     [capture setImage:[UIImage imageNamed:@"icon-camera.png"] forState:UIControlStateNormal];
+    
+#if TARGET_IPHONE_SIMULATOR
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(takePictureSimulator)];
+    singleTap.numberOfTapsRequired = 1;
+#else
+    
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(takePicture)];
     singleTap.numberOfTapsRequired = 1;
+#endif
+    
+
     capture.userInteractionEnabled = YES;
     [capture addGestureRecognizer:singleTap];
     [_containerView addSubview:capture];
@@ -89,7 +100,6 @@
     quit.userInteractionEnabled = YES;
     [quit addGestureRecognizer:singleTapQuit];
     [_containerView addSubview:quit];
-    
     
     // Add the view and start the camera
     [self.viewController.view addSubview:_containerView];
@@ -177,10 +187,19 @@
          }];
 
      }];
-     
-    /*
     
-    UIImage* ti = [UIImage imageNamed:@"notpenny"];
+    
+    NSError *error;
+    if (error) {
+        //errorCallback(@"error");
+        NSLog(@"error");
+    }else{
+        
+    }
+}
+
+-(void)takePictureSimulator {
+    UIImage* ti = [UIImage imageNamed:@"simulatorpicture"];
     UIImageView* i = [[UIImageView alloc]initWithImage:ti];
     i.contentMode = UIViewContentModeScaleAspectFit;
     i.frame = _previewView.frame;
@@ -195,6 +214,7 @@
         NSLog(@"ko %@", err.description);
     }
     
+    NSLog(@"ti : %@", ti);
     NSLog(@"jpeg path : %@", jpgPath);
     NSLog(@"command id : %@", _commandId);
     
@@ -208,18 +228,7 @@
         [_containerView removeFromSuperview];
         [self.webView setUserInteractionEnabled:YES];
     }];
-    
-    
-    */
-    
-    
-    NSError *error;
-    if (error) {
-        //errorCallback(@"error");
-        NSLog(@"error");
-    }else{
-        
-    }
+
 }
 
 

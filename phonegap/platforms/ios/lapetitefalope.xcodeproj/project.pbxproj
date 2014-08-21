@@ -52,6 +52,7 @@
 		86ABF8DA18CCED7900940FDB /* UniversalAnalyticsPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 86ABF8D918CCED7900940FDB /* UniversalAnalyticsPlugin.m */; };
 		86ABF8E318CCEE4C00940FDB /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86ABF8E218CCEE4C00940FDB /* libGoogleAnalyticsServices.a */; };
 		86DF1AF118BD901500B3A212 /* icon-close.png in Resources */ = {isa = PBXBuildFile; fileRef = 86DF1AF018BD901500B3A212 /* icon-close.png */; };
+		86F72E7C19A5C4F100A95E0E /* simulatorpicture.png in Resources */ = {isa = PBXBuildFile; fileRef = 86F72E7B19A5C4F100A95E0E /* simulatorpicture.png */; };
 		B9543616CE034F2E91872674 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93DF4BE4BD34420AA591E7D5 /* AdSupport.framework */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		E368C893478B42F2AAC9EB98 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69E14BCA28FD4F13A36F9C54 /* CoreData.framework */; };
@@ -153,6 +154,7 @@
 		86ABF8E118CCEE4600940FDB /* GAITracker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
 		86ABF8E218CCEE4C00940FDB /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
 		86DF1AF018BD901500B3A212 /* icon-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-close.png"; sourceTree = "<group>"; };
+		86F72E7B19A5C4F100A95E0E /* simulatorpicture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = simulatorpicture.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* lapetitefalope-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "lapetitefalope-Info.plist"; path = "../lapetitefalope-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		93DF4BE4BD34420AA591E7D5 /* AdSupport.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		A323DE73D73843ADA1F998CB /* libz.dylib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -253,6 +255,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				86F72E7B19A5C4F100A95E0E /* simulatorpicture.png */,
 				86DF1AF018BD901500B3A212 /* icon-close.png */,
 				86A27E2B18BCED40009F27F1 /* CDVNotification.bundle */,
 				867E4C2818B796FA00791714 /* icon-camera.png */,
@@ -482,6 +485,7 @@
 				F840E1F1165FE0F500CFE078 /* config.xml in Resources */,
 				867D9E8118CAE55E003C7541 /* icon~iphone.png in Resources */,
 				308D05371370CCF300D202BF /* icon-72.png in Resources */,
+				86F72E7C19A5C4F100A95E0E /* simulatorpicture.png in Resources */,
 				308D05381370CCF300D202BF /* icon.png in Resources */,
 				308D05391370CCF300D202BF /* icon@2x.png in Resources */,
 				1F766FE113BBADB100FB74C0 /* Localizable.strings in Resources */,

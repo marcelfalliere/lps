@@ -69,6 +69,9 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 			.on('add', refreshIScrollFunction)
 			.on('remove', refreshIScrollFunction);
 		setTimeout(refreshIScrollFunction, 10);
+
+		if (window.app.homeViewlastCloseIScrollY)
+			this.iScrollInstance.scrollTo(0, window.app.homeViewlastCloseIScrollY);
 	},
 	appendHtml: function(collectionView, itemView, index){ // see https://github.com/marionettejs/backbone.marionette/wiki/Adding-support-for-sorted-collections
 		var childrenContainer = collectionView.itemViewContainer ? collectionView.$(collectionView.itemViewContainer) : collectionView.$el;
@@ -94,6 +97,9 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 	        ,remove: true});
 			
 		},this),100);
+	},
+	onClose:function(){
+		window.app.homeViewlastCloseIScrollY = this.iScrollInstance.y;
 	}
 });
 
