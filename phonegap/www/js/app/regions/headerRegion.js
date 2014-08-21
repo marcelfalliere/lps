@@ -30,7 +30,7 @@ var HeaderRegion = Backbone.Marionette.Region.extend({
 	},
 
 	setMainTitle:function(title){
-		this.setTitle('carnet');
+		this.setTitle('la petite s.');
 		this.$title.addClass('main-title');
 		return this;
 	},

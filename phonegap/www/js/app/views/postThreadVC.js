@@ -114,7 +114,7 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 			_.bind(function(imagePath){
 				this.model.set('imagePath', imagePath);
 				this.uploadImage(imagePath);
-
+				setTimeout(_.bind(function(){ this.focus(); }, this), 200);
 			},this), 
 			_.bind(function(error){
 				alert(error);

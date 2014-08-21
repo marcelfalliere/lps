@@ -170,6 +170,13 @@ module.exports = [
         "clobbers": [
             "window.FileTransfer"
         ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.splashscreen/www/splashscreen.js",
+        "id": "org.apache.cordova.splashscreen.SplashScreen",
+        "clobbers": [
+            "navigator.splashscreen"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -179,7 +186,8 @@ module.exports.metadata =
     "com.danielcwilson.plugins.googleanalytics": "0.4.0",
     "org.apache.cordova.dialogs": "0.2.7",
     "org.apache.cordova.file": "1.1.0",
-    "org.apache.cordova.file-transfer": "0.4.3"
+    "org.apache.cordova.file-transfer": "0.4.3",
+    "org.apache.cordova.splashscreen": "0.3.2"
 }
 // BOTTOM OF METADATA
 });

@@ -50,4 +50,8 @@
     <feature name="PushNotification">
         <param name="ios-package" value="PushNotification" />
     </feature>
+    <feature name="SplashScreen">
+        <param name="ios-package" value="CDVSplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
 </widget>

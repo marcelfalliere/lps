@@ -51,6 +51,7 @@
 		86ABF88018CAE93A00940FDB /* PushNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 86ABF87F18CAE93A00940FDB /* PushNotification.m */; };
 		86ABF8DA18CCED7900940FDB /* UniversalAnalyticsPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 86ABF8D918CCED7900940FDB /* UniversalAnalyticsPlugin.m */; };
 		86ABF8E318CCEE4C00940FDB /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86ABF8E218CCEE4C00940FDB /* libGoogleAnalyticsServices.a */; };
+		86DC20F419A628410037F387 /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 86DC20F319A628410037F387 /* CDVSplashScreen.m */; };
 		86DF1AF118BD901500B3A212 /* icon-close.png in Resources */ = {isa = PBXBuildFile; fileRef = 86DF1AF018BD901500B3A212 /* icon-close.png */; };
 		86F72E7C19A5C4F100A95E0E /* simulatorpicture.png in Resources */ = {isa = PBXBuildFile; fileRef = 86F72E7B19A5C4F100A95E0E /* simulatorpicture.png */; };
 		B9543616CE034F2E91872674 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93DF4BE4BD34420AA591E7D5 /* AdSupport.framework */; };
@@ -79,7 +80,7 @@
 /* Begin PBXFileReference section */
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* carnet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = carnet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* la petite s..app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "la petite s..app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F766FDD13BBADB100FB74C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		1F766FE013BBADB100FB74C0 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Localizable.strings; sourceTree = "<group>"; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -153,6 +154,8 @@
 		86ABF8E018CCEE4600940FDB /* GAITrackedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
 		86ABF8E118CCEE4600940FDB /* GAITracker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
 		86ABF8E218CCEE4C00940FDB /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		86DC20F219A628410037F387 /* CDVSplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVSplashScreen.h; sourceTree = "<group>"; };
+		86DC20F319A628410037F387 /* CDVSplashScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDVSplashScreen.m; sourceTree = "<group>"; };
 		86DF1AF018BD901500B3A212 /* icon-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-close.png"; sourceTree = "<group>"; };
 		86F72E7B19A5C4F100A95E0E /* simulatorpicture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = simulatorpicture.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* lapetitefalope-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "lapetitefalope-Info.plist"; path = "../lapetitefalope-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
@@ -205,7 +208,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* carnet.app */,
+				1D6058910D05DD3D006BFB54 /* la petite s..app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -301,6 +304,8 @@
 		307C750510C5A3420062BCA9 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				86DC20F219A628410037F387 /* CDVSplashScreen.h */,
+				86DC20F319A628410037F387 /* CDVSplashScreen.m */,
 				86A27E2818BCED34009F27F1 /* CDVNotification.h */,
 				86A27E2918BCED34009F27F1 /* CDVNotification.m */,
 				86A27E1F18BC8868009F27F1 /* CDVFileTransfer.h */,
@@ -422,7 +427,7 @@
 			);
 			name = lapetitefalope;
 			productName = lapetitefalope;
-			productReference = 1D6058910D05DD3D006BFB54 /* carnet.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* la petite s..app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -538,6 +543,7 @@
 				86A1796718C1EC0D00BAB19C /* AFURLSessionManager.m in Sources */,
 				86A1796618C1EC0D00BAB19C /* AFURLResponseSerialization.m in Sources */,
 				86ABF88018CAE93A00940FDB /* PushNotification.m in Sources */,
+				86DC20F419A628410037F387 /* CDVSplashScreen.m in Sources */,
 				86ABF8DA18CCED7900940FDB /* UniversalAnalyticsPlugin.m in Sources */,
 				86A27E2A18BCED34009F27F1 /* CDVNotification.m in Sources */,
 				86A27E2118BC8868009F27F1 /* CDVFileTransfer.m in Sources */,
@@ -631,7 +637,7 @@
 					"\"$(BUILT_PRODUCTS_DIR)/libCordova.a\"",
 					"-ObjC",
 				);
-				PRODUCT_NAME = carnet;
+				PRODUCT_NAME = "la petite s.";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos7.1;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -671,7 +677,7 @@
 					"\"$(BUILT_PRODUCTS_DIR)/libCordova.a\"",
 					"-ObjC",
 				);
-				PRODUCT_NAME = carnet;
+				PRODUCT_NAME = "la petite s.";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos7.1;
 				TARGETED_DEVICE_FAMILY = 1;

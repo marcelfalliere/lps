@@ -108,6 +108,7 @@
     theWebView.scrollView.bounces=false;
     theWebView.scrollView.scrollEnabled=false;
     theWebView.keyboardDisplayRequiresUserAction=false;
+    theWebView.alpha = 1;
     
     return [super webViewDidFinishLoad:theWebView];
 }

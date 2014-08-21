@@ -10,9 +10,9 @@ function initializeApp(){
 	initializeXhr();
 	initializeBackbone();
 	initializeHammer();
+	initializePlatformsSquirk();
 	initializeGoogleAnalytics();
 
-	initializePlatformsSquirk();
 
 	initializeRegions();
 	initializeCollections();
@@ -44,14 +44,16 @@ function initializeBackbone(){
 }
 
 function initializePlatformsSquirk(){
-	if (isIOS7()) {
-		$('html').attr('data-ios7',true);
+	if (!isIOS7()) {
+		$('html').removeAttr('data-ios7');
 	}
+	if (navigator && navigator.splashscreen)
+		navigator.splashscreen.hide();
 }
 
 function initializeGoogleAnalytics(){
 	$(document).on('deviceready', function(){
-		console.log('device ready');
+		navigator.splashscreen.hide();
 		analytics.startTrackerWithId('UA-48753141-1');
 	});
 }

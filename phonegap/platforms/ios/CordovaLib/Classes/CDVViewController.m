@@ -553,6 +553,7 @@
 
     if (!self.webView) {
         self.webView = [self newCordovaViewWithFrame:webViewBounds];
+        self.webView.alpha = 0;
         self.webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
 
         [self.view addSubview:self.webView];
