@@ -14,12 +14,29 @@
     -webkit-transform: translate3d(0%, 0, 0);
   }
 }
+@-webkit-keyframes slideinfrombottom {
+  from {
+    -webkit-transform: translate3d(0, 100%, 0);
+  }
+  to {
+    -webkit-transform: translate3d(0, 0%, 0);
+  }
+}
 @-webkit-keyframes slideouttolefteasy {
   from {
     -webkit-transform: translate3d(0%, 0, 0);
   }
   to {
     -webkit-transform: translate3d(-100%, 0, 0);
+    opacity: 0.5;
+  }
+}
+@-webkit-keyframes slideouttotopeasy {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+  to {
+    -webkit-transform: translate3d(0, -100%, 0);
     opacity: 0.5;
   }
 }
@@ -53,24 +70,30 @@
   }
 }
 #menu {
-  -webkit-transition-duration: 0.3s;
+  -webkit-transition-duration: 3s;
 }
 .slide.in {
-  -webkit-animation: slideinfromright 0.5s;
+  -webkit-animation: slideinfromright 5s;
 }
 .slide.in.left {
-  -webkit-animation: slideinfromleft 0.5s;
+  -webkit-animation: slideinfromleft 5s;
 }
 .slide.out.easy {
-  -webkit-animation: slideouttolefteasy 0.5s;
+  -webkit-animation: slideouttolefteasy 5s;
 }
 .slide.out.easy.right {
-  -webkit-animation: slideouttorighteasy 0.5s;
+  -webkit-animation: slideouttorighteasy 5s;
+}
+.slide.up.easy {
+  -webkit-animation: slideouttotopeasy 5s;
+}
+.slide.in.bottom {
+  -webkit-animation: slideinfrombottom 5s;
 }
 .hidebuttonanim {
   position: absolute;
-  -webkit-animation: hidebutton 0.3s ease;
+  -webkit-animation: hidebutton 3s ease;
 }
 .showbuttonanim {
-  -webkit-animation: showbutton 0.3s ease;
+  -webkit-animation: showbutton 3s ease;
 }

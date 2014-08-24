@@ -52,6 +52,7 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 		this.$input.text(getRandomPlaceholder());
 		this.onKeyupSaveUserInputAndUpdateTitle();
 		
+		this.startCapture();
 	},
 	focus:function(){
 		this.$input.focus();
@@ -113,7 +114,7 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 			_.bind(function(imagePath){
 				this.model.set('imagePath', imagePath);
 				this.uploadImage(imagePath);
-
+				setTimeout(_.bind(function(){ this.focus(); }, this), 200);
 			},this), 
 			_.bind(function(error){
 				alert(error);
@@ -161,7 +162,7 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 			    		this.model.set('imagePath', '');
 			    	}
 			    },this),         
-			    '',            
+			    'Confirmez-vous ?',            
 			    ['Oui', 'Non']);   
 		} else {
 			this.model.set('mode', 'bgcolor');

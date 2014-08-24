@@ -6,4 +6,7 @@ phonegap/platforms/ios/build
 phonegap/platforms/ios/DerivedData
 phonegap/platforms/ios/www
 
+phonegap/platforms/android/bin
+phonegap/platforms/android/CordovaLib/bin
+
 uploaded_pictures/**

@@ -5,84 +5,6 @@
 @import "fonts.css";
 /* iScroll 5 scrollbar styles */
 /* user agent css reset */
-@-webkit-keyframes slideinfromright {
-  from {
-    -webkit-transform: translate3d(100%, 0, 0);
-  }
-  to {
-    -webkit-transform: translate3d(0%, 0, 0);
-  }
-}
-@-webkit-keyframes slideinfromleft {
-  from {
-    -webkit-transform: translate3d(-100%, 0, 0);
-  }
-  to {
-    -webkit-transform: translate3d(0%, 0, 0);
-  }
-}
-@-webkit-keyframes slideouttolefteasy {
-  from {
-    -webkit-transform: translate3d(0%, 0, 0);
-  }
-  to {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    opacity: 0.5;
-  }
-}
-@-webkit-keyframes slideouttorighteasy {
-  from {
-    -webkit-transform: translate3d(0%, 0, 0);
-  }
-  to {
-    -webkit-transform: translate3d(100%, 0, 0);
-    opacity: 0.5;
-  }
-}
-@-webkit-keyframes showbutton {
-  from {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -20%, 0);
-  }
-  to {
-    opacity: 1;
-    -webkit-transform: translate3d(0, 0%, 0);
-  }
-}
-@-webkit-keyframes hidebutton {
-  from {
-    opacity: 1;
-    -webkit-transform: translate3d(0, 0%, 0);
-  }
-  to {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -20%, 0);
-  }
-}
-#menu {
-  -webkit-transition-duration: 0.3s;
-}
-.slide.in {
-  -webkit-animation: slideinfromright 0.5s;
-}
-.slide.in.left {
-  -webkit-animation: slideinfromleft 0.5s;
-}
-.slide.out.easy {
-  -webkit-animation: slideouttolefteasy 0.5s;
-}
-.slide.out.easy.right {
-  -webkit-animation: slideouttorighteasy 0.5s;
-}
-.hidebuttonanim {
-  position: absolute;
-  -webkit-animation: hidebutton 0.3s ease;
-}
-.showbuttonanim {
-  -webkit-animation: showbutton 0.3s ease;
-}
-/* page transitions */
-/* app fonts */
 html,
 body,
 #viewport {
@@ -288,7 +210,121 @@ html[data-ios7] #content .page.no-header {
   text-shadow: 1px 1px 0px black;
   background-size: contain;
 }
+.item-display .normal-image {
+  background-size: contain;
+}
+.item-display .normal-image h2 {
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 1.2;
+  text-align: center;
+  width: 100%;
+  color: white;
+  text-shadow: 1px 1px 0px black;
+  background-size: contain;
+}
 /* phonestrap stuff */
+@-webkit-keyframes slideinfromright {
+  from {
+    -webkit-transform: translate3d(100%, 0, 0);
+  }
+  to {
+    -webkit-transform: translate3d(0%, 0, 0);
+  }
+}
+@-webkit-keyframes slideinfromleft {
+  from {
+    -webkit-transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    -webkit-transform: translate3d(0%, 0, 0);
+  }
+}
+@-webkit-keyframes slideinfrombottom {
+  from {
+    -webkit-transform: translate3d(0, 100%, 0);
+  }
+  to {
+    -webkit-transform: translate3d(0, 0%, 0);
+  }
+}
+@-webkit-keyframes slideouttolefteasy {
+  from {
+    -webkit-transform: translate3d(0%, 0, 0);
+  }
+  to {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    opacity: 0.5;
+  }
+}
+@-webkit-keyframes slideouttotopeasy {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+  to {
+    -webkit-transform: translate3d(0, -100%, 0);
+    opacity: 0.5;
+  }
+}
+@-webkit-keyframes slideouttorighteasy {
+  from {
+    -webkit-transform: translate3d(0%, 0, 0);
+  }
+  to {
+    -webkit-transform: translate3d(100%, 0, 0);
+    opacity: 0.5;
+  }
+}
+@-webkit-keyframes showbutton {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -20%, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0%, 0);
+  }
+}
+@-webkit-keyframes hidebutton {
+  from {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0%, 0);
+  }
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -20%, 0);
+  }
+}
+#menu {
+  -webkit-transition-duration: 0.3s;
+}
+.slide.in {
+  -webkit-animation: slideinfromright 0.5s;
+}
+.slide.in.left {
+  -webkit-animation: slideinfromleft 0.5s;
+}
+.slide.out.easy {
+  -webkit-animation: slideouttolefteasy 0.5s;
+}
+.slide.out.easy.right {
+  -webkit-animation: slideouttorighteasy 0.5s;
+}
+.slide.up.easy {
+  -webkit-animation: slideouttotopeasy 0.5s;
+}
+.slide.in.bottom {
+  -webkit-animation: slideinfrombottom 0.5s;
+}
+.hidebuttonanim {
+  position: absolute;
+  -webkit-animation: hidebutton 0.3s ease;
+}
+.showbuttonanim {
+  -webkit-animation: showbutton 0.3s ease;
+}
+/* page transitions */
+/* app fonts */
 #content .page.home-vc ol {
   -webkit-transform-style: preserve-3d;
 }
@@ -297,8 +333,16 @@ html[data-ios7] #content .page.no-header {
   position: relative;
   background-size: contain;
   -webkit-animation: all 0.5s ease-in-out;
+  /*
+			h2 {
+				.title-display;
+			}*/
+
 }
-#content .page.home-vc ol li h2 {
+#content .page.home-vc ol li .normal-image {
+  background-size: contain;
+}
+#content .page.home-vc ol li .normal-image h2 {
   vertical-align: middle;
   display: inline-block;
   line-height: 1.2;
@@ -314,11 +358,19 @@ html[data-ios7] #content .page.no-header {
 #content .page.thread-vc #thread-title {
   position: absolute;
   width: 100%;
+  /*
+		h2 {
+			.title-display;
+		}*/
+
 }
 #content .page.thread-vc #thread-title div {
   background-size: contain;
 }
-#content .page.thread-vc #thread-title h2 {
+#content .page.thread-vc #thread-title .normal-image {
+  background-size: contain;
+}
+#content .page.thread-vc #thread-title .normal-image h2 {
   vertical-align: middle;
   display: inline-block;
   line-height: 1.2;
@@ -398,9 +450,7 @@ html[data-ios7] #content .page.no-header {
   vertical-align: middle;
   display: inline-block;
   line-height: 1.2;
-  text-align: center;
   width: 100%;
-  color: white;
   text-shadow: 1px 1px 0px black;
   background-size: contain;
   background-color: transparent;
@@ -411,6 +461,8 @@ html[data-ios7] #content .page.no-header {
   -webkit-touch-callout: initial;
   -webkit-text-size-adjust: initial;
   -webkit-user-select: initial;
+  text-align: center;
+  color: white;
 }
 #content .page.post-thread-vc #input-wrap .upload-overlay {
   position: absolute;
@@ -475,6 +527,23 @@ html[data-ios7] #content .page.no-header {
 }
 #content .page.eula-vc {
   color: white;
+  opacity: 0;
+  -webkit-transform: translateY(-100px);
+}
+#content .page.eula-vc.ready {
+  opacity: 1;
+  -webkit-transform: translateY(0px);
+}
+@-webkit-keyframes banderolle {
+  0% {
+    -webkit-transform: translateX(0px);
+  }
+  50% {
+    -webkit-transform: translateX(-2300px);
+  }
+  100% {
+    -webkit-transform: translateX(0px);
+  }
 }
 #content .page.eula-vc #banderolle {
   position: absolute;
@@ -486,18 +555,16 @@ html[data-ios7] #content .page.no-header {
   background-size: contain;
   height: 160px;
 }
+#content .page.eula-vc #banderolle.animate {
+  -webkit-animation-name: banderolle;
+  -webkit-animation-duration: 140s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease-in-out;
+}
 @media screen and (max-height: 480px) {
   #content .page.eula-vc #banderolle {
     height: 80px;
   }
-}
-#content .page.eula-vc .report-icon {
-  background-image: url('../images/icon-report-white.png');
-  width: 20px;
-  height: 20px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  display: inline-block;
 }
 #content .page.eula-vc .pane-container {
   -webkit-transform: translate3d(0%, 0, 0) scale3d(1, 1, 1);
@@ -550,10 +617,12 @@ html[data-ios7] #content .page.no-header {
 }
 #content .page.eula-vc .pane-container .pane .pane-inside ol {
   margin-left: 20px;
+  margin-top: 10px;
 }
 #content .page.eula-vc .pane-container .pane .pane-inside ol li {
   font-size: 0.6em;
-  line-height: 1em;
+  line-height: 1.1em;
+  margin: 0.2em 0;
   list-style-type: decimal;
   text-align: left;
 }
@@ -576,12 +645,6 @@ html[data-ios7] #content .page.no-header {
   color: #aaa;
   background-color: #eee;
 }
-#content .page.eula-vc .pane-container.animate {
-  -webkit-transition: all .3s;
-  -moz-transition: all .3s;
-  -o-transition: all .3s;
-  transition: all .3s;
-}
 #easter {
   position: absolute;
   width: 100%;
@@ -598,4 +661,12 @@ html[data-ios7] #content .page.no-header {
   font-size: 30px;
   color: #3d3d3d;
   z-index: 0;
+}
+#cache-images {
+  position: absolute;
+  left: -999999px;
+  top: -999999px;
+}
+#cache-images img {
+  display: block;
 }

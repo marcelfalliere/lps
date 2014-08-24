@@ -1,6 +1,7 @@
 @normal: 0.5s;
 @quick: 0.3s;
 @slow: 0.8s;
+
 @headerBgColor: #ffffff;
 @headerShadowColor: #ffffff;
 @headerColor: #333;
@@ -246,7 +247,6 @@ html[data-ios7] {
 }
 
 .title-display {
-
 	vertical-align:middle;
 	display:inline-block;
 	line-height:1.2;
@@ -255,4 +255,17 @@ html[data-ios7] {
 	color: white;
 	text-shadow: 1px 1px 0px black;
 	background-size: contain;
+	
+}
+
+.item-display {
+
+	.normal-image {
+		background-size: contain;
+
+		h2 {
+			.title-display;
+		}
+	}
+
 }

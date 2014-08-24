@@ -1,6 +1,12 @@
 "use strict";
 
 var MainRouter = Backbone.Router.extend({
+	initialize:function(){
+		this.customHistory = [];
+		this.on('route', _.bind(function(r){
+			this.customHistory.push(r);
+		},this))
+	},
 	routes:{
 		'':'home',
 		'thread/:thread_id':'thread',
@@ -16,10 +22,18 @@ var MainRouter = Backbone.Router.extend({
 			.hideButton('report')
 			.hideButton('close')
 			.setTransparent(false);
-// anim sympa après les ftue ?
-		app.content.slideInFromRight(new HomeVC({
-			collection:app.threads
-		}));
+
+		var lastRoute = this.customHistory[this.customHistory.length-1];
+		if (lastRoute == 'eula') {
+			app.content.slideInFromBottom(new HomeVC({
+				collection:app.threads
+			}));
+		} else {
+			app.content.slideInFromRight(new HomeVC({
+				collection:app.threads
+			}));
+		}
+
 
 		if (analytics!==undefined) analytics.trackView('Home');
 	},

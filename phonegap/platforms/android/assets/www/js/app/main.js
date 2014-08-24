@@ -10,15 +10,15 @@ function initializeApp(){
 	initializeXhr();
 	initializeBackbone();
 	initializeHammer();
-	initializeCacheDatabase();
+	initializePlatformsSquirk();
 	initializeGoogleAnalytics();
 
-	initializePlatformsSquirk();
 
 	initializeRegions();
 	initializeCollections();
 	initializeRouterAfterEverythingElse();
-	
+	initializeScrollBackToTopHelper();
+
 	initializeInAppPush();
 
 	checkIfUserIsBanned();
@@ -43,22 +43,17 @@ function initializeBackbone(){
 	Backbone.emulateHTTP = true;
 }
 
-function initializeCacheDatabase(){
-	app.db = openDatabase('mydb', '1.0', 'my first database', 5 * 1024 * 1024);
-	app.db.transaction(function (tx) {
-	  tx.executeSql('CREATE TABLE IF NOT EXISTS images (sha1 unique, base64)');
-	});
-}
-
 function initializePlatformsSquirk(){
-	if (isIOS7()) {
-		$('html').attr('data-ios7',true);
+	if (!isIOS7()) {
+		$('html').removeAttr('data-ios7');
 	}
+	if (navigator && navigator.splashscreen)
+		navigator.splashscreen.hide();
 }
 
 function initializeGoogleAnalytics(){
 	$(document).on('deviceready', function(){
-		console.log('device ready');
+		navigator.splashscreen.hide();
 		analytics.startTrackerWithId('UA-48753141-1');
 	});
 }
@@ -97,6 +92,7 @@ function initializeCollections() {
 
 function initializeRouterAfterEverythingElse() {
 	app.on("initialize:after", function(options){
+		
 		if (hasNotSeenEula()){
 			location.hash = 'eula';
 		}
@@ -134,6 +130,14 @@ function hasNotSeenEula(){
 
 function hasAcceptedEula(){
 	localStorage.setItem('hasSeenEula', 'true')
+}
+
+function initializeScrollBackToTopHelper(){
+	$('#scroll-back-to-top-helper').on('click', function(){
+		$('#content .page').trigger('scrollBackToTop')
+	})
+	
+	
 }
 
 document.querySelector("body").onload = main;

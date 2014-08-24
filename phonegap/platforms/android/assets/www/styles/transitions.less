@@ -17,12 +17,31 @@
   }
 }
 
+@-webkit-keyframes slideinfrombottom{
+  from {
+    -webkit-transform:translate3d(0, 100%, 0);
+  } 
+  to {
+    -webkit-transform:translate3d(0, 0%, 0);
+  }
+}
+
 @-webkit-keyframes slideouttolefteasy{
   from {
     -webkit-transform:translate3d(0%, 0, 0);
   } 
   to {
     -webkit-transform:translate3d(-100%, 0, 0);
+    opacity:0.5;
+  }
+}
+
+@-webkit-keyframes slideouttotopeasy{
+  from {
+    -webkit-transform:translate3d(0, 0, 0);
+  } 
+  to {
+    -webkit-transform:translate3d(0, -100%, 0);
     opacity:0.5;
   }
 }
@@ -59,9 +78,6 @@
   }
 }
 
-@normal: 0.5s;
-@quick: 0.3s;
-
 #menu {
   -webkit-transition-duration:@quick;
 }
@@ -80,6 +96,15 @@
 
 .slide.out.easy.right {
   -webkit-animation: slideouttorighteasy @normal ;
+}
+
+.slide.up.easy {
+  -webkit-animation: slideouttotopeasy @normal ;
+}
+
+
+.slide.in.bottom {
+  -webkit-animation: slideinfrombottom @normal ;
 }
 
 .hidebuttonanim {

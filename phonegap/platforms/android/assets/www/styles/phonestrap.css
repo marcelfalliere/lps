@@ -203,3 +203,16 @@ html[data-ios7] #content .page.no-header {
   text-shadow: 1px 1px 0px black;
   background-size: contain;
 }
+.item-display .normal-image {
+  background-size: contain;
+}
+.item-display .normal-image h2 {
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 1.2;
+  text-align: center;
+  width: 100%;
+  color: white;
+  text-shadow: 1px 1px 0px black;
+  background-size: contain;
+}

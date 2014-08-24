@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html data-ios7="true">
     <head>
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />        
         <link rel="stylesheet" href="styles/all.css">
+        <link rel="stylesheet" href="styles/platform.css">
 
     </head>
     <body>
@@ -15,7 +16,7 @@
 
             <section id="header">
                 <div id="scroll-back-to-top-helper"></div>
-                <h1>carnet</h1>
+                <h1>la petite s.</h1>
                 <div class="button back hidden"></div>
                 <div class="button close hidden"></div>
                 <div class="button post-thread"></div>
@@ -25,9 +26,13 @@
 
             <section id="content"></section>
             
-            <h2 id="easter">carnet</h2>
+            <h2 id="easter">la petite s.</h2>
+
         </div>
 
+        <div id="cache-images">
+            
+        </div>
 
         <script type="html/template" id="tpl-home">
             <div class="scroll-wrap">
@@ -41,7 +46,9 @@
         </script>
 
         <script type="html/template" id="tpl-home-item">
-            <h2><%= title %></h2>
+            <div class="normal-image">
+                <h2><%= title %></h2>
+            </div>
         </script>
 
 
@@ -106,57 +113,9 @@
 
         <script type="html/template" id="tpl-eula-vc">
             <div class="pane-container">
-                <div class="pane">
-                    <div class="pane-inside">
-                        <em>carnet</em> est une façon un peu différente de communiquer.<br/>
-                        <i>c'est à base de page carré</i>
-                        <ul>
-                            <li>photographie</li>
-                            <li>petit mot</li>
-                            <li>ou les deux en même temps</li>
-                        </ul>
-                    </div>
-                    <div id="banderolle"></div>
-                </div>
-                <div class="pane">
-                    <div class="pane-inside">
-                        <strong>Totalement anonyme.</strong>
-                        <i>important à savoir...!</i>
-                    </div>
-                </div>
-                <div class="pane">
-                    <div class="pane-inside">
-                        <strong>Personnalisable.</strong>
-                        <i>il faut faire glisser son doigt de haut en bas</i>
-                    </div>
-                </div>
-                <div class="pane">
-                    <div class="pane-inside">
-                        <strong>Les messages survivent en fonction de l'intérêt qu'ils suscitent (à travers les commentaires)</strong>
-                        <i>il y en a 20, les nouveaux faisant sauter la fin de pile</i>
-                    </div>
-                </div>
-                <div class="pane">
-                    <div class="pane-inside">
-                        <strong>Uniquement français</strong>
-                        <i>chauvin ? non. un peu, ok.</i>
-                    </div>
-                </div>
-                <div class="pane">
-                    <div class="pane-inside">
-                        <strong>Acceptez les notifs</strong>
-                        <i>...et ne loupez rien !</i>
-                    </div>
-                </div>
-                <div class="pane">
-                    <div class="pane-inside">
-                        <strong>Signalez les choses choquantes</strong>
-                        <i>effleurez l'icone <div class="report-icon"></div> dans un message ; on réagit super vite</i>
-                    </div>
-                </div>
                 <div class="pane eula">
                     <div class="pane-inside">
-                        Acceptez la charte d'utilisation (EULA) et c'est parti !
+                        Acceptez la charte d'utilisation (EULA).
                         <ol>
                             <li>Je ne posterai pas de photographies à caractère choquant (pornographie, chatons morts, ...). Celles-ci sont strictement interdites !</li>
                             <li>Je serai banni si je ne respecte pas la règle 1.</li>
@@ -164,6 +123,7 @@
                         </ol>
                         <div class="button">Accepter</div>
                     </div>
+                    <div id="banderolle"></div>
                 </div>
             </div>
             

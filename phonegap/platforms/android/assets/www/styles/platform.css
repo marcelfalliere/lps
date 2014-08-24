@@ -1,0 +1,6 @@
+
+/* blocink scroll on eula screen */
+body, .pane.eula { overflow:hidden; }
+
+/* titre principal */
+header #h1.main-title { letter-spacing: -1px; line-height: 50px; }
