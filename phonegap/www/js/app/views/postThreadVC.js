@@ -49,10 +49,9 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 		this.$controlHint.addClass('ready');
 		this.renderCurrentModeInUI();
 
-		this.$input.text(getRandomPlaceholder());
 		this.onKeyupSaveUserInputAndUpdateTitle();
 		
-		//this.startCapture();
+		this.startCapture();
 	},
 	focus:function(){
 		this.$input.focus();
