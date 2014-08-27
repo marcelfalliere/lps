@@ -7,13 +7,35 @@ var EulaVC = Backbone.Marionette.ItemView.extend({
 		'tap .eula .button:not(.disabled)':'acceptEula'
 	},
 	acceptEula:function(){
+		// android <4.4 hack
+		if (device 
+			&& device.platform 
+			&& device.version 
+			&& device.platform=='Android' 
+			&& parseFloat(device.version) < 4.4) {
+			
+			$('#header').attr('style', '')
+		}
+
 		if (analytics!==undefined) analytics.trackView('EulaAccepted');
 		hasAcceptedEula();
 		location.hash='';
+
+			
 	},
 	onRender:function(){
 
+
 		setTimeout(_.bind(function(){
+
+			// android <4.4 hack
+			if (device 
+				&& device.platform 
+				&& device.version 
+				&& device.platform=='Android' 
+				&& parseFloat(device.version) < 4.4) {
+				$('#header').attr('style', 'display:none;')
+			}
 			
 			this.$el.addClass('ready');
 

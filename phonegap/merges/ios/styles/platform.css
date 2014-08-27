@@ -1,0 +1,24 @@
+
+
+#header h1 {
+	top:20px;
+}
+#header .button {
+	top:20px;
+}
+
+#header .button.text {
+	line-height: 60px;
+}
+
+#header .button.publier {
+	top:0px;
+}
+
+#content .page {
+	top:60px;
+}
+
+#content .page.no-header {
+	top:20px;
+}

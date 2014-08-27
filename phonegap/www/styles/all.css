@@ -17,29 +17,8 @@ body,
 body {
   overflow: scroll;
 }
-html[data-ios7] #header {
-  height: 60px;
-}
-html[data-ios7] #header h1 {
-  top: 20px;
-}
-html[data-ios7] #header .button {
-  top: 20px;
-}
-html[data-ios7] #header .button.text {
-  line-height: 70px;
-}
-html[data-ios7] #header .button.publier {
-  top: 0px;
-}
-html[data-ios7] #content .page {
-  top: 60px;
-}
-html[data-ios7] #content .page.no-header {
-  top: 20px;
-}
 #header {
-  height: 40px;
+  height: 60px;
   width: 100%;
   color: #333333;
   padding-top: 0px;
@@ -136,7 +115,7 @@ html[data-ios7] #content .page.no-header {
   -webkit-transform-style: preserve-3d;
   -webkit-transition: all 0.5s, top 0s;
   position: absolute;
-  top: 40px;
+  top: 60px;
   left: 0px;
   right: 0px;
   bottom: 0px;
@@ -578,7 +557,6 @@ html[data-ios7] #content .page.no-header {
   display: inline-block;
   -webkit-transform-style: preserve-3d;
   -webkit-transform: translate3d(0, 0, 0);
-  height: 100%;
   padding-top: 160px;
 }
 @media screen and (max-height: 480px) {

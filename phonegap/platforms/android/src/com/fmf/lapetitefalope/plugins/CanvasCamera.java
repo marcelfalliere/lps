@@ -22,7 +22,7 @@ public class CanvasCamera extends CordovaPlugin {
 			
 			Intent myIntent = new Intent(this.cordova.getActivity(), CanvasCameraActivity.class);
 			cordova.startActivityForResult(this, myIntent, 1);
-			
+	
 			return true;
 		}
 		return false; // Returning false results in a "MethodNotFound" error.
@@ -32,11 +32,11 @@ public class CanvasCamera extends CordovaPlugin {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
     	super.onActivityResult(requestCode, resultCode, intent);
     	
-    	String filePath = intent.getExtras().getString("filePath");
-		Log.d("kamera", "activity result, filepath is : "+ filePath);
-    	
     	if (resultCode == 1) {
+    		String filePath = intent.getExtras().getString("filePath");
     		mCallbackContext.success(filePath);
+    	} else {
+    		mCallbackContext.error(resultCode);
     	}
     	
     }

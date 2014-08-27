@@ -4,3 +4,62 @@ body, .pane.eula { overflow:hidden; }
 
 /* titre principal */
 header #h1.main-title { letter-spacing: -1px; line-height: 50px; }
+
+
+/* le header */
+
+
+#header h1 {
+	text-indent:-99999px;
+	background-image: url('../images/logo.png');
+	width:200px;
+	height:58px;
+	background-size: contain;
+	display:block;
+	height: 80%;
+	top:10%;
+	background-repeat: no-repeat;
+	background-position: center;
+	-webkit-transition: opacity linear 0.2s;
+}
+
+#header.transparent h1 {
+	opacity:0;
+}
+
+#header .button {
+	top:10px;
+}
+
+#header .button.text {
+	line-height: 60px;
+}
+
+#header .button.publier {
+	top:0px;
+}
+
+#content .page {
+	top:60px;
+}
+
+#content .page.no-header {
+	top:20px;
+}
+
+
+/* easter */
+
+#easter{
+	text-indent:-9999999px;
+	background-image: url('../images/logo2.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	width:200px;
+	height:58px;
+	margin-left:-100px;
+	left:50%;
+}
+
+

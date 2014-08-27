@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="#000"
     android:orientation="vertical"
     tools:context=".CanvasCameraActivity" >
 
@@ -10,15 +10,31 @@
         android:id="@+id/square"
         android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:background="#333333"
         class="com.fmf.lapetitefalope.CanvasCameraActivity$SquareLayout" />
-            
+   	
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+	    
+	    <Button android:id="@+id/take_picture"
+	        	android:text="Take a picture"
+	        	android:layout_width="wrap_content" 
+	        	android:layout_height="wrap_content"
+	        	android:layout_centerInParent="true"
+	        	android:layout_marginTop="10dp"
+	        />
+        
+    </RelativeLayout>
     
-    <Button android:id="@+id/take_picture"
-        	android:text="Take a picture right noa"
-        	android:layout_width="wrap_content" 
-        	android:layout_height="wrap_content"
-        />
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+	    
+	    <Button android:id="@+id/cancel"
+	        	android:text="Cancel"
+	        	android:layout_width="wrap_content" 
+	        	android:layout_height="wrap_content"
+	        	android:layout_centerInParent="true"
+	        	android:layout_marginTop="10dp"
+	        />
+        
+    </RelativeLayout>
     
 </LinearLayout>
 

@@ -37,6 +37,7 @@ var PostThreadVC_Upload = {
 		}
 
 		var percent = 100 - ((progressEvent.loaded / progressEvent.total) * 100);
+		this.percent = percent;
 		$uploadOverlay.css('width', percent+'%');
 	},
 	onSuccess:function(rawResponse){

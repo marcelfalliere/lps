@@ -58,7 +58,19 @@ public class CanvasCameraActivity extends Activity {
 			}
 		});
 		
-		preview = new KameraSurface(getApplicationContext());
+		Button cancel = (Button)findViewById(R.id.cancel);
+		cancel.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				setResult(0, intent);
+				finish();
+				
+			}
+		});
+		
+		preview = new KameraSurface(getApplicationContext(), this);
         ((SquareLayout) findViewById(R.id.square)).addView(preview);
 	}
 	

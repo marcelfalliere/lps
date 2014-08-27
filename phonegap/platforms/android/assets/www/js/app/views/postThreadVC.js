@@ -52,7 +52,7 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 		this.$input.text(getRandomPlaceholder());
 		this.onKeyupSaveUserInputAndUpdateTitle();
 		
-		this.startCapture();
+		//this.startCapture();
 	},
 	focus:function(){
 		this.$input.focus();
@@ -81,7 +81,7 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 	onTapToPost:function(){
 		if (this.model.get('isUploading')==true) {
 			navigator.notification.alert(
-			    "La photo est en train d'être envoyée ... Patience!",  
+			    "La photo est en train d'être envoyée ... Patience! (dernier pourcentage connu : "+this.percent+"%)",  
 			    function(){},         
 			    '~ ~ ~',            
 			    'Ben j\'attends'                  
@@ -117,7 +117,11 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 				setTimeout(_.bind(function(){ this.focus(); }, this), 200);
 			},this), 
 			_.bind(function(error){
-				alert(error);
+				if (error == 0) {
+					// nothing ?
+				} else {
+					alert(error);
+				}
 			},this), 
 			"CanvasCamera", "showCaptureView", [""]
 		);

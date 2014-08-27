@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Date;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -25,8 +26,11 @@ public class KameraSurface  extends SurfaceView implements SurfaceHolder.Callbac
     SurfaceHolder mHolder;
     public Camera camera;
 
-    KameraSurface(Context context) {
+	private CanvasCameraActivity canvasCameraActivity;
+
+    KameraSurface(Context context, CanvasCameraActivity canvasCameraActivity) {
         super(context);
+		this.canvasCameraActivity = canvasCameraActivity;
 
         // Install a SurfaceHolder.Callback so we get notified when the
         // underlying surface is created and destroyed.
@@ -37,39 +41,41 @@ public class KameraSurface  extends SurfaceView implements SurfaceHolder.Callbac
     public void surfaceCreated(SurfaceHolder holder) {
         // The Surface has been created, acquire the camera and tell it where
         // to draw.
-
-         camera = Camera.open();
-
-         Camera.Parameters p = camera.getParameters();
-         //p.setPictureSize(80, 60);
-         p.setColorEffect(android.hardware.Camera.Parameters.EFFECT_NONE);
-         //p.setJpegQuality(20);
-         //p.setPreviewFpsRange(5, 10);
-         //p.setPreviewSize(80, 60);
-         camera.setParameters(p);
-
-
-
-        try {
-            camera.setPreviewDisplay(holder);
-
-
-            camera.setPreviewCallback(new Camera.PreviewCallback() {
-
-                public void onPreviewFrame(byte[] data, Camera arg1) {
-                    //KameraSurface.this.invalidate();
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    	
+		camera = Camera.open();
+		
+		Camera.Parameters p = camera.getParameters();
+		//p.setPictureSize(80, 60);
+		p.setColorEffect(android.hardware.Camera.Parameters.EFFECT_NONE);
+		//p.setJpegQuality(20);
+		//p.setPreviewFpsRange(5, 10);
+		//p.setPreviewSize(80, 60);
+		camera.setParameters(p);
+		
+		try {
+			camera.setPreviewDisplay(holder);
+			
+			
+			camera.setPreviewCallback(new Camera.PreviewCallback() {
+				
+				public void onPreviewFrame(byte[] data, Camera arg1) {
+					//KameraSurface.this.invalidate();
+				}
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
     }
 
     public void surfaceDestroyed(SurfaceHolder holder) {
         // Surface will be destroyed when we return, so stop the preview.
         // Because the CameraDevice object is not a shared resource, it's very
         // important to release it when the activity is paused.
+    	Log.d("kamera", "surface destroyed");
+    	camera.setPreviewCallback(null);
         camera.stopPreview();
+        camera.release();
         camera = null;
     }
     
@@ -99,11 +105,11 @@ public class KameraSurface  extends SurfaceView implements SurfaceHolder.Callbac
 			public void onPictureTaken(byte[] data, Camera camera) {
 				if (data != null) {
 					
+					
 					FileOutputStream fos = null;
                     try {
                         
                         Log.d("kamera","coming here");
-                        
                         
                         Log.d("kamera","writing data");
 
