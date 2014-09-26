@@ -24,14 +24,15 @@ var MainRouter = Backbone.Router.extend({
 			.setTransparent(false);
 
 		var lastRoute = this.customHistory[this.customHistory.length-1];
+
+		var homeVC = new HomeVC({ collection:app.threads });
+
 		if (lastRoute == 'eula') {
-			app.content.slideInFromBottom(new HomeVC({
-				collection:app.threads
-			}));
+			app.content.slideInFromBottom(homeVC);
+		} else if (lastRoute == 'thread') {
+			app.content.zoomOut(homeVC);
 		} else {
-			app.content.slideInFromRight(new HomeVC({
-				collection:app.threads
-			}));
+			app.content.slideInFromRight(homeVC);
 		}
 
 
@@ -46,7 +47,7 @@ var MainRouter = Backbone.Router.extend({
 			.hideButton('close')
 			.setTransparent(false);
 
-		app.content.slideIn(new ThreadVCLayout(
+		app.content.zoomIn(new ThreadVCLayout(
 			// will handle itself
 		));
 

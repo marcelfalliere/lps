@@ -26,7 +26,7 @@ body {
   position: fixed;
   z-index: 9999;
   box-shadow: inset 1px -4px 5px -6px #333333;
-  -webkit-transition: background-color linear 5s, color linear 5s, -webkit-transform linear 0.8s;
+  -webkit-transition: background-color linear 0.5s, color linear 0.5s, -webkit-transform linear 0.8s;
   -webkit-transition-delay: 0.1s;
 }
 #header.transparent {
@@ -278,22 +278,22 @@ body {
   -webkit-transition-duration: 0.3s;
 }
 .slide.in {
-  -webkit-animation: slideinfromright 5s;
+  -webkit-animation: slideinfromright 0.5s;
 }
 .slide.in.left {
-  -webkit-animation: slideinfromleft 5s;
+  -webkit-animation: slideinfromleft 0.5s;
 }
 .slide.out.easy {
-  -webkit-animation: slideouttolefteasy 5s;
+  -webkit-animation: slideouttolefteasy 0.5s;
 }
 .slide.out.easy.right {
-  -webkit-animation: slideouttorighteasy 5s;
+  -webkit-animation: slideouttorighteasy 0.5s;
 }
 .slide.up.easy {
-  -webkit-animation: slideouttotopeasy 5s;
+  -webkit-animation: slideouttotopeasy 0.5s;
 }
 .slide.in.bottom {
-  -webkit-animation: slideinfrombottom 5s;
+  -webkit-animation: slideinfrombottom 0.5s;
 }
 .hidebuttonanim {
   position: absolute;
@@ -301,6 +301,50 @@ body {
 }
 .showbuttonanim {
   -webkit-animation: showbutton 0.3s ease;
+}
+/* zoom in */
+@-webkit-keyframes hide_zoomin {
+  to {
+    -webkit-transform: scale(2);
+    opacity: 0;
+  }
+}
+.hide.zoomin {
+  -webkit-animation: hide_zoomin 0.5s;
+}
+@-webkit-keyframes show_zoomin {
+  from {
+    opacity: 0;
+    -webkit-transform: scale(0.5);
+  }
+  to {
+    -webkit-transform: scale(1);
+  }
+}
+.show.zoomin {
+  -webkit-animation: show_zoomin 0.5s;
+}
+/* zoom out */
+@-webkit-keyframes hide_zoomout {
+  to {
+    -webkit-transform: scale(0.5);
+    opacity: 0;
+  }
+}
+.hide.zoomout {
+  -webkit-animation: hide_zoomout 0.5s;
+}
+@-webkit-keyframes show_zoomout {
+  from {
+    opacity: 0;
+    -webkit-transform: scale(2);
+  }
+  to {
+    -webkit-transform: scale(1);
+  }
+}
+.show.zoomout {
+  -webkit-animation: show_zoomout 0.5s;
 }
 /* page transitions */
 /* app fonts */
@@ -311,7 +355,7 @@ body {
   background-color: #ccc;
   position: relative;
   background-size: contain;
-  -webkit-animation: all 5s ease-in-out;
+  -webkit-animation: all 0.5s ease-in-out;
   /*
 			h2 {
 				.title-display;

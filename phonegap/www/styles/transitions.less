@@ -115,3 +115,52 @@
 .showbuttonanim {
   -webkit-animation: showbutton @quick ease ;
 }
+
+/* zoom in */
+
+@-webkit-keyframes hide_zoomin{
+  to {
+    -webkit-transform:scale(2);
+    opacity:0;
+  }
+}
+
+.hide.zoomin {
+  -webkit-animation: hide_zoomin @normal;
+}
+
+@-webkit-keyframes show_zoomin{
+  from { opacity:0; -webkit-transform:scale(0.5); }
+  to { -webkit-transform:scale(1); }
+}
+
+.show.zoomin {
+  -webkit-animation: show_zoomin @normal;
+}
+
+/* zoom out */
+
+
+@-webkit-keyframes hide_zoomout{
+  to {
+    -webkit-transform:scale(0.5);
+    opacity:0;
+  }
+}
+
+.hide.zoomout {
+  -webkit-animation: hide_zoomout @normal;
+}
+
+@-webkit-keyframes show_zoomout{
+  from { opacity:0; -webkit-transform:scale(2); }
+  to { -webkit-transform:scale(1); }
+}
+
+.show.zoomout {
+  -webkit-animation: show_zoomout @normal;
+}
+
+
+
+

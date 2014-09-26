@@ -56,8 +56,7 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 		    disableMouse: true,
     		disablePointer: true,
     		shrinkScrollbars:'scale',
-    		scrollbars: 'custom',
-    		tap:true
+    		scrollbars: 'custom'
 		});
 		
 		this.$p2r = this.$el.find('.pull-to-refresh');
