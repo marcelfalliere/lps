@@ -29,7 +29,8 @@ function initializeXhr(){
 		{ 
 			cache: false,
 			beforeSend:function(xhr){
-				xhr.setRequestHeader('X-DUID', device.uuid);
+				if (window.device)
+					xhr.setRequestHeader('X-DUID', device.uuid);
 			}
 		}
 	);
@@ -54,7 +55,7 @@ function initializePlatformsSquirk(){
 function initializeGoogleAnalytics(){
 	$(document).on('deviceready', function(){
 		navigator.splashscreen.hide();
-		analytics.startTrackerWithId('UA-48753141-1');
+		window.analytics.startTrackerWithId('UA-48753141-1');
 	});
 }
 

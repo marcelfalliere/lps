@@ -8,7 +8,7 @@ var EulaVC = Backbone.Marionette.ItemView.extend({
 	},
 	acceptEula:function(){
 		// android <4.4 hack
-		if (device 
+		if (window.device 
 			&& device.platform 
 			&& device.version 
 			&& device.platform=='Android' 
@@ -17,7 +17,7 @@ var EulaVC = Backbone.Marionette.ItemView.extend({
 			$('#header').attr('style', '')
 		}
 
-		if (analytics!==undefined) analytics.trackView('EulaAccepted');
+		if (window.analytics!==undefined) window.analytics.trackView('EulaAccepted');
 		hasAcceptedEula();
 		location.hash='';
 
@@ -29,7 +29,7 @@ var EulaVC = Backbone.Marionette.ItemView.extend({
 		setTimeout(_.bind(function(){
 
 			// android <4.4 hack
-			if (device 
+			if (window.device 
 				&& device.platform 
 				&& device.version 
 				&& device.platform=='Android' 

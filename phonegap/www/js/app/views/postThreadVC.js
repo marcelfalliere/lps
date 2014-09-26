@@ -90,7 +90,7 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 		}
 	},
 	postModelToServer:function(){
-		analytics.trackEvent('PostThread', 'postModelToServer', this.model.get('title'));
+		window.analytics.trackEvent('PostThread', 'postModelToServer', this.model.get('title'));
 
 		app.header.headerView.$el.trigger('saving');
 		this.model.set('isSaving',true);
@@ -105,7 +105,7 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 	},
 
 	startCapture:function(){
-		analytics.trackEvent('PostThread', 'startCapture', 'Prise de photo');
+		window.analytics.trackEvent('PostThread', 'startCapture', 'Prise de photo');
 
 		this.model.set('mode', 'picture');
 
@@ -154,7 +154,7 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 	},
 
 	bgcolor:function(){
-		analytics.trackEvent('PostThread', 'bgcolor', 'Couleur de fond');
+		window.analytics.trackEvent('PostThread', 'bgcolor', 'Couleur de fond');
 		if(this.model.get('imagePath')!==undefined) {
 			navigator.notification.confirm(
 			    "Utiliser une couleur de fond à la place de la photo ?",  
@@ -172,7 +172,7 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 		}
 	},
 	police:function(){
-		analytics.trackEvent('PostThread', 'police', 'Police de caractère');
+		window.analytics.trackEvent('PostThread', 'police', 'Police de caractère');
 		this.model.set('mode', 'police');
 	},
 	newImagePath:function(){

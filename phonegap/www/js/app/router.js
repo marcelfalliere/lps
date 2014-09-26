@@ -35,7 +35,7 @@ var MainRouter = Backbone.Router.extend({
 		}
 
 
-		if (analytics!==undefined) analytics.trackView('Home');
+		if (window.analytics!==undefined) window.analytics.trackView('Home');
 	},
 	thread:function(thread_id) {
 		app.header.setMainTitle()
@@ -50,7 +50,7 @@ var MainRouter = Backbone.Router.extend({
 			// will handle itself
 		));
 
-		if (analytics!==undefined) analytics.trackView('Thread-'+thread_id);
+		if (window.analytics!==undefined) window.analytics.trackView('Thread-'+thread_id);
 	},
 	postThread:function() {
 		app.header.setTitle('')
@@ -66,7 +66,7 @@ var MainRouter = Backbone.Router.extend({
 			model:new ThreadModel()
 		}));
 
-		if (analytics!==undefined) analytics.trackView('PostThread');
+		if (window.analytics!==undefined) window.analytics.trackView('PostThread');
 	},
 	banned:function(){
 		app.header.setMainTitle()
@@ -80,7 +80,7 @@ var MainRouter = Backbone.Router.extend({
 
 		app.content.slideIn(new BannedVC());
 
-		if (analytics!==undefined) analytics.trackView('Banned');
+		if (window.analytics!==undefined) window.analytics.trackView('Banned');
 	},
 	eula:function(){
 		app.header.setMainTitle()
@@ -89,7 +89,7 @@ var MainRouter = Backbone.Router.extend({
 
 		app.content.slideIn(new EulaVC());
 
-		if (analytics!==undefined) analytics.trackView('Eula');
+		if (window.analytics!==undefined) window.analytics.trackView('Eula');
 	}
 });
 
