@@ -74,7 +74,7 @@
     [_containerView addSubview:_previewView];
 
     // Add the take picture button and gesture recog
-    UIButton* capture = [[UIButton alloc]initWithFrame:CGRectMake(rectangle.size.width/2 - 20, rectangle.size.width+70, 40, 40)];
+    UIButton* capture = [[UIButton alloc]initWithFrame:CGRectMake(rectangle.size.width/2 - 40, rectangle.size.width+70, 80, 40)];
     [capture setImage:[UIImage imageNamed:@"icon-camera.png"] forState:UIControlStateNormal];
     
 #if TARGET_IPHONE_SIMULATOR
@@ -182,6 +182,7 @@
          [UIView animateWithDuration:0.6f animations:^{
              _containerView.alpha=0;
          } completion:^(BOOL finished){
+             [_captureSession stopRunning];
              [_containerView removeFromSuperview];
              [self.webView setUserInteractionEnabled:YES];
          }];

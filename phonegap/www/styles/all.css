@@ -26,7 +26,7 @@ body {
   position: fixed;
   z-index: 9999;
   box-shadow: inset 1px -4px 5px -6px #333333;
-  -webkit-transition: background-color linear 0.5s, color linear 0.5s, -webkit-transform linear 0.8s;
+  -webkit-transition: background-color linear 5s, color linear 5s, -webkit-transform linear 0.8s;
   -webkit-transition-delay: 0.1s;
 }
 #header.transparent {
@@ -278,22 +278,22 @@ body {
   -webkit-transition-duration: 0.3s;
 }
 .slide.in {
-  -webkit-animation: slideinfromright 0.5s;
+  -webkit-animation: slideinfromright 5s;
 }
 .slide.in.left {
-  -webkit-animation: slideinfromleft 0.5s;
+  -webkit-animation: slideinfromleft 5s;
 }
 .slide.out.easy {
-  -webkit-animation: slideouttolefteasy 0.5s;
+  -webkit-animation: slideouttolefteasy 5s;
 }
 .slide.out.easy.right {
-  -webkit-animation: slideouttorighteasy 0.5s;
+  -webkit-animation: slideouttorighteasy 5s;
 }
 .slide.up.easy {
-  -webkit-animation: slideouttotopeasy 0.5s;
+  -webkit-animation: slideouttotopeasy 5s;
 }
 .slide.in.bottom {
-  -webkit-animation: slideinfrombottom 0.5s;
+  -webkit-animation: slideinfrombottom 5s;
 }
 .hidebuttonanim {
   position: absolute;
@@ -311,7 +311,7 @@ body {
   background-color: #ccc;
   position: relative;
   background-size: contain;
-  -webkit-animation: all 0.5s ease-in-out;
+  -webkit-animation: all 5s ease-in-out;
   /*
 			h2 {
 				.title-display;
