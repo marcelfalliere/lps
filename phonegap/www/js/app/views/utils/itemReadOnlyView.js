@@ -23,6 +23,11 @@ var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
 			});
 		}
 
+		if (location.hash != '')
+			this.loadImage();
+	},
+
+	loadImage:function(){
 		if (!_.isEmpty(this.model.get('imageUrl'))){
 
 			// De base, couleur de fond transparente
@@ -59,4 +64,5 @@ var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
 			
 		}
 	}
+	
 });

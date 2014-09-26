@@ -4,8 +4,16 @@ var HomeItemView = ItemReadOnlyView.extend({
 	template:'#tpl-home-item',
 	tagName:'li',
 	events:{
-		'tap':'onTap'
+		'tap':'onTap',
+		'becomesVisible':'loadImage'
 	},
+
+	onRender:function(){
+		this.imageLoaded = false;
+
+		ItemReadOnlyView.prototype.onRender.apply(this, arguments);
+	},
+
 	onTap:function(ev){
 		ev.gesture.preventDefault();
 		app.thread = this.model;
@@ -16,8 +24,16 @@ var HomeItemView = ItemReadOnlyView.extend({
 		$('.page.home-vc').css('top','-'+(app.homeViewScrollTop-$('#header').innerHeight())+'px')
 
 		app.router.navigate('thread/'+this.model.get('id'), {trigger:true});
-	}
+	},
 
+	loadImage:function(){
+		if (this.imageLoaded)
+			return;
+
+		this.imageLoaded=true;
+
+		ItemReadOnlyView.prototype.loadImage.apply(this, arguments);
+	}
 });
 
 var HomeVC = Backbone.Marionette.CompositeView.extend({
@@ -26,7 +42,8 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 	itemViewContainer:'ol',
 	itemView:HomeItemView,
 	events:{
-		'scrollBackToTop':'scrollBackToTop'
+		'scrollBackToTop':'scrollBackToTop',
+		'touchend .scroll-inner':'touchEnd'
 	},
 	scrollBackToTop:function(){
 		this.iScrollInstance.scrollTo(0,0, 300)
@@ -35,44 +52,37 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 
 		this.iScrollInstance = new IScroll(this.$el.find('.scroll-wrap')[0], {
 		    fadeScrollbars:true,
-		    probeType: 2,
+		    probeType: 3,
 		    disableMouse: true,
     		disablePointer: true,
     		shrinkScrollbars:'scale',
     		scrollbars: 'custom'
 		});
+		
 		this.$p2r = this.$el.find('.pull-to-refresh');
 		this.breakpoint = 80;
 		this.isFetching = false;
-		this.iScrollInstance.on('scroll', _.bind(function(){
-			if (this.iScrollInstance.y > 0) {
-				if (this.isFetching==true)
-					this.$p2r.text('en cours...')
-				else if (this.iScrollInstance.y < this.breakpoint)
-					this.$p2r.text(dots(parseInt(this.iScrollInstance.y/2,10)));
-				else if (this.iScrollInstance.y >= this.breakpoint)
-					this.$p2r.text('lâcher pour rafraîchir')
-			}
-		},this));
-		this.$el.find('.scroll-inner').on('touchend', _.bind(function(){
-			if (this.isFetching==false && this.iScrollInstance.y >= this.breakpoint) {
-				this.isFetching=true;
-				this.$p2r.text('en cours...')
-				this.refreshFunction();
-			}
-		},this));
+		this.windowW = $(window).width();
+		this.currentPage = 0;
+
+		this.iScrollInstance.on('scroll', _.bind(this.onScroll,this));
 
 		var refreshIScrollFunction = _.bind(function(){
 			this.iScrollInstance.refresh();
 		},this);
+
 		this.collection
 			.on('add', refreshIScrollFunction)
 			.on('remove', refreshIScrollFunction);
+
 		setTimeout(refreshIScrollFunction, 10);
 
 		if (window.app.homeViewlastCloseIScrollY)
 			this.iScrollInstance.scrollTo(0, window.app.homeViewlastCloseIScrollY);
+
+		this.onScroll();
 	},
+
 	appendHtml: function(collectionView, itemView, index){ // see https://github.com/marionettejs/backbone.marionette/wiki/Adding-support-for-sorted-collections
 		var childrenContainer = collectionView.itemViewContainer ? collectionView.$(collectionView.itemViewContainer) : collectionView.$el;
 		var children = childrenContainer.children();
@@ -82,7 +92,9 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 		} else {
 			children.eq(index).before(itemView.el);
 		}
+
 	},
+
 	refreshFunction:function(){
 		setTimeout(_.bind(function(){
 			this.collection.fetch({
@@ -98,9 +110,37 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 			
 		},this),100);
 	},
+
 	onClose:function(){
 		window.app.homeViewlastCloseIScrollY = this.iScrollInstance.y;
+	},
+
+	onScroll:function(){
+		if (this.iScrollInstance.y > 0) {
+			if (this.isFetching==true)
+				this.$p2r.text('en cours...')
+			else if (this.iScrollInstance.y < this.breakpoint)
+				this.$p2r.text(dots(parseInt(this.iScrollInstance.y/2,10)));
+			else if (this.iScrollInstance.y >= this.breakpoint)
+				this.$p2r.text('lâcher pour rafraîchir')
+		}
+
+		var currentPage = Math.floor(Math.abs(this.iScrollInstance.y) / this.windowW);
+
+		$(this.$el.find('.scroll-inner ol li')[currentPage]).trigger('becomesVisible');
+		$(this.$el.find('.scroll-inner ol li')[currentPage+1]).trigger('becomesVisible');
+		$(this.$el.find('.scroll-inner ol li')[currentPage+2]).trigger('becomesVisible');
+
+	},
+
+	onTouchend:function(){
+		if (this.isFetching==false && this.iScrollInstance.y >= this.breakpoint) {
+			this.isFetching=true;
+			this.$p2r.text('en cours...')
+			this.refreshFunction();
+		}
 	}
+
 });
 
 function dots(howmany) {
