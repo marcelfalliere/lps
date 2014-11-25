@@ -182,6 +182,8 @@
          [UIView animateWithDuration:0.6f animations:^{
              _containerView.alpha=0;
          } completion:^(BOOL finished){
+             [_previewLayer removeFromSuperlayer];
+             [_previewView removeFromSuperview];
              [_captureSession stopRunning];
              [_containerView removeFromSuperview];
              [self.webView setUserInteractionEnabled:YES];
@@ -266,6 +268,9 @@
     [UIView animateWithDuration:0.6f animations:^{
         _containerView.alpha = 0;
     } completion:^(BOOL finished){
+        [_previewLayer removeFromSuperlayer];
+        [_previewView removeFromSuperview];
+        [_captureSession stopRunning];
         [_containerView removeFromSuperview];
         [self.webView setUserInteractionEnabled:YES];
     }];

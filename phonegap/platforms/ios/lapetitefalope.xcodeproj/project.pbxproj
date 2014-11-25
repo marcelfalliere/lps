@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -638,7 +639,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "la petite s.";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "70fd2c1d-dcb4-4689-a4d1-de7d71e12fe5";
 				SDKROOT = iphoneos7.1;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -678,7 +679,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "la petite s.";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "70fd2c1d-dcb4-4689-a4d1-de7d71e12fe5";
 				SDKROOT = iphoneos7.1;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
