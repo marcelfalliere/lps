@@ -247,15 +247,30 @@ Server.prototype.listen = function(port) {
 
 	// push to all
 	this._app.post('/modozone/push', _.bind(function(req, res){
-		var passcode = req.headers['x-passcode'];
-		if (passcode!=='fifoupresident') {
-			res.send(403);
-		} else {
-			var msg = req.params.content;
-			this._pushInterface.push('newfalope', msg, undefined, function(){
-				res.send()
-			});
-		}
+		var body = '';
+		req.on('data',function(data){
+			body+=data;
+		});
+		req.on('end',_.bind(function(){
+			var passcode = req.headers['x-passcode'];
+			if (passcode!=='fifoupresident') {
+				res.send(403);
+			} else {
+				try {
+					var body_parsed = JSON.parse(body);
+				} catch(exc) {
+					var body_parsed = qs.parse(body);
+				}
+				var msg = body_parsed.content;
+
+				console.log("MSG:", msg);
+				this._pushInterface.push('newfalope', msg, undefined, function(){
+					res.send()
+				});
+			}
+			
+		},this));
+
 	},this));
 
 	// HTTP POST /threads/<thread_id>/delete
