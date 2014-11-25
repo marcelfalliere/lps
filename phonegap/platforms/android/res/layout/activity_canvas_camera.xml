@@ -15,7 +15,7 @@
     <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
 	    
 	    <Button android:id="@+id/take_picture"
-	        	android:text="Take a picture"
+	        	android:text="Prendre une photo"
 	        	android:layout_width="wrap_content" 
 	        	android:layout_height="wrap_content"
 	        	android:layout_centerInParent="true"
@@ -27,7 +27,7 @@
     <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
 	    
 	    <Button android:id="@+id/cancel"
-	        	android:text="Cancel"
+	        	android:text="Annuler"
 	        	android:layout_width="wrap_content" 
 	        	android:layout_height="wrap_content"
 	        	android:layout_centerInParent="true"
