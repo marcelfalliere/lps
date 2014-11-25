@@ -2,6 +2,12 @@
 
 var ContentRegion = Backbone.Marionette.Region.extend({
 	el:'#content',
+	zoomIn:function(view){
+		this.transition(view, 'show zoomin', 'hide zoomin');
+	},
+	zoomOut:function(view){
+		this.transition(view, 'show zoomout', 'hide zoomout');
+	},
 	slideIn:function(view) {
 		this.transition(view, 'slide in', 'slide out easy');
 	},

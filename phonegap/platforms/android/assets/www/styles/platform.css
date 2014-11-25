@@ -41,6 +41,7 @@ header #h1.main-title { letter-spacing: -1px; line-height: 50px; }
 
 #content .page {
 	top:60px;
+	-webkit-transform: translateZ(0);
 }
 
 #content .page.no-header {
