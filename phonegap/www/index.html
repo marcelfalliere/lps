@@ -85,8 +85,12 @@
             <ol></ol>
         </script>
         <script type="html/template" id="tpl-thread-comment-item-view">
-            <%= text %>
-            <div class="triangle" style="border-color: <%= color %> transparent transparent transparent;"></div>
+            <% if (loading) { %>
+                <span class="loading"></loading>
+            <% } else { %>
+                <%= text %>
+                <div class="triangle" style="border-color: <%= color %> transparent transparent transparent;"></div>
+            <% } %>
         </script>
         
         <script type="html/template" id="tpl-post-comment-view">

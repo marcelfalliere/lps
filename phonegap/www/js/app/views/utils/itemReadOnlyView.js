@@ -2,8 +2,15 @@
 
 var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
 	template:'#tpl-home-item',
-	templateHelpers:{
-		home:false
+	templateHelpers:function(){
+		return {
+			home:false,
+			title:(_.bind(function(){
+				if (this.model)
+					return this.model.get('title');
+				return "";
+			},this))()
+		}
 	},
 	onRender:function(){
 		
@@ -14,24 +21,26 @@ var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
   			"line-height":size
 		});
 
+		if (this.model) {
+			if (!_.isEmpty(this.model.get('color'))){
+				this.$el.css('background-color', this.model.get('color'));
+			}
 
-		if (!_.isEmpty(this.model.get('color'))){
-			this.$el.css('background-color', this.model.get('color'));
+			if (_.isEmpty(this.model.get('imageUrl'))){
+				this.$el.css('background-image', 'none');
+			}
+
+			if (!_.isEmpty(this.model.get('policeName'))){
+				this.$el.css({
+					'font-family': this.model.get('policeName'),
+					'font-size': this.model.get('policeSize')
+				});
+			}
+
+			if (location.hash != '')
+				this.loadImage();
+			
 		}
-
-		if (_.isEmpty(this.model.get('imageUrl'))){
-			this.$el.css('background-image', 'none');
-		}
-
-		if (!_.isEmpty(this.model.get('policeName'))){
-			this.$el.css({
-				'font-family': this.model.get('policeName'),
-				'font-size': this.model.get('policeSize')
-			});
-		}
-
-		if (location.hash != '')
-			this.loadImage();
 	},
 
 	loadImage:function(){

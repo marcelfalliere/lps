@@ -517,6 +517,10 @@ body {
   border-width: 10px 10px 0 0;
   border-color: #335d8a transparent transparent transparent;
 }
+#content .page.thread-vc #thread-comments ol li .loading:before {
+  color: #fff;
+  content: ". . . ";
+}
 #content .page.post-thread-vc #input-wrap {
   width: 100%;
   position: relative;
