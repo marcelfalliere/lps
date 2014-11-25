@@ -31,7 +31,7 @@ var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
 		if (!_.isEmpty(this.model.get('imageUrl'))){
 
 			// De base, couleur de fond transparente
-			this.$el.css('background-color', 'transparent');
+			//this.$el.css('background-color', 'transparent');
 
 			// de base, chargement de l'image thumb
 			var imageUrl = this.model.get('imageUrl');

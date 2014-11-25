@@ -12,6 +12,12 @@ var HomeItemView = ItemReadOnlyView.extend({
 		this.imageLoaded = false;
 
 		ItemReadOnlyView.prototype.onRender.apply(this, arguments);
+
+		if (!_.isEmpty(this.model.get('color'))){
+			var darkenedColor = tinycolor(this.model.get('color')).darken(10);
+			this.$el.find('.blur-bg').css('background-color', darkenedColor);
+		}
+		
 	},
 
 	onTap:function(ev){
@@ -31,6 +37,12 @@ var HomeItemView = ItemReadOnlyView.extend({
 			return;
 
 		this.imageLoaded=true;
+
+		if (!_.isEmpty(this.model.get('imageUrl'))){
+			this.$el.find('.blur-bg')
+				.css('background-image', 'url("'+this.model.get('imageUrl')+'")')
+				this.$el.find('.blur-bg').css('background-color', 'transparent');
+		}
 
 		ItemReadOnlyView.prototype.loadImage.apply(this, arguments);
 	}

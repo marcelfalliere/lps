@@ -195,3 +195,6 @@ body {
   text-shadow: 1px 1px 0px black;
   background-size: contain;
 }
+.item-display .normal-image .count-wrap {
+  display: none;
+}

@@ -21,5 +21,8 @@ var ThreadModel = Backbone.Model.extend({
 		});
 		report.save();
 		app.threads.report(this.get('id'));
+	},
+	defaults:{
+		comments_count:0
 	}
 });

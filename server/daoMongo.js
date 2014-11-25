@@ -54,7 +54,8 @@ DaoMongo.prototype.post_thread = function(title, color, policeName, policeSize, 
 			policeSize:policeSize,
 			imageUrl:imageUrl,
 			duid:duid,
-			last_comment:new Date().getTime()
+			last_comment:new Date().getTime(),
+			comments_count:0
 		}
 
 		_threads.save(new_thread, _.bind(function(err, thread){
@@ -101,6 +102,7 @@ DaoMongo.prototype.post_comment = function(id, text, color, callback) {
 				if (err==null) {
 
 					thread.last_comment = new Date().getTime();
+					thread.comments_count = thread.comments_count + 1;
 					_threads.save(thread, function(err, res){
 						callback([comment]);
 					});

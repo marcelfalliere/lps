@@ -48,6 +48,13 @@
         <script type="html/template" id="tpl-home-item">
             <div class="normal-image">
                 <h2><%= title %></h2>
+                <span class="count-wrap">
+                    <span class="the-count">
+                        <%= comments_count %>
+                        commentaire<%= (comments_count>1)?"s":"" %>
+                    </span>
+                    <div class="blur-bg"></div>
+                </span>
             </div>
         </script>
 
@@ -137,6 +144,8 @@
         <script type="text/javascript" src="js/bower_comps/backbone.marionette/lib/backbone.marionette.min.js"></script>
         <script type="text/javascript" src="js/bower_comps/jquery-hammerjs/jquery.hammer-full.js"></script>
         <script type="text/javascript" src="js/bower_comps/iscroll/build/iscroll-probe.js"></script>
+        <script type="text/javascript" src="js/bower_comps/iscroll/build/iscroll-probe.js"></script>
+        <script type="text/javascript" src="js/bower_comps/tinycolor/tinycolor.js"></script>
         
         <!-- conf -->
         <script src="js/app/conf.js"></script>
