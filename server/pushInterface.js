@@ -5,7 +5,7 @@ function PushInterface(request, endPoint){
 	this._endPoint=endPoint;
 }
 
-PushInterface.prototype.push = function(event, msg, thread_id) {
+PushInterface.prototype.push = function(event, msg, thread_id, callback) {
 	var form = {  msg: msg };
 
 	if (thread_id != undefined) {
@@ -17,8 +17,11 @@ PushInterface.prototype.push = function(event, msg, thread_id) {
 		json:true,
 		form: form
 	}, _.bind(function(){
+		if (callback) callback();
 		// what do ?
 	},this));
 }
+
+
 
 module.exports = PushInterface;

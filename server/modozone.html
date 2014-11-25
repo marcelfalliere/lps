@@ -3,18 +3,56 @@
     <head>
         <meta charset="utf-8" />
         
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <style type="text/css">
-        	li { margin-bottom:10px; }
-        	button { display:block; }
+            .row > :first-child {
+                text-align:right;
+            }
+            .thread {
+                margin-bottom:20px;
+            }
+            img {
+                max-height:100px;
+            }
+            .bg-danger {
+                padding:.5em;
+            }
         </style>
     </head>
     <body>
 
-    	<h1>Threads</h1>
-    	<h2 id="count"></h2>
-    	<div id="threads">
+        <div class="container">
+        
+            <div id="setup" class="bg-danger">
+                <h1>Update your X-PASSCODE header</h1>
+                <div class="form-group">
+                    <label for="header-PASSCODE">Saisissez ici le passcode à envoyer en header</label>
+                    <input type="text" id="header-PASSCODE" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-default">Configurer</button>
+            </div>
 
-    	</div>
+            <h1>Push</h1>
+            <div id="push">
+
+                <div class="form-group">
+                    <label for="push-content">Contenu du push</label>
+                    <textarea id="push-content" class="form-control"></textarea>
+                </div>
+                <button type="submit" class="btn btn-default">Envoyer (appui qu'une fois banane)</button>
+
+            </div>
+
+        	<h1>Threads</h1>
+        	<h2>Nombre de threads : <span id="count"></span></h2>
+        	<div id="threads">
+
+        	</div>
+
+        </div>
         
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
@@ -22,15 +60,35 @@
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.marionette/1.6.4-bundled/backbone.marionette.min.js"></script>
 
         <script type="html/template" id="threadViewTpl">
-        	<%= title %>
-        	<%= id %>
-        	<% if (imageUrl) { %>
-        		<img src="<%= imageUrl %>" />
-        	<% } %>
-        	<button class="delete">Delete</button>
-        	<div class="delete-feedback"></div>
-        	<button class="ban">Ban user for this</button>
-        	<div class="ban-feedback"></div>
+            <div class="row">
+                <div class="col-md-3">Texte</div>
+                <div class="col-md-9"><%= title %></div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Id</div>
+                <div class="col-md-9"><%= id %></div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Image</div>
+                <div class="col-md-9">
+                    <% if (imageUrl) { %>
+                        <img src="<%= imageUrl %>" />
+                    <% } else { %>
+                        <em>pas dimages</em>
+                    <% } %>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Actions</div>
+                <div class="col-md-9">
+                    <button class="delete btn btn-default">Delete</button>
+                    <button class="ban btn btn-default">Ban user for this</button>
+                    <div class="delete-feedback"></div>
+                    <div class="ban-feedback"></div>
+                </div>
+            </div>
+        	
+        	
         </script>
 
         <script type="text/javascript">
@@ -50,7 +108,7 @@
         	});
         	var ThreadView = Backbone.Marionette.ItemView.extend({
         		template:'#threadViewTpl',
-        		tagName:'li',
+                className:'thread',
         		events:{
         			'click .delete':'deleteThread',
         			'click .ban':'banUser'
@@ -92,7 +150,6 @@
         	})
         	var ThreadsView = Backbone.Marionette.CollectionView.extend({
         		itemView: ThreadView,
-        		tagName:'ul',
         		el:'#threads',
         		initialize:function(){
         			this.on('all', function(){
@@ -101,22 +158,48 @@
         			this.collection.fetch();
         		}
         	})
+            var PushView = Backbone.View.extend({
+                el:'#push',
+                events:{
+                    'click [type="submit"]':"send"
+                },
+                send:function(){
+                    var content = $('#push-content').val();
+                    $.post('/modozone/push', {content:content}).then(function(){
+                        alert("Pushed !")
+                    }, function(){
+                        alert("NOT pushed !")
+                    });
+                }
+            })
+            var SetupView = Backbone.View.extend({
+                el:'#setup',
+                events:{
+                    'click [type="submit"]':"configure"  
+                },
+                configure:function() {
+                    $.ajaxSetup({ 
+                        cache: false,
+                        headers:{
+                            'X-PASSCODE':$('#header-PASSCODE').val()
+                        }
+                    });
+                    this.$el.fadeOut();
+                }
+            })
         </script>
         <script type="text/javascript">
         	$(document).ready(function(){
         		Backbone.emulateHTTP = true;
-        		$.ajaxSetup({ 
-					cache: false,
-					headers:{
-						'X-PASSCODE':'fifoupresident'
-					}
-				});
-
+        		
 
         		var threads = new Threads();
         		var view = new ThreadsView({
         			collection:threads
         		});
+
+                new SetupView();
+                new PushView();
         		
         	})
         </script>

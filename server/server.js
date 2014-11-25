@@ -227,6 +227,7 @@ Server.prototype.listen = function(port) {
 		})
 	},this));
 
+
 	// ---------------------
 	// ADMIN ZONE
 
@@ -243,6 +244,19 @@ Server.prototype.listen = function(port) {
 			}
 		});
 	});
+
+	// push to all
+	this._app.post('/modozone/push', _.bind(function(req, res){
+		var passcode = req.headers['x-passcode'];
+		if (passcode!=='fifoupresident') {
+			res.send(403);
+		} else {
+			var msg = req.params.content;
+			this._pushInterface.push('newfalope', msg, undefined, function(){
+				res.send()
+			});
+		}
+	},this));
 
 	// HTTP POST /threads/<thread_id>/delete
 	// suppression d'un thread
