@@ -2,6 +2,9 @@
 
 var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
 	template:'#tpl-home-item',
+	templateHelpers:{
+		home:false
+	},
 	onRender:function(){
 		
 		var size = $(window).width()+'px';
@@ -14,6 +17,10 @@ var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
 
 		if (!_.isEmpty(this.model.get('color'))){
 			this.$el.css('background-color', this.model.get('color'));
+		}
+
+		if (_.isEmpty(this.model.get('imageUrl'))){
+			this.$el.css('background-image', 'none');
 		}
 
 		if (!_.isEmpty(this.model.get('policeName'))){

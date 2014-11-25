@@ -189,6 +189,9 @@ body {
   text-shadow: 1px 1px 0px black;
   background-size: contain;
 }
+.item-display {
+  background-image: url('../images/loading.png');
+}
 .item-display .normal-image {
   background-size: contain;
 }
@@ -364,6 +367,7 @@ body {
 				.title-display;
 			}*/
 
+  background-image: url('../images/loading.png');
 }
 #content .page.home-vc ol li .normal-image {
   background-size: contain;
@@ -396,8 +400,8 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  -webkit-filter: blur(5px);
-  filter: blur(5px);
+  -webkit-filter: blur(3px);
+  filter: blur(3px);
   background-size: 100%;
   background-position-y: 100%;
 }
@@ -407,6 +411,16 @@ body {
   line-height: 40px;
   padding: 0 20px;
   position: absolute;
+  z-index: 2;
+  font-size: 14px;
+}
+#content .page.home-vc ol li .normal-image .count-wrap .the-index {
+  font-family: homizio, 'Helvetica Neue', 'Helvetica', Arial;
+  color: white;
+  line-height: 40px;
+  padding: 0 20px;
+  position: absolute;
+  right: 0px;
   z-index: 2;
   font-size: 14px;
 }
@@ -421,6 +435,7 @@ body {
 			.title-display;
 		}*/
 
+  background-image: url('../images/loading.png');
 }
 #content .page.thread-vc #thread-title div {
   background-size: contain;

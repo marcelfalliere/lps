@@ -7,7 +7,14 @@ var HomeItemView = ItemReadOnlyView.extend({
 		'tap':'onTap',
 		'becomesVisible':'loadImage'
 	},
-
+	templateHelpers: function(){
+		return {
+		    home:true,
+		    indexInCollection:(_.bind(function(){
+		    	return "#"+ (this.model.collection.indexOf(this.model)+1);
+		    },this)())
+		}
+	},
 	onRender:function(){
 		this.imageLoaded = false;
 

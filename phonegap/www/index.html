@@ -48,13 +48,18 @@
         <script type="html/template" id="tpl-home-item">
             <div class="normal-image">
                 <h2><%= title %></h2>
-                <span class="count-wrap">
-                    <span class="the-count">
-                        <%= comments_count %>
-                        commentaire<%= (comments_count>1)?"s":"" %>
+                <% if (home) { %>
+                    <span class="count-wrap">
+                        <span class="the-count">
+                            <%= comments_count %>
+                            commentaire<%= (comments_count>1)?"s":"" %>
+                        </span>
+                        <span class="the-index">
+                            <%= indexInCollection %>
+                        </span>
+                        <div class="blur-bg"></div>
                     </span>
-                    <div class="blur-bg"></div>
-                </span>
+                <% } %>
             </div>
         </script>
 
