@@ -42,7 +42,12 @@ public class KameraSurface  extends SurfaceView implements SurfaceHolder.Callbac
         // The Surface has been created, acquire the camera and tell it where
         // to draw.
     	
-		camera = Camera.open();
+    	Log.d("test", "->"+Camera.getNumberOfCameras());
+    	if (Camera.getNumberOfCameras() == 1) {
+    		camera = Camera.open(0);
+    	} else {
+    		camera = Camera.open();
+    	}
 		
 		Camera.Parameters p = camera.getParameters();
 		//p.setPictureSize(80, 60);

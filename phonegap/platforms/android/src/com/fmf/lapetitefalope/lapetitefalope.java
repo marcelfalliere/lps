@@ -22,11 +22,15 @@ package com.fmf.lapetitefalope;
 import org.apache.cordova.Config;
 import org.apache.cordova.CordovaActivity;
 
+import com.fmf.lapetitefalope.plugins.CanvasCamera;
+
 import android.os.Bundle;
 
 public class lapetitefalope extends CordovaActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		CanvasCamera c;
+		
 		super.onCreate(savedInstanceState);
 		super.init();
 		super.appView.setHorizontalScrollBarEnabled(false);

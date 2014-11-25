@@ -5,6 +5,7 @@ var util = require('util');
 var fs = require('fs');
 var gm = require('gm').subClass({ imageMagick: true });;
 var path = require('path');
+var bodyparser = require('body-parser');
 
 var nodemailer = require("nodemailer");
 var smtpTransport = nodemailer.createTransport("SMTP",{
@@ -40,6 +41,9 @@ Server.prototype.listen = function(port) {
 
 	    next();
 	});
+
+	// Stuff
+	this._app.use(this.express.limit(5000000));
 
 	// HTTP GET /threads 
 	this._app.get('/threads', _.bind(function(req,res){

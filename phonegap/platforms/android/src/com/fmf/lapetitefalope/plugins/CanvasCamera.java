@@ -16,13 +16,14 @@ public class CanvasCamera extends CordovaPlugin {
 	
     @Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		if ("showCaptureView".equals(action)) {
+		Log.d("fifou", "hey");
+    	if ("showCaptureView".equals(action)) {
 			
 			mCallbackContext = callbackContext;
 			
 			Intent myIntent = new Intent(this.cordova.getActivity(), CanvasCameraActivity.class);
 			cordova.startActivityForResult(this, myIntent, 1);
-	
+			
 			return true;
 		}
 		return false; // Returning false results in a "MethodNotFound" error.

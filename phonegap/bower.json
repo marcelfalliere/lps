@@ -7,6 +7,6 @@
     "backbone.marionette": "*",
     "jquery-hammerjs": "*",
     "db.js": "*",
-    "iscroll": "~5.1.1"
+    "iscroll": "~5.1.3"
   }
 }

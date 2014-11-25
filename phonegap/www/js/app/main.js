@@ -37,7 +37,7 @@ function initializeXhr(){
 }
 
 function initializeHammer(){
-	$("#viewport").hammer();
+	$("#viewport").hammer({prevent_default:true});
 }
 
 function initializeBackbone(){

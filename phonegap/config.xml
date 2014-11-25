@@ -20,6 +20,7 @@
         <param name="ios-package" value="CanvasCamera" />
         <param name="android-package" value="com.fmf.lapetitefalope.plugins.CanvasCamera" />
     </feature>
+    
     <feature name="SoftKeyboard">
         <param name="android-package" value="com.fmf.lapetitefalope.plugins.SoftKeyboard" />
     </feature>

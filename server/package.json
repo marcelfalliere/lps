@@ -14,7 +14,8 @@
 		"gm":"*",
 		"sinon-chai":"*",
 		"easymongo":"*",
-		"nodemailer":"*"
+		"nodemailer":"*",
+		"body-parser":"*"
 	}
 }
 
