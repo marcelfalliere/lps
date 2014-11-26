@@ -25,6 +25,7 @@ import org.apache.cordova.CordovaActivity;
 import com.fmf.lapetitefalope.plugins.CanvasCamera;
 
 import android.os.Bundle;
+import android.webkit.WebView;
 
 public class lapetitefalope extends CordovaActivity {
 	@Override
