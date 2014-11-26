@@ -30,9 +30,16 @@ var PostCommentView = Backbone.Marionette.ItemView.extend({
 	},
 	postModelToServer:function(){
 
+		var stringToColour = function(str) {
+		    for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash));
+		    for (var i = 0, colour = "#"; i < 3; colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
+		    return colour;
+		}
 
-		var randomColor = getColorFromPercentage(Math.floor(Math.random() * 100) + 1);
-		console.log('random color : '+randomColor);
+		var randomColor = stringToColour("Anonymous");
+		if (window.device && window.device.uuid) 
+			randomColor = stringToColour(device.uuid);
+
 		this.model.set('color', randomColor);
 		this.model.on('sync',_.bind(this.updateLocalThreadsList,this));
 		this.model.save();

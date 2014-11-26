@@ -89,7 +89,8 @@
                 <span class="loading"></loading>
             <% } else { %>
                 <%= text %>
-                <div class="triangle" style="border-color: <%= color %> transparent transparent transparent;"></div>
+                <div class="box" style="background-color: <%= color %>;"></div>
+                <div class="id"><%= tinycolor(color).toHexString().substring(1,tinycolor(color).toHexString().length) %></div>
             <% } %>
         </script>
         
