@@ -182,6 +182,9 @@ body {
   text-shadow: 1px 1px 0px black;
   background-size: contain;
 }
+.item-display {
+  background-image: url('../images/loading.png');
+}
 .item-display .normal-image {
   background-size: contain;
 }
@@ -194,4 +197,7 @@ body {
   color: white;
   text-shadow: 1px 1px 0px black;
   background-size: contain;
+}
+.item-display .normal-image .count-wrap {
+  display: none;
 }

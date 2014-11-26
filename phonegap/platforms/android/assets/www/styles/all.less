@@ -22,6 +22,50 @@
 
 			.item-display;
 
+			.normal-image {
+
+				.count-wrap {
+					display:block;
+					position: absolute;
+					bottom: 0;
+					left: 0px;
+					display: inline-block;
+					line-height: 40px;
+					height: 40px;
+					right: 0px;
+					overflow:hidden;
+					
+					.blur-bg {
+						position:absolute;
+						width: 100%;
+						height: 100%;
+						-webkit-filter: blur(3px);
+						filter: blur(3px);
+						background-size: 100%;
+						background-position-y: 100%;
+					}
+
+					.the-count {
+						font-family: homizio, 'Helvetica Neue', 'Helvetica', Arial;
+						color:white;
+						line-height: 40px;
+						padding:0 20px;
+						position:absolute;
+						z-index:2;
+						font-size:14px;
+					}
+					.the-index {
+						font-family: homizio, 'Helvetica Neue', 'Helvetica', Arial;
+						color:white;
+						line-height: 40px;
+						padding:0 20px;
+						position:absolute;
+						right:0px;
+						z-index:2;
+						font-size:14px;
+					}
+				}
+			}
 		}
 	}	
 }
@@ -125,7 +169,12 @@
 					border-width: 10px 10px 0 0;
 					border-color: #335d8a transparent transparent transparent;
 				}
-
+				.loading {
+					&:before {
+						color:#fff;
+						content:". . . ";
+					}
+				}
 			}
 		}
 

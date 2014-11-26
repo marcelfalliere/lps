@@ -2,6 +2,16 @@
 
 var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
 	template:'#tpl-home-item',
+	templateHelpers:function(){
+		return {
+			home:false,
+			title:(_.bind(function(){
+				if (this.model)
+					return this.model.get('title');
+				return "";
+			},this))()
+		}
+	},
 	onRender:function(){
 		
 		var size = $(window).width()+'px';
@@ -11,27 +21,33 @@ var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
   			"line-height":size
 		});
 
+		if (this.model) {
+			if (!_.isEmpty(this.model.get('color'))){
+				this.$el.css('background-color', this.model.get('color'));
+			}
 
-		if (!_.isEmpty(this.model.get('color'))){
-			this.$el.css('background-color', this.model.get('color'));
+			if (_.isEmpty(this.model.get('imageUrl'))){
+				this.$el.css('background-image', 'none');
+			}
+
+			if (!_.isEmpty(this.model.get('policeName'))){
+				this.$el.css({
+					'font-family': this.model.get('policeName'),
+					'font-size': this.model.get('policeSize')
+				});
+			}
+
+			if (location.hash != '')
+				this.loadImage();
+			
 		}
-
-		if (!_.isEmpty(this.model.get('policeName'))){
-			this.$el.css({
-				'font-family': this.model.get('policeName'),
-				'font-size': this.model.get('policeSize')
-			});
-		}
-
-		if (location.hash != '')
-			this.loadImage();
 	},
 
 	loadImage:function(){
 		if (!_.isEmpty(this.model.get('imageUrl'))){
 
 			// De base, couleur de fond transparente
-			this.$el.css('background-color', 'transparent');
+			//this.$el.css('background-color', 'transparent');
 
 			// de base, chargement de l'image thumb
 			var imageUrl = this.model.get('imageUrl');
