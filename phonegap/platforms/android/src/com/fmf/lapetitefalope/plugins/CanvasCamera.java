@@ -16,7 +16,6 @@ public class CanvasCamera extends CordovaPlugin {
 	
     @Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		Log.d("fifou", "hey");
     	if ("showCaptureView".equals(action)) {
 			
 			mCallbackContext = callbackContext;

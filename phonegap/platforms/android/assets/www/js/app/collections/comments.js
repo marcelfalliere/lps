@@ -7,5 +7,12 @@ var CommentsCollection = Backbone.Collection.extend({
 	},
 	parse:function(dataFromServerAsJson) {
 		return dataFromServerAsJson.comments;
+	},
+	isLoading:function(){
+		if (this.length == 1) {
+			if (this.at(0).get('loading'))
+				return true;
+		}
+		return false;
 	}
 });

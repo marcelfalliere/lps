@@ -13,7 +13,6 @@ var ThreadVCLayout = Backbone.Marionette.Layout.extend({
 	},
 	onRender:function(){
 		if (app.thread) {
-			debugger;
 			this.iScrollInstance = new IScroll(this.$el.find('.scroll-wrap')[0], {
 			    fadeScrollbars:true,
 			    disableMouse: true,
@@ -26,6 +25,13 @@ var ThreadVCLayout = Backbone.Marionette.Layout.extend({
 			comments.add({loading:true})
 			comments.on('all', _.bind(function(){
 				this.iScrollInstance.refresh();
+
+			},this));
+			comments.on('sync', _.bind(function(){
+				if (!comments.isLoading()) {
+					this.iScrollInstance.refresh();
+					this.iScrollInstance.scrollTo(0, (Math.abs(this.iScrollInstance.maxScrollY) > $(window).width())?  -$(window).width() : this.iScrollInstance.maxScrollY   , 1000);
+				}
 			},this));
 
 			this.title.show(new ItemReadOnlyView({

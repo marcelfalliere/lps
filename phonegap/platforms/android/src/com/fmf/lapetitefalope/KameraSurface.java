@@ -15,6 +15,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
+import android.hardware.Camera.CameraInfo;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -25,6 +26,7 @@ public class KameraSurface  extends SurfaceView implements SurfaceHolder.Callbac
 
     SurfaceHolder mHolder;
     public Camera camera;
+    private int camId = 0;
 
 	private CanvasCameraActivity canvasCameraActivity;
 
@@ -43,12 +45,17 @@ public class KameraSurface  extends SurfaceView implements SurfaceHolder.Callbac
         // to draw.
     	
     	Log.d("test", "->"+Camera.getNumberOfCameras());
-    	if (Camera.getNumberOfCameras() == 1) {
-    		camera = Camera.open(0);
-    	} else {
-    		camera = Camera.open();
+    	if (Camera.getNumberOfCameras() > 1)  {
+    		for (int i = 0 ; i < Camera.getNumberOfCameras() ; i++) {
+    		    Camera.CameraInfo info = new Camera.CameraInfo();
+    			Camera.getCameraInfo(i, info);
+    			if (info.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+    				camId = i;
+    			}
+    		}
     	}
-		
+    	camera = Camera.open(camId);
+    	
 		Camera.Parameters p = camera.getParameters();
 		//p.setPictureSize(80, 60);
 		p.setColorEffect(android.hardware.Camera.Parameters.EFFECT_NONE);
@@ -118,6 +125,7 @@ public class KameraSurface  extends SurfaceView implements SurfaceHolder.Callbac
                         
                         Log.d("kamera","writing data");
 
+                        
                         // create bitmap
                         Bitmap bmp;
                         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -129,8 +137,11 @@ public class KameraSurface  extends SurfaceView implements SurfaceHolder.Callbac
                         Log.d("kamera", "size after crop :"+croppedBmp.getWidth()+" x "+croppedBmp.getHeight());
                         
                         // rotate
+                        CameraInfo cameraInfo = new Camera.CameraInfo();
+						Camera.getCameraInfo(camId, cameraInfo);
+                        
                         Matrix matrix = new Matrix();
-                        matrix.postRotate(90);
+                        matrix.postRotate(cameraInfo.orientation);
                         Bitmap scaledBitmap = Bitmap.createScaledBitmap(croppedBmp,croppedBmp.getWidth(),croppedBmp.getHeight(),true);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap , 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
                         

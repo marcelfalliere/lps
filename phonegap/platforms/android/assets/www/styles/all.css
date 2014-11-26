@@ -190,7 +190,7 @@ body {
   background-size: contain;
 }
 .item-display {
-  background-image: url('../images/loading.png');
+  background-color: transparent;
 }
 .item-display .normal-image {
   background-size: contain;
@@ -367,7 +367,7 @@ body {
 				.title-display;
 			}*/
 
-  background-image: url('../images/loading.png');
+  background-color: transparent;
 }
 #content .page.home-vc ol li .normal-image {
   background-size: contain;
@@ -435,7 +435,7 @@ body {
 			.title-display;
 		}*/
 
-  background-image: url('../images/loading.png');
+  background-color: transparent;
 }
 #content .page.thread-vc #thread-title div {
   background-size: contain;
