@@ -30,7 +30,7 @@ var PostCommentView = Backbone.Marionette.ItemView.extend({
 	},
 	postModelToServer:function(){
 
-		
+
 		var randomColor = getColorFromPercentage(Math.floor(Math.random() * 100) + 1);
 		console.log('random color : '+randomColor);
 		this.model.set('color', randomColor);
