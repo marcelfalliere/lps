@@ -23,7 +23,7 @@ static NSString* PUSH_BASE_URL = @"https://cp.lapetitefalope.fr/";
 
 + (void)subscribeWithEvent:(NSString*)event {
     NSString* dToken = [[NSUserDefaults standardUserDefaults]valueForKey:@"DEVICE_TOKEN"];
-    NSLog(@"devicetoken : %@", dToken);
+
     if (dToken!=nil){
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         manager.securityPolicy.allowInvalidCertificates = YES;
@@ -33,8 +33,6 @@ static NSString* PUSH_BASE_URL = @"https://cp.lapetitefalope.fr/";
             NSString* sessionId = [responseObject valueForKey:@"id"];
             
             [manager POST:[NSString stringWithFormat:@"%@subscriber/%@/subscriptions/%@", PUSH_BASE_URL, sessionId, event] parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                
-                NSLog(@"All went OK : %@", responseObject);
                 
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 

@@ -498,8 +498,8 @@ body {
   line-height: 37px;
 }
 #content .page.thread-vc #thread-comments ol li {
-  padding: 1.2em 0.9em;
-  margin: 1.5em;
+  padding: 1.5em 1.2em;
+  margin: 1.1em;
   font-family: 'homizio';
   font-size: 15px;
   color: #ffffff;
@@ -507,15 +507,20 @@ body {
   position: relative;
   display: inline-block;
 }
-#content .page.thread-vc #thread-comments ol li .triangle {
+#content .page.thread-vc #thread-comments ol li .box {
   position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 0px;
-  height: 0px;
-  border-style: solid;
-  border-width: 10px 10px 0 0;
-  border-color: #335d8a transparent transparent transparent;
+  top: 2px;
+  left: 2px;
+  width: 10px;
+  height: 10px;
+}
+#content .page.thread-vc #thread-comments ol li .id {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  font-size: 11px;
+  color: #eee;
+  text-transform: uppercase;
 }
 #content .page.thread-vc #thread-comments ol li .loading:before {
   color: #fff;
