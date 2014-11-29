@@ -143,7 +143,7 @@ Server.prototype.listen = function(port) {
 		res.writeHead(200, {
 		  'Content-Type' : 'image/png',
 		  'Content-Length': stat.size,
-		  'Cache-Control': 'public, max-age=3600'
+		  'Cache-Control': 'public, max-age=86400'
 		});
 		fs.createReadStream(this._savePath+req.params.image+'.png').pipe(res);
 	},this));
