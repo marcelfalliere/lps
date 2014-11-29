@@ -149,7 +149,12 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 
 		$(this.$el.find('.scroll-inner ol li')[currentPage]).trigger('becomesVisible');
 		$(this.$el.find('.scroll-inner ol li')[currentPage+1]).trigger('becomesVisible');
-		$(this.$el.find('.scroll-inner ol li')[currentPage+2]).trigger('becomesVisible');
+
+		// check if item currentPage+2 is near visible ...
+		if ((Math.abs(this.iScrollInstance.y) / this.windowW) % 1 > 0.5 ) {
+			console.log("load currentPage+2")
+			$(this.$el.find('.scroll-inner ol li')[currentPage+2]).trigger('becomesVisible');
+		}
 
 	},
 
