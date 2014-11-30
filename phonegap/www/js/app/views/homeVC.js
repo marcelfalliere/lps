@@ -120,13 +120,17 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 			this.collection.fetch({
 	            success:_.bind(function(){
 	                this.$p2r.text("c'est fait");
-	                this.isFetching=false;
+	                setTimeout(_.bind(function(){
+	                	this.isFetching=false;
+	                },this), 4000);
 	            },this),
 	            error:_.bind(function(){
 	                this.$p2r.text('une erreur est survenue :(')
-	                this.isFetching=false;
+	                setTimeout(_.bind(function(){
+	                	this.isFetching=false;
+	                },this), 1000);
 	            },this)
-	        ,remove: true});
+	        });
 			
 		},this),100);
 	},
