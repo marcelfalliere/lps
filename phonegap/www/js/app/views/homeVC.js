@@ -62,7 +62,7 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 	itemView:HomeItemView,
 	events:{
 		'scrollBackToTop':'scrollBackToTop',
-		'touchend .scroll-inner':'touchEnd'
+		'touchend .scroll-inner':'onTouchend'
 	},
 	scrollBackToTop:function() {
 		this.iScrollInstance.scrollTo(0,0, 0);
