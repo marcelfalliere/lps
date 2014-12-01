@@ -28,6 +28,7 @@ var HomeItemView = ItemReadOnlyView.extend({
 	},
 
 	onTap:function(ev){
+
 		ev.gesture.preventDefault();
 		app.thread = this.model;
 
@@ -69,7 +70,7 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 		this.onScroll();
 	},
 	onRender:function(){
-
+console.log("redner home vc")
 		this.iScrollInstance = new IScroll(this.$el.find('.scroll-wrap')[0], {
 		    fadeScrollbars:true,
 		    probeType: 3,
@@ -103,7 +104,7 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 					this.showCollection();
 				    this.iScrollInstance.refresh();
 				    this.onScroll();
-				    
+
 				},this), 300);
 			}, this));
 

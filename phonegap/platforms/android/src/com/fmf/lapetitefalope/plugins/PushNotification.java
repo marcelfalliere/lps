@@ -1,5 +1,6 @@
 package com.fmf.lapetitefalope.plugins;
 
+import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.http.Header;
 import org.apache.http.client.HttpClient;
@@ -8,8 +9,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.*;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
+import com.fmf.lapetitefalope.CanvasCameraActivity;
 import com.fmf.lapetitefalope.lapetitefalope;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -17,8 +20,26 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.SyncHttpClient;
 
+
 public class PushNotification extends CordovaPlugin {
 
+	
+	 @Override
+		public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+    	if ("subscribe".equals(action)) {
+			
+			
+    		String event = args.getString(0);
+    		Log.d(TAG, "subscribre to "+event+" -...");
+    		
+			this.subscribeWithEvent(event, (lapetitefalope)this.cordova.getActivity());
+			
+			return true;
+		}
+		return false; // Returning false results in a "MethodNotFound" error.
+	}
+	
+	
     static final String TAG = "GCMlpf";
 	static String PUSH_BASE_URL = "https://cp.lapetitefalope.fr/";
 	public void subscribeWithEvent(final String event, lapetitefalope mainActivity){

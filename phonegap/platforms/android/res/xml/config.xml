@@ -44,6 +44,7 @@
     </feature>
     <feature name="PushNotification">
         <param name="ios-package" value="PushNotification" />
+        <param name="android-package" value="com.fmf.lapetitefalope.plugins.PushNotification" />
     </feature>
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />

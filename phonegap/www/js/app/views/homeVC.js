@@ -28,6 +28,7 @@ var HomeItemView = ItemReadOnlyView.extend({
 	},
 
 	onTap:function(ev){
+
 		ev.gesture.preventDefault();
 		app.thread = this.model;
 
