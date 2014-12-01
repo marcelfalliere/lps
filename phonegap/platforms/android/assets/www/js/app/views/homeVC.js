@@ -62,7 +62,7 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 	itemView:HomeItemView,
 	events:{
 		'scrollBackToTop':'scrollBackToTop',
-		'touchend .scroll-inner':'touchEnd'
+		'touchend .scroll-inner':'onTouchend'
 	},
 	scrollBackToTop:function() {
 		this.iScrollInstance.scrollTo(0,0, 0);
@@ -120,13 +120,17 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 			this.collection.fetch({
 	            success:_.bind(function(){
 	                this.$p2r.text("c'est fait");
-	                this.isFetching=false;
+	                setTimeout(_.bind(function(){
+	                	this.isFetching=false;
+	                },this), 4000);
 	            },this),
 	            error:_.bind(function(){
 	                this.$p2r.text('une erreur est survenue :(')
-	                this.isFetching=false;
+	                setTimeout(_.bind(function(){
+	                	this.isFetching=false;
+	                },this), 1000);
 	            },this)
-	        ,remove: true});
+	        });
 			
 		},this),100);
 	},
@@ -149,7 +153,12 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 
 		$(this.$el.find('.scroll-inner ol li')[currentPage]).trigger('becomesVisible');
 		$(this.$el.find('.scroll-inner ol li')[currentPage+1]).trigger('becomesVisible');
-		$(this.$el.find('.scroll-inner ol li')[currentPage+2]).trigger('becomesVisible');
+
+		// check if item currentPage+2 is near visible ...
+		if ((Math.abs(this.iScrollInstance.y) / this.windowW) % 1 > 0.5 ) {
+			console.log("load currentPage+2")
+			$(this.$el.find('.scroll-inner ol li')[currentPage+2]).trigger('becomesVisible');
+		}
 
 	},
 
