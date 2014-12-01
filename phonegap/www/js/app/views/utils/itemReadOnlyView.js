@@ -26,7 +26,7 @@ var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
 				this.$el.css('background-color', this.model.get('color'));
 			}
 
-			if (_.isEmpty(this.model.get('imageUrl'))){
+			if (!_.isEmpty(this.model.get('imageUrl'))){
 				this.$el.css('background-image', 'none');
 				this.$el.css('background-color', 'transparent');
 			}
