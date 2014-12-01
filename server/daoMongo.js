@@ -58,6 +58,8 @@ DaoMongo.prototype.post_thread = function(title, color, policeName, policeSize, 
 			comments_count:0
 		}
 
+		console.log("New thread created ", new_thread)
+
 		_threads.save(new_thread, _.bind(function(err, thread){
 			this._transformMongoId(thread);
 			if (err==null) 

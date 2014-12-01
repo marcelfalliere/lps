@@ -69,7 +69,7 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 		this.onScroll();
 	},
 	onRender:function(){
-
+console.log("redner home vc")
 		this.iScrollInstance = new IScroll(this.$el.find('.scroll-wrap')[0], {
 		    fadeScrollbars:true,
 		    probeType: 3,
@@ -93,7 +93,19 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 
 		this.collection
 			.on('add', refreshIScrollFunction)
-			.on('remove', refreshIScrollFunction);
+			.on('remove', refreshIScrollFunction)
+			.on('sync', _.bind(function(){
+				setTimeout(_.bind(function(){
+
+					// TODO : replace this bulk replace with a more fine tuned replace
+					// with animations ?
+					this.closeChildren();
+					this.showCollection();
+				    this.iScrollInstance.refresh();
+				    this.onScroll();
+
+				},this), 300);
+			}, this));
 
 		setTimeout(refreshIScrollFunction, 10);
 
@@ -122,7 +134,7 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 	                this.$p2r.text("c'est fait");
 	                setTimeout(_.bind(function(){
 	                	this.isFetching=false;
-	                },this), 4000);
+	                },this), 500);
 	            },this),
 	            error:_.bind(function(){
 	                this.$p2r.text('une erreur est survenue :(')

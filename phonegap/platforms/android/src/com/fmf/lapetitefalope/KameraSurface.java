@@ -145,12 +145,11 @@ public class KameraSurface  extends SurfaceView implements SurfaceHolder.Callbac
                         Bitmap scaledBitmap = Bitmap.createScaledBitmap(croppedBmp,croppedBmp.getWidth(),croppedBmp.getHeight(),true);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap , 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
                         
-                        
                         // save
                         File outputDir = getContext().getCacheDir();
-                        File outputFile = File.createTempFile("fmfpicture", new Date().getTime()+".png", outputDir);
+                        File outputFile = File.createTempFile("fmfpicture", new Date().getTime()+".jpeg", outputDir);
                         fos = new FileOutputStream(outputFile);
-                        rotatedBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                        rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 60, fos);
                         
                         // done !
                         callback.fileSaved(null, outputFile.getAbsolutePath());
