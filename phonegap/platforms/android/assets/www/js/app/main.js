@@ -137,8 +137,11 @@ function initializeScrollBackToTopHelper(){
 	$('#scroll-back-to-top-helper').on('click', function(){
 		$('#content .page').trigger('scrollBackToTop')
 	})
-	
-	
+}
+
+function didSetPseudonym(){
+	var potentialInformation = localStorage.getItem('pseudonym');
+	return potentialInformation != null;
 }
 
 document.querySelector("body").onload = main;

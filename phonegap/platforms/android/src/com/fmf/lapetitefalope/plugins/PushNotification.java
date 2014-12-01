@@ -15,6 +15,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.SyncHttpClient;
 
 public class PushNotification extends CordovaPlugin {
 
@@ -28,6 +29,7 @@ public class PushNotification extends CordovaPlugin {
 			mainActivity= (lapetitefalope)this.cordova.getActivity();
 		}
 		String registrationId = mainActivity.getRegistrationId(mainActivity);
+		Log.d(TAG, "with registrationId"+registrationId);
 		
 		AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
 		
@@ -49,16 +51,17 @@ public class PushNotification extends CordovaPlugin {
 		    
 		    @Override
 		    public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
+		    	Log.e(TAG, "failure at "+PUSH_BASE_URL+"subscribers");
 		    	Log.e(TAG, arg0+"");
-		    	Log.e(TAG, arg2);
-		    	Log.e(TAG, arg3.toString());
+		    	Log.e(TAG, arg2+"");
+		    	Log.e(TAG, arg3+"");
 		    }
 
 			@Override
 			public void onSuccess(int arg0, Header[] arg1, JSONObject j) {
 				Log.d(TAG, "first sub ok");
 				try {
-					String sessionId = j.getString("id");
+					final String sessionId = j.getString("id");
 
 					AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
 					
@@ -79,14 +82,15 @@ public class PushNotification extends CordovaPlugin {
 
 						@Override
 						public void onSuccess(int arg0, Header[] arg1, JSONObject j) {
-							
+							Log.d(TAG, "second sub ok");
 						}
 
-					    @Override
+						@Override
 					    public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
+							Log.e(TAG, "failure at "+PUSH_BASE_URL+"subscriber/"+sessionId+"/subscriptions/"+event);
 					    	Log.e(TAG, arg0+"");
-					    	Log.e(TAG, arg2);
-					    	Log.e(TAG, arg3.toString());
+					    	Log.e(TAG, arg2+"");
+					    	Log.e(TAG, arg3+"");
 					    }
 					});
 				} catch (JSONException e) {
