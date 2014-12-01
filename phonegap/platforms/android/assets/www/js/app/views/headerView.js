@@ -8,6 +8,7 @@ var HeaderView = Backbone.Marionette.ItemView.extend({
 		'tap .button.post-thread': 'onPostThreadTapped',
 		'tap .button.publier':'onPublierTapped',
 		'tap .button.report':'onReportTapped',
+		'tap .button.pseudonym':'onPseudonymTapped',
 
 		'newcolor':'updateButtonColor',
 		'newimage':'updateImageBackground',
@@ -16,7 +17,11 @@ var HeaderView = Backbone.Marionette.ItemView.extend({
 		'saving':'lock'
 	},
 	onBackTapped:function(){
-		app.router.navigate('', {trigger:true});
+		var lastRoute = app.router.customHistory[app.router.customHistory.length-2];
+		if (lastRoute == 'thread')
+			window.history.back();
+		else
+			app.router.navigate('', {trigger:true});
 	},
 	onPostThreadTapped:function(){
 		app.router.navigate('post_thread', {trigger:true});
@@ -26,6 +31,9 @@ var HeaderView = Backbone.Marionette.ItemView.extend({
 	},
 	onReportTapped:function(){
 		app.content.currentView.$el.trigger('raporttapped');
+	},
+	onPseudonymTapped:function(){
+		app.router.navigate('pseudonym', {trigger:true});
 	},
 
 	updateButtonColor:function(e, color){

@@ -2,7 +2,11 @@
 
 var CommentItemView = Backbone.Marionette.ItemView.extend({
 	template:'#tpl-thread-comment-item-view',
-	tagName:'li'
+	tagName:'li',
+	onRender:function(){
+		this.$el.css('background-color', this.model.get('color'));
+		
+	}
 });
 
 

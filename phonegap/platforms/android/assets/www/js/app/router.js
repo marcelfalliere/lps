@@ -12,7 +12,8 @@ var MainRouter = Backbone.Router.extend({
 		'thread/:thread_id':'thread',
 		'post_thread':'postThread',
 		'banned':'banned',
-		'eula':'eula'
+		'eula':'eula',
+		'pseudonym':'pseudonym'
 	},
 	home:function(){
 		app.header.setMainTitle()
@@ -21,6 +22,7 @@ var MainRouter = Backbone.Router.extend({
 			.hideButton('publier')
 			.hideButton('report')
 			.hideButton('close')
+			.showButton('pseudonym')
 			.setTransparent(false);
 
 		var lastRoute = this.customHistory[this.customHistory.length-1];
@@ -31,10 +33,11 @@ var MainRouter = Backbone.Router.extend({
 			app.content.slideInFromBottom(homeVC);
 		} else if (lastRoute == 'thread') {
 			app.content.zoomOut(homeVC);
+		} else if (lastRoute == 'pseudonym'){
+			app.content.slideInToBottom(homeVC);
 		} else {
 			app.content.slideInFromRight(homeVC);
 		}
-
 
 		if (window.analytics!==undefined) window.analytics.trackView('Home');
 	},
@@ -45,6 +48,7 @@ var MainRouter = Backbone.Router.extend({
 			.hideButton('publier')
 			.showButton('report')
 			.hideButton('close')
+			.hideButton('pseudonym')
 			.setTransparent(false);
 
 		app.content.zoomIn(new ThreadVCLayout(
@@ -60,6 +64,7 @@ var MainRouter = Backbone.Router.extend({
 			.showButton('publier')
 			.hideButton('report')
 			.showButton('close')
+			.hideButton('pseudonym')
 			.setTransparent(true)
 			.buttons.publier.removeClass('loading');
 
@@ -76,6 +81,7 @@ var MainRouter = Backbone.Router.extend({
 			.hideButton('publier')
 			.hideButton('report')
 			.hideButton('close')
+			.hideButton('pseudonym')
 			.setTransparent(false)
 			.buttons.publier.removeClass('loading');
 
@@ -91,6 +97,21 @@ var MainRouter = Backbone.Router.extend({
 		app.content.slideIn(new EulaVC());
 
 		if (window.analytics!==undefined) window.analytics.trackView('Eula');
-	}
+	},
+	pseudonym:function(thread_id) {
+		app.header.setTitle('')
+			.hideButton('back')
+			.hideButton('postThread')
+			.hideButton('publier')
+			.hideButton('report')
+			.showButton('close')
+			.hideButton('pseudonym')
+			.setTransparent(true);
+
+		app.content.slideInFromBottom(new PseudonymVC(
+		));
+
+		if (window.analytics!==undefined) window.analytics.trackView('Pseudonym');
+	},
 });
 

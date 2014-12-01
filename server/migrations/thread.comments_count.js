@@ -6,3 +6,6 @@ db.threads.find({}).forEach(function(thread){
 	thread.comments_count = count;
 	db.threads.save(thread);
 })
+
+
+db.comments.update({}, {$set:{pseudonym:'Anonyme'}}, {multi:true})

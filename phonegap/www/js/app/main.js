@@ -140,8 +140,29 @@ function initializeScrollBackToTopHelper(){
 }
 
 function didSetPseudonym(){
-	var potentialInformation = localStorage.getItem('pseudonym');
+	var potentialInformation = getPseudonym();
 	return potentialInformation != null;
+}
+
+function rememberPseudonym(pseudonym){
+	localStorage.setItem('pseudonym', pseudonym)
+}
+
+function getPseudonym(){
+	return localStorage.getItem('pseudonym');
+}
+
+function getCommentColor(){
+	var randomColor = stringToColor("Anonyme");
+	if (window.device && window.device.uuid) 
+		randomColor = stringToColor(device.uuid);
+	return randomColor;
+}
+
+function stringToColor(str) {
+    for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash));
+    for (var i = 0, colour = "#"; i < 3; colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
+    return colour;
 }
 
 document.querySelector("body").onload = main;

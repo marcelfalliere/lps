@@ -45,6 +45,15 @@
     opacity:0.5;
   }
 }
+@-webkit-keyframes slideouttobottomeasy{
+  from {
+    -webkit-transform:translate3d(0, 0, 0);
+  } 
+  to {
+    -webkit-transform:translate3d(0, 100%, 0);
+    opacity:0.5;
+  }
+}
 
 @-webkit-keyframes slideouttorighteasy{
   from {
@@ -101,12 +110,14 @@
 .slide.up.easy {
   -webkit-animation: slideouttotopeasy @normal ;
 }
+.slide.down.easy {
+  -webkit-animation: slideouttobottomeasy @normal ;
+}
 
 
 .slide.in.bottom {
   -webkit-animation: slideinfrombottom @normal ;
 }
-
 .hidebuttonanim {
   position:absolute;
   -webkit-animation: hidebutton @quick ease ;

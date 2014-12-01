@@ -12,6 +12,7 @@ var CommentModel = Backbone.Model.extend({
 		thread.subscribeToNewCommentsPush();
 	},
 	defaults:{
-		loading:false
+		loading:false,
+		pseudonym:'Anonyme'
 	}
 });

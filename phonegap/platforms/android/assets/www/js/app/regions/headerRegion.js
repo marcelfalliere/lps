@@ -82,7 +82,8 @@ var HeaderRegion = Backbone.Marionette.Region.extend({
 			postThread: this.$el.find('.button.post-thread'),
 			publier: this.$el.find('.button.publier'),
 			close: this.$el.find('.button.close'),
-			report: this.$el.find('.button.report')
+			report: this.$el.find('.button.report'),
+			pseudonym: this.$el.find('.button.pseudonym')
 		};
 		this.$title = this.$el.find('h1');
 	}

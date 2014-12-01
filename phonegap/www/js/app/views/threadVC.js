@@ -47,12 +47,17 @@ var ThreadVCLayout = Backbone.Marionette.Layout.extend({
 				collection:comments
 			}));
 
-			this.postComment.show(new PostCommentView({
-				model:new CommentModel({
-					thread_id:app.thread.get('id')
-				}),
-				comments:comments
-			}));
+			if (didSetPseudonym()) {
+				this.postComment.show(new PostCommentView({
+					model:new CommentModel({
+						thread_id:app.thread.get('id')
+					}),
+					comments:comments
+				}));
+			} else {
+				this.postComment.show(new NoPostCommentForYouView())
+			}
+
 
 			comments.thread_id = app.thread.get('id');
 

@@ -16,7 +16,11 @@ var ContentRegion = Backbone.Marionette.Region.extend({
 	},
 
 	slideInFromBottom:function(view) {
-		this.transition(view, 'slide in bottom', 'slide up easy');
+		this.transition(view, 'slide in bottom', 'hide zoomout');
+	},
+
+	slideInToBottom:function(view) {
+		this.transition(view, 'show zoomin', 'slide up easy');
 	},
 	transition:function(view, animIn, animOut) {
 		this.ensureEl();

@@ -85,14 +85,17 @@ DaoMongo.prototype.post_thread = function(title, color, policeName, policeSize, 
 
 }
 
-DaoMongo.prototype.post_comment = function(id, text, color, callback) {
+DaoMongo.prototype.post_comment = function(id, text, color, pseudonym, callback) {
 	var _comments = this._mongo.collection('comments');
 
 	var new_comment = {
 		thread_id:id,
 		text:text,
-		color:color
+		color:color,
+		pseudonym:pseudonym || 'Anonyme'
 	}
+
+	console.log('new comment', new_comment);
 
 	_comments.save(new_comment, _.bind(function(err, comment) {
 		this._transformMongoId(comment);

@@ -52,6 +52,10 @@ body {
   right: 0px;
   background-image: url('../images/icon-report.png');
 }
+#header .button.pseudonym {
+  left: 0px;
+  background-image: url('../images/icon-user.png');
+}
 #header .button.publier {
   width: 60px;
   right: 0px;

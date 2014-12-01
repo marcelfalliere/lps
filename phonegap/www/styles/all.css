@@ -59,6 +59,10 @@ body {
   right: 0px;
   background-image: url('../images/icon-report.png');
 }
+#header .button.pseudonym {
+  left: 0px;
+  background-image: url('../images/icon-user.png');
+}
 #header .button.publier {
   width: 60px;
   right: 0px;
@@ -251,6 +255,15 @@ body {
     opacity: 0.5;
   }
 }
+@-webkit-keyframes slideouttobottomeasy {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+  to {
+    -webkit-transform: translate3d(0, 100%, 0);
+    opacity: 0.5;
+  }
+}
 @-webkit-keyframes slideouttorighteasy {
   from {
     -webkit-transform: translate3d(0%, 0, 0);
@@ -297,6 +310,9 @@ body {
 }
 .slide.up.easy {
   -webkit-animation: slideouttotopeasy 0.5s;
+}
+.slide.down.easy {
+  -webkit-animation: slideouttobottomeasy 0.5s;
 }
 .slide.in.bottom {
   -webkit-animation: slideinfrombottom 0.5s;
@@ -497,34 +513,41 @@ body {
   font-family: 'birds';
   line-height: 37px;
 }
+#content .page.thread-vc #post-comment .noPostCommentForYou {
+  text-align: center;
+  color: #333;
+  background-color: white;
+  font-size: 80%;
+  height: 100%;
+  line-height: 17px;
+}
 #content .page.thread-vc #thread-comments ol li {
   padding: 1.5em 1.2em;
   margin: 1.1em;
   font-family: 'homizio';
-  font-size: 15px;
+  font-size: 16px;
   color: #ffffff;
   background-color: #333333;
   position: relative;
   display: inline-block;
 }
-#content .page.thread-vc #thread-comments ol li .box {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 10px;
-  height: 10px;
-}
 #content .page.thread-vc #thread-comments ol li .id {
   position: absolute;
-  bottom: 1px;
-  right: 1px;
-  font-size: 11px;
+  bottom: 0px;
+  right: 0px;
+  font-size: 13px;
   color: #eee;
   text-transform: uppercase;
 }
 #content .page.thread-vc #thread-comments ol li .loading:before {
   color: #fff;
   content: ". . . ";
+}
+#content .page.thread-vc #thread-comments ol li span {
+  background-color: #333333;
+  padding: .2em;
+  display: inline;
+  line-height: 1.3em;
 }
 #content .page.post-thread-vc #input-wrap {
   width: 100%;
@@ -728,6 +751,58 @@ body {
 #content .page.eula-vc .pane-container .pane .pane-inside .button.disabled {
   color: #aaa;
   background-color: #eee;
+}
+#content .page.pseudonym-vc {
+  background-color: #333;
+  color: white;
+  text-align: center;
+}
+#content .page.pseudonym-vc h4 {
+  margin-top: 0.8em;
+  margin-bottom: 2em;
+  font-size: 2em;
+}
+#content .page.pseudonym-vc p {
+  padding: 0 10px;
+}
+#content .page.pseudonym-vc p strong {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1.3em;
+}
+#content .page.pseudonym-vc .form {
+  margin: 20px 0;
+}
+#content .page.pseudonym-vc .form input {
+  margin: 0;
+  border: 0;
+  border-radius: 3px;
+  padding: 0 3%;
+  line-height: 25px;
+  font-size: 13px;
+  color: #333333;
+  font-family: 'Helvetica';
+  border: 1px solid #333;
+}
+#content .page.pseudonym-vc .form .button {
+  -webkit-transition: all .3s .8s;
+  width: 80%;
+  height: auto;
+  text-indent: 0;
+  background-color: white;
+  box-shadow: inset 1px -4px 5px -6px #333333;
+  display: inline-block;
+  margin-top: 20px;
+  color: #333;
+  font-size: 1.8em;
+  line-height: 1.2em;
+}
+#content .page.pseudonym-vc.light {
+  color: #333;
+}
+#content .page.pseudonym-vc.light .button {
+  color: white;
+  background-color: #333;
 }
 #easter {
   position: absolute;

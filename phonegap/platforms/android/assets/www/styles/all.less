@@ -4,6 +4,7 @@
 @import "transitions.less";	/* page transitions */
 @import "fonts.css";		/* app fonts */
 
+
 #content .page.home-vc {
 
 	ol {
@@ -142,37 +143,39 @@
 			}
 			
 		}
+
+		.noPostCommentForYou {
+			text-align: center;
+			color: #333;
+			background-color: white;
+			font-size: 80%;
+			height: 100%;
+			line-height: 17px;
+		}
 	}
 
 	#thread-comments {
 		
 		
 		ol {
-
 			li {
 				
 				padding:1.5em 1.2em;
 				margin:1.1em;
+
 				font-family:'homizio';
-				font-size:15px;
+				font-size:16px;
 				color:@headerBgColor;
 				background-color:@headerColor;
 				position:relative;
 				display:inline-block;
 
-				@triangleWidth:2px;
-				.box {
-					position: absolute;
-					top: 2px;
-					left: 2px;
-					width: 10px;
-					height: 10px;
-				}
+				
 				.id {
 					position:absolute;
-					bottom: 1px;	
-					right:1px;
-					font-size:11px;
+					bottom: 0px;	
+					right:0px;
+					font-size:13px;
 					color:#eee;
 					text-transform: uppercase;
 				}
@@ -181,6 +184,13 @@
 						color:#fff;
 						content:". . . ";
 					}
+				}
+
+				span {
+					background-color:@headerColor;
+					padding: .2em;
+					display: inline;
+					line-height: 1.3em;
 				}
 			}
 		}
@@ -408,6 +418,70 @@
 
 		}
 	}
+}
+
+#content .page.pseudonym-vc {
+	background-color:#333;
+	color:white;
+	text-align: center;
+
+	h4 {
+		margin-top:0.8em;
+		margin-bottom:2em;
+		font-size: 2em;
+	}
+
+	p {
+		padding:0 10px;
+
+		strong {
+			display:block;
+			margin-bottom:10px;
+			font-size:1.3em;
+		}
+
+	}
+	.form {
+		margin:20px 0;
+
+		input {
+			margin:0;
+			border:0;
+			border-radius:3px;
+			padding:0 3%;
+
+			line-height:25px;
+			font-size:13px;
+			color:@headerColor;
+			font-family: 'Helvetica';
+			border:1px solid #333;
+		}
+
+		.button {
+			-webkit-transition: all .3s .8s;
+			width: 80%;
+			height: auto;
+			text-indent: 0;
+			background-color: white;
+			box-shadow: inset 1px -4px 5px -6px #333333;
+			display: inline-block;
+			margin-top: 20px;
+			color: #333;
+			font-size:1.8em;
+			line-height:1.2em;
+		}
+	}
+
+	&.light {
+		color:#333;
+
+		.button {
+			color:white;
+			background-color: #333;
+		}
+	}
+
+
 }
 
 #easter{

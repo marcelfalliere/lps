@@ -22,6 +22,7 @@
                 <div class="button post-thread"></div>
                 <div class="button text publier hidden">publier</div>
                 <div class="button report hidden"></div>
+                <div class="button pseudonym hidden"></div>
             </section>
 
             <section id="content"></section>
@@ -88,9 +89,8 @@
             <% if (loading) { %>
                 <span class="loading"></loading>
             <% } else { %>
-                <%= text %>
-                <div class="box" style="background-color: <%= color %>;"></div>
-                <div class="id"><%= tinycolor(color).toHexString().substring(1,tinycolor(color).toHexString().length) %></div>
+                <span><%= text %></span>
+                <div class="id" style="background-color:<%= tinycolor(color).darken(15) %>"><%= pseudonym %></div>
             <% } %>
         </script>
         
@@ -99,6 +99,10 @@
                 <input type='text' />
             </div>
             <a class="post">répondre</a>
+        </script>
+
+        <script type="html/template" id="tpl-no-post-comment-for-you">
+            Veuillez choisir un pseudonyme pour pouvoir poster un commentaire.
         </script>
 
         <script type="html/template" id="tpl-post-thread-vc">
@@ -127,6 +131,24 @@
             ಠ_ಠ
             </h4>
         </script>
+
+        <script type="html/template" id="tpl-set-pseudonym-vc">
+            <h4>Choisissez un pseudonyme</h4>
+            <p><strong>La vie est plus fun avec un pseudonyme.</strong></p>
+            <p>Dans cette appli, en avoir un est obligatoire pour poster un commentaire. Ce n'est pas obligatoire pour poster une photo par contre...!</p>
+            <div class="form">
+                <input type="text" name="pseudonym" id="pseudonym" value="Anonyme" />
+                <div class="button confirm">Choisir ce pseudo</div>
+            </div>
+            <p>Et pour info, la couleur de fond de cette page sera votre couleur permettant de d'identifier les commentaires dont vous serez l'auteur.</p>
+        </script>
+
+        <script type="html/template" id="tpl-pseudonym-vc">
+            <h4>Vous avez un pseudonyme !</h4>
+            <p><strong>C'est fabuleux.</strong></p>
+            <p>Il n'y a pas grand chose d'autres à faire par ici.</p>
+        </script>
+
 
         <script type="html/template" id="tpl-eula-vc">
             <div class="pane-container">
@@ -169,8 +191,10 @@
 
         <!-- views -->
         <script src="js/app/views/utils/itemReadOnlyView.js"></script>   
+        <script src="js/app/views/pseudonymVC.js"></script>   
         <script src="js/app/views/homeVC.js"></script>   
         <script src="js/app/views/threadVC.js"></script>   
+            <script src="js/app/views/threadVC-noPostCommentForYouView.js"></script>   
             <script src="js/app/views/threadVC-postCommentView.js"></script>   
             <script src="js/app/views/threadVC-commentsView.js"></script>   
         <script src="js/app/views/postThreadVC.js"></script>    

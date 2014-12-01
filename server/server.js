@@ -78,8 +78,11 @@ Server.prototype.listen = function(port) {
 			}
 			var text = body_parsed.text;
 			var color = body_parsed.color;
-			
-			this._dao.post_comment(req.params.id, text, color, _.bind(function(thread){
+			var pseudonym = body_parsed.pseudonym;
+
+console.log('body_parsed', body_parsed);
+
+			this._dao.post_comment(req.params.id, text, color, pseudonym, _.bind(function(thread){
 				
 				
 				if (thread.length != 1) 
