@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html data-ios7="true">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />        
+        <link rel="stylesheet" href="styles/all.css">
+        <link rel="stylesheet" href="styles/platform.css">
+
+    </head>
+    <body>
+
+        <div id="viewport">
+
+            <section id="push"></section>
+
+            <section id="header">
+                <div id="scroll-back-to-top-helper"></div>
+                <h1>la petite s.</h1>
+                <div class="button back hidden"></div>
+                <div class="button close hidden"></div>
+                <div class="button post-thread"></div>
+                <div class="button text publier hidden">publier</div>
+                <div class="button report hidden"></div>
+                <div class="button pseudonym hidden"></div>
+            </section>
+
+            <section id="content"></section>
+            
+            <h2 id="easter">la petite s.</h2>
+
+        </div>
+
+        <div id="cache-images">
+            
+        </div>
+
+        <script type="html/template" id="tpl-home">
+            <div class="scroll-wrap">
+                <div class="scroll-inner">
+                    <div class="pull-to-refresh"></div>
+                    <ol>
+
+                    </ol>
+                </div>
+            </div>
+        </script>
+
+        <script type="html/template" id="tpl-home-item">
+            <div class="normal-image">
+                <h2><%= title %></h2>
+                <% if (home) { %>
+                    <span class="count-wrap">
+                        <span class="the-count">
+                            <%= comments_count %>
+                            commentaire<%= (comments_count>1)?"s":"" %>
+                        </span>
+                        <span class="the-index">
+                            <%= indexInCollection %>
+                        </span>
+                        <div class="blur-bg"></div>
+                    </span>
+                <% } %>
+            </div>
+        </script>
+
+
+        <script type="html/template" id="tpl-thread-layout">
+            <div id="thread-title"></div>
+            <div class="scroll-wrap">
+                <div class="scroll-inner">
+                    <div class="item-read-only-placeholder" style="height:<%= $(window).width()+'px' %>"></div>
+                    <div id="thread-comments"></div>
+                    <div class="post-comment-placeholder" style="height:<%= ($(window).height()-$(window).width()-$('#header').innerHeight()-37)+'px' %>"></div>
+                </div>
+            </div>
+            <div id="post-comment"></div>
+        </script>
+        
+
+        <script type="html/template" id="tpl-thread-title-view">
+            <h2><%= title %></h2>
+        </script>
+
+        <script type="html/template" id="tpl-thread-comments-view">
+            <ol></ol>
+        </script>
+        <script type="html/template" id="tpl-thread-comment-item-view">
+            <% if (loading) { %>
+                <span class="loading"></loading>
+            <% } else { %>
+                <span><%= text %></span>
+                <div class="id" style="background-color:<%= tinycolor(color).darken(15) %>"><%= pseudonym %></div>
+            <% } %>
+        </script>
+        
+        <script type="html/template" id="tpl-post-comment-view">
+            <div class="input-wrap">
+                <input type='text' />
+            </div>
+            <a class="post">répondre</a>
+        </script>
+
+        <script type="html/template" id="tpl-no-post-comment-for-you">
+            Veuillez choisir un pseudonyme pour pouvoir poster un commentaire.
+        </script>
+
+        <script type="html/template" id="tpl-post-thread-vc">
+            <div id="input-wrap">
+                <p contentEditable></p>
+            </div>
+            <div id="controls-wrap">
+                <div id="control-hint"></div>
+                <ul id="controls"><!--
+                    --><li class="picture"></li><!--
+                    --><li class="bgcolor"></li><!--
+                    --><li class="police"></li><!--
+                --></ul>
+            </div>
+        </script>
+
+        <script type="html/template" id="tpl-push">
+            <%= title %>
+        </script>
+
+        <script type="html/template" id="tpl-banned-vc">
+            <h4>Vous êtes bannis.
+            <br/>
+            <br/>
+            <br/>
+            ಠ_ಠ
+            </h4>
+        </script>
+
+        <script type="html/template" id="tpl-set-pseudonym-vc">
+            <h4>Choisissez un pseudonyme</h4>
+            <p><strong>La vie est plus fun avec un pseudonyme.</strong></p>
+            <p>Dans cette appli, en avoir un est obligatoire pour poster un commentaire. Ce n'est pas obligatoire pour poster une photo par contre...!</p>
+            <div class="form">
+                <input type="text" name="pseudonym" id="pseudonym" value="Anonyme" />
+                <div class="button confirm">Choisir ce pseudo</div>
+            </div>
+            <p>Et pour info, la couleur de fond de cette page sera votre couleur lorsque vous posterez un commentaire.</p>
+        </script>
+
+        <script type="html/template" id="tpl-pseudonym-vc">
+            <h4>Vous avez un pseudonyme !</h4>
+            <p><strong>C'est fabuleux.</strong></p>
+            <p>Il n'y a pas grand chose d'autres à faire par ici.</p>
+        </script>
+
+
+        <script type="html/template" id="tpl-eula-vc">
+            <div class="pane-container">
+                <div class="pane eula">
+                    <div class="pane-inside">
+                        Acceptez la charte d'utilisation (EULA).
+                        <ol>
+                            <li>Je ne posterai pas de photographies à caractère choquant (pornographie, chatons morts, ...). Celles-ci sont strictement interdites !</li>
+                            <li>Je serai banni si je ne respecte pas la règle 1.</li>
+                            <li>Voir règles 1, puis 2.</li>
+                        </ol>
+                        <div class="button">Accepter</div>
+                    </div>
+                    <div id="banderolle"></div>
+                </div>
+            </div>
+            
+        </script>
+        
+        <!-- libs -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/bower_comps/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bower_comps/underscore/underscore-min.js"></script>
+        <script type="text/javascript" src="js/bower_comps/backbone/backbone.js"></script>
+        <script type="text/javascript" src="js/bower_comps/backbone.marionette/lib/backbone.marionette.min.js"></script>
+        <script type="text/javascript" src="js/bower_comps/jquery-hammerjs/jquery.hammer-full.js"></script>
+        <script type="text/javascript" src="js/bower_comps/iscroll/build/iscroll-probe.js"></script>
+        <script type="text/javascript" src="js/bower_comps/iscroll/build/iscroll-probe.js"></script>
+        <script type="text/javascript" src="js/bower_comps/tinycolor/tinycolor.js"></script>
+        
+        <!-- conf -->
+        <script src="js/app/conf.js"></script>
+
+        <!-- models, collections -->
+        <script src="js/app/models/thread.js"></script>   
+        <script src="js/app/collections/threads.js"></script>   
+        <script src="js/app/models/comment.js"></script>   
+        <script src="js/app/collections/comments.js"></script>   
+        <script src="js/app/models/report.js"></script>   
+
+        <!-- views -->
+        <script src="js/app/views/utils/itemReadOnlyView.js"></script>   
+        <script src="js/app/views/pseudonymVC.js"></script>   
+        <script src="js/app/views/homeVC.js"></script>   
+        <script src="js/app/views/threadVC.js"></script>   
+            <script src="js/app/views/threadVC-noPostCommentForYouView.js"></script>   
+            <script src="js/app/views/threadVC-postCommentView.js"></script>   
+            <script src="js/app/views/threadVC-commentsView.js"></script>   
+        <script src="js/app/views/postThreadVC.js"></script>    
+            <script src="js/app/views/postThreadVC-upload.js"></script>   
+            <script src="js/app/views/postThreadVC-modeValueFromPercentageFunctions.js"></script>   
+        <script src="js/app/views/headerView.js"></script>   
+        <script src="js/app/views/pushView.js"></script>   
+        <script src="js/app/views/bannedVC.js"></script>
+        <script src="js/app/views/eulaVC.js"></script>   
+
+        <!-- regions -->
+        <script src="js/app/regions/headerRegion.js"></script>    
+        <script src="js/app/regions/contentRegion.js"></script>   
+        <script src="js/app/regions/pushRegion.js"></script>   
+
+        <!-- router and main -->
+        <script src="js/app/router.js"></script>  
+        <script src="js/app/main.js"></script>
+
+    </body>
+</html>

@@ -1,0 +1,207 @@
+html,
+body,
+#viewport {
+  background-color: #333333;
+  font-family: homizio, 'Helvetica Neue', 'Helvetica', Arial;
+  overflow: hidden;
+  height: 100%;
+  max-height: 100%;
+}
+body {
+  overflow: scroll;
+}
+#header {
+  height: 60px;
+  width: 100%;
+  color: #333333;
+  padding-top: 0px;
+  background-color: #ffffff;
+  position: fixed;
+  z-index: 9999;
+  box-shadow: inset 1px -4px 5px -6px #333333;
+  -webkit-transition: background-color linear 0.5s, color linear 0.5s, -webkit-transform linear 0.8s;
+  -webkit-transition-delay: 0.1s;
+}
+#header.transparent {
+  color: #3d3d3d;
+  background-color: transparent;
+}
+#header.gone-up {
+  -webkit-transform: translateY(-100px);
+}
+#header .button {
+  margin: 0px;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0px;
+}
+#header .button.back {
+  left: 0px;
+  background-image: url('../images/icon-back.png');
+}
+#header .button.close {
+  left: 0px;
+  background-image: url('../images/icon-close.png');
+}
+#header .button.post-thread {
+  right: 0px;
+  background-image: url('../images/icon-post-thread.png');
+}
+#header .button.report {
+  right: 0px;
+  background-image: url('../images/icon-report.png');
+}
+#header .button.pseudonym {
+  left: 0px;
+  background-image: url('../images/icon-user.png');
+}
+#header .button.publier {
+  width: 60px;
+  right: 0px;
+  height: 100%;
+  color: white;
+  text-shadow: 1px 1px 0px black;
+  box-shadow: 0px -2px 4px -2px #333333;
+  background-size: 100% 100%;
+  padding: 0px;
+  text-align: center;
+}
+#header .button.publier.loading {
+  opacity: 0.5;
+}
+#header .button.hidden {
+  display: none;
+}
+#header .button.text {
+  text-indent: 0px;
+  line-height: 40px;
+  padding: 0 8px;
+}
+#header h1 {
+  position: absolute;
+  width: 60%;
+  top: 0px;
+  left: 0;
+  text-align: center;
+  height: 40px	;
+  vertical-align: middle;
+  line-height: 40px;
+  margin-left: 20%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: 'birds';
+  font-size: 30px;
+}
+#header h1.main-title {
+  font-style: italic;
+}
+#header #scroll-back-to-top-helper {
+  position: absolute;
+  width: 60%;
+  height: 95%;
+  left: 20%;
+  z-index: 9999999999999;
+  background-color: transparent;
+}
+#content {
+  background-color: #333333;
+}
+#content .page {
+  -webkit-transform-style: preserve-3d;
+  -webkit-transition: all 0.5s, top 0s;
+  position: absolute;
+  top: 60px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  width: 100%;
+  z-index: 90;
+}
+#content .page.no-header {
+  top: 0px;
+}
+#content .page.slide .scroll-wrap .pull-to-refresh {
+  display: none;
+}
+#content .page .scroll-wrap {
+  height: 100%;
+  overflow: hidden;
+}
+#content .page .scroll-wrap .pull-to-refresh {
+  position: absolute;
+  top: -80px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  height: 80px;
+  line-height: 80px;
+}
+#content .page .scroll-wrap.pullrefresh-slideup,
+#content .page .scroll-wrap.pullrefresh-loading,
+#content .page .scroll-wrap.back-to-top {
+  -webkit-transition: -webkit-transform 0.3s;
+}
+#content .page .scroll-wrap.velocity-scroll {
+  -webkit-transition: -webkit-transform 1s ease;
+}
+#push {
+  position: fixed;
+  top: 0;
+  color: #333333;
+  padding-top: 0px;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 99999999999;
+  right: 0px;
+  left: 0px;
+}
+#push div {
+  margin: 30px;
+}
+.button {
+  width: 20px;
+  height: 20px;
+  text-indent: -99999px;
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.button.hidden {
+  display: none;
+}
+.form-button {
+  display: inline-block;
+  border: 1px solid green;
+  padding: 5px 1px;
+}
+.title-display {
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 1.2;
+  text-align: center;
+  width: 100%;
+  color: white;
+  text-shadow: 1px 1px 0px black;
+  background-size: contain;
+}
+.item-display {
+  background-color: transparent;
+}
+.item-display .normal-image {
+  background-size: contain;
+}
+.item-display .normal-image h2 {
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 1.2;
+  text-align: center;
+  width: 100%;
+  color: white;
+  text-shadow: 1px 1px 0px black;
+  background-size: contain;
+}
+.item-display .normal-image .count-wrap {
+  display: none;
+}

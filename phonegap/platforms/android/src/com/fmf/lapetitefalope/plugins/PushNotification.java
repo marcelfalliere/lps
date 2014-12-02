@@ -57,8 +57,8 @@ public class PushNotification extends CordovaPlugin {
 		RequestParams params = new RequestParams();
 		params.put("proto", "gcm");
 		params.put("token", registrationId);
-
-		client.post(PUSH_BASE_URL+"subscribers", params, new JsonHttpResponseHandler() {
+		try {
+			client.post(PUSH_BASE_URL+"subscribers", params, new JsonHttpResponseHandler() {
 
 		    @Override
 		    public void onStart() {
@@ -129,6 +129,8 @@ public class PushNotification extends CordovaPlugin {
 				
 			}
 		});
-
+		} catch (IllegalArgumentException e) {
+			Log.e(TAG, "IllegalArgumentException"+e.getMessage());
+		}
 	}
 }

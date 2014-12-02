@@ -140,7 +140,7 @@
                 <input type="text" name="pseudonym" id="pseudonym" value="Anonyme" />
                 <div class="button confirm">Choisir ce pseudo</div>
             </div>
-            <p>Et pour info, la couleur de fond de cette page sera votre couleur permettant de d'identifier les commentaires dont vous serez l'auteur.</p>
+            <p>Et pour info, la couleur de fond de cette page sera votre couleur lorsque vous posterez un commentaire.</p>
         </script>
 
         <script type="html/template" id="tpl-pseudonym-vc">
@@ -168,51 +168,9 @@
             
         </script>
         
-        <!-- libs -->
+        <!-- cordova and app -->
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/bower_comps/jquery/jquery.min.js"></script>
-        <script type="text/javascript" src="js/bower_comps/underscore/underscore-min.js"></script>
-        <script type="text/javascript" src="js/bower_comps/backbone/backbone.js"></script>
-        <script type="text/javascript" src="js/bower_comps/backbone.marionette/lib/backbone.marionette.min.js"></script>
-        <script type="text/javascript" src="js/bower_comps/jquery-hammerjs/jquery.hammer-full.js"></script>
-        <script type="text/javascript" src="js/bower_comps/iscroll/build/iscroll-probe.js"></script>
-        <script type="text/javascript" src="js/bower_comps/iscroll/build/iscroll-probe.js"></script>
-        <script type="text/javascript" src="js/bower_comps/tinycolor/tinycolor.js"></script>
-        
-        <!-- conf -->
-        <script src="js/app/conf.js"></script>
-
-        <!-- models, collections -->
-        <script src="js/app/models/thread.js"></script>   
-        <script src="js/app/collections/threads.js"></script>   
-        <script src="js/app/models/comment.js"></script>   
-        <script src="js/app/collections/comments.js"></script>   
-        <script src="js/app/models/report.js"></script>   
-
-        <!-- views -->
-        <script src="js/app/views/utils/itemReadOnlyView.js"></script>   
-        <script src="js/app/views/pseudonymVC.js"></script>   
-        <script src="js/app/views/homeVC.js"></script>   
-        <script src="js/app/views/threadVC.js"></script>   
-            <script src="js/app/views/threadVC-noPostCommentForYouView.js"></script>   
-            <script src="js/app/views/threadVC-postCommentView.js"></script>   
-            <script src="js/app/views/threadVC-commentsView.js"></script>   
-        <script src="js/app/views/postThreadVC.js"></script>    
-            <script src="js/app/views/postThreadVC-upload.js"></script>   
-            <script src="js/app/views/postThreadVC-modeValueFromPercentageFunctions.js"></script>   
-        <script src="js/app/views/headerView.js"></script>   
-        <script src="js/app/views/pushView.js"></script>   
-        <script src="js/app/views/bannedVC.js"></script>
-        <script src="js/app/views/eulaVC.js"></script>   
-
-        <!-- regions -->
-        <script src="js/app/regions/headerRegion.js"></script>    
-        <script src="js/app/regions/contentRegion.js"></script>   
-        <script src="js/app/regions/pushRegion.js"></script>   
-
-        <!-- router and main -->
-        <script src="js/app/router.js"></script>  
-        <script src="js/app/main.js"></script>
+        <script src="app.js"></script>  
 
     </body>
 </html>
