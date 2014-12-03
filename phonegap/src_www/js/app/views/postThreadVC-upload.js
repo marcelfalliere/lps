@@ -4,7 +4,6 @@ var PostThreadVC_Upload = {
 	uploadImage:function(imagePath){
 		this.model.set('isUploading', true);
         var options = new FileUploadOptions();
-        debugger;
         options.fileKey="image";
         options.fileName=imagePath.substr(imagePath.lastIndexOf('/')+1);
         options.mimeType="image/png";

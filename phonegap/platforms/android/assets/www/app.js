@@ -6541,6 +6541,7 @@ var PseudonymVC = Backbone.Marionette.ItemView.extend({
 	onFocusInput:function(ev) {
 		ev.gesture.preventDefault();
 		this.$el.find('input').focus();
+		this.$el.find('input')[0].select();
 	}
 });
 "use strict";
@@ -6854,6 +6855,7 @@ var PostCommentView = Backbone.Marionette.ItemView.extend({
 		window.analytics.trackEvent('Thread', 'onFocusInput', 'Focus sur le champ de réponse');
 		ev.gesture.preventDefault();
 		this.$el.find('input').focus();
+		this.$el.find('input')[0].select();
 	},
 	postModelToServer:function(){
 
@@ -7107,7 +7109,6 @@ var PostThreadVC_Upload = {
 	uploadImage:function(imagePath){
 		this.model.set('isUploading', true);
         var options = new FileUploadOptions();
-        debugger;
         options.fileKey="image";
         options.fileName=imagePath.substr(imagePath.lastIndexOf('/')+1);
         options.mimeType="image/png";
@@ -7431,12 +7432,13 @@ var HeaderRegion = Backbone.Marionette.Region.extend({
 		if (button) {
 			if (button.hasClass('shown')) {
 				button
+					.off('webkitAnimationEnd')
 					.removeClass('shown')
 					.addClass('hidebuttonanim')
 					.on('webkitAnimationEnd', _.bind(function(){
 							this.off('webkitAnimationEnd')
 								.addClass('hidden')
-								.removeClass('hidebuttonanim');
+								.removeClass('hidebuttonanim showbuttonanim');
 						}, button));
 
 			} else {
@@ -7451,12 +7453,13 @@ var HeaderRegion = Backbone.Marionette.Region.extend({
 		var button = this.buttons[buttonId];
 		if (button) {
 			button
+				.off('webkitAnimationEnd')
 				.removeClass('hidden')
 				.addClass('showbuttonanim')
 				.on('webkitAnimationEnd', _.bind(function(){
 						this.off('webkitAnimationEnd')
 							.addClass('shown')
-							.removeClass('showbuttonanim');
+							.removeClass('showbuttonanim hidebuttonanim');
 					}, button));
 			if (possibleRoute) {
 				button.attr('data-route', possibleRoute)

@@ -27,6 +27,7 @@ var PostCommentView = Backbone.Marionette.ItemView.extend({
 		window.analytics.trackEvent('Thread', 'onFocusInput', 'Focus sur le champ de réponse');
 		ev.gesture.preventDefault();
 		this.$el.find('input').focus();
+		this.$el.find('input')[0].select();
 	},
 	postModelToServer:function(){
 
