@@ -1,95 +1,114 @@
 <!DOCTYPE html>
 <html>
-	<head>
+    <head>
 
-		<meta charset="UTF-8">
-		<style type="text/css">
-			body, html, #viewport { margin:0; padding:0; min-height:100%; background-color:#333;}
+        <meta charset="UTF-8">
+        <style type="text/css">
+            body, html { margin:0; padding:0; background-color:#333;}
 
-			@font-face{
-			    font-family : "birds";
-			    src : url('fonts/birds.ttf')  format('truetype'); 
-			}
-			@font-face{
-			    font-family : "homizio";
-			    src : url('fonts/homizio-light.ttf')  format('truetype'); 
-			}
+            @font-face{
+                font-family : "birds";
+                src : url('fonts/birds.ttf')  format('truetype'); 
+            }
+            @font-face{
+                font-family : "homizio";
+                src : url('fonts/homizio-light.ttf')  format('truetype'); 
+            }
 
 
-			header { position:fixed; top:0; left:0; right:0;
-					color:#333;
-					background-color:#fff;
-					position:fixed;
-					z-index:9999;
-					box-shadow:inset 1px -4px 5px -6px #333;
-					text-align: center;
-			}
-			header h1 {
-				font-family:'birds';
-				width:242px;
-				height:56px;
-				background-image:url('images/head.png');
-				background-repeat:no-repeat;
-				margin:0; padding:0;
-				display:inline-block;
-			}
+            header { position:fixed; top:0; left:0; right:0;
+                    color:#333;
+                    background-color:#fff;
+                    position:fixed;
+                    z-index:9999;
+                    box-shadow:inset 1px -4px 5px -6px #333;
+                    text-align: center;
+            }
+            header h1 {
+                font-family:'birds';
+                width:242px;
+                height:56px;
+                background-image:url('images/head.png');
+                background-repeat:no-repeat;
+                margin:0; padding:0;
+                display:inline-block;
+            }
 
-			#content {
-				color:white;
-				font-family:'homizio';
-			}
+            #content {
+                color:white;
+                font-family:'homizio';
+            }
 
-			#intro {
-				position:fixed;
-				width:640px;
-				top:20%;
-				left:50%;
-				margin-left:-320px;
-			}
+            #intro {
+                position:fixed;
+                width:640px;
+                top:20%;
+                left:50%;
+                margin-left:-320px;
+            }
+            .bgimg {
+                width:15%;
+                height:15%;
+                background-size: 100%;
+                background-position-y: center;
+            }
+        </style>
 
-		</style>
+    </head>
 
-	</head>
+    <body>
 
-	<body>
+        <div id="viewport">
 
-		<div id="viewport">
-			<header data-50="transform:translateY(-60px)" data-100="transform:translateY(0px)">
-				<h1></h1>
-			</header>
-			<div id="content">
-				<div id="intro"
-					data-0="transform:scale(0.8)"
-					data-120="transform:scale(1)">
-					<h2>anonyme, créatif et ultra simple</h2>
-					<h3>
-						<u>hypothèses</u><br/>
-						- lancer une discussion devrait être plus qu'un simple texte<br/>
-						- la typographie est super importante<br/>
-						- on se moque bien de l'historique de tout ce qu'il s'est dit depuis 3 ans<br/>
-						- je ne veux pas que le gouvernement soit au courant de mes moindres gestes<br/>
-					</h3>
 
-				</div>
-				
-			</div>
+            <header data-00="transform:translateY(-60px)" data-100="transform:translateY(0px)">
+                <h1></h1>
+            </header>
+            <div id="content">
+                <div id="intro">
+                    <h2 
+                    data-0="transform:scale(0.2)"
+                    data-120="transform:scale(1)">anonyme, créatif et ultra simple</h2>
+                    <h3 
+                    data-20="transform:scale(0.2)"
+                    data-140="transform:scale(1)">
+                        <u>hypothèses</u><br/>
+                        - lancer une discussion devrait être plus qu'un simple texte<br/>
+                        - la typographie est super importante<br/>
+                        - on se moque bien de l'historique de tout ce qu'il s'est dit depuis 3 ans<br/>
+                        - je ne veux pas que le gouvernement soit au courant de mes moindres gestes<br/>
+                    </h3>
 
-		</div>
+                </div>
+                
+            </div>
 
-		<script type="text/javascript" src="js/libs/skrollr.min.js"></script>
-	    <script type="text/javascript">
-	    	var s = skrollr.init();
-	    </script>
 
-	    <script>
-		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        </div>
 
-		  ga('create', 'UA-48753141-2', 'lapetitefalope.fr');
-		  ga('send', 'pageview');
+        <script type="text/javascript">
+            ['tag.jpg', 'prince.jpg'].forEach(function(img){
+                var d = document.createElement('div');
+                d.className = 'bgimg';
+                d.style.backgroundImage = 'url("images/'+img+'")';
+                document.body.appendChild(d)
+            })
+        </script>
 
-		</script>
-	</body>
+        <script type="text/javascript" src="js/libs/skrollr.min.js"></script>
+        <script type="text/javascript">
+            var s = skrollr.init();
+        </script>
+
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-48753141-2', 'lapetitefalope.fr');
+          ga('send', 'pageview');
+
+        </script>
+    </body>
 </html>
