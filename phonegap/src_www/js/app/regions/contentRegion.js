@@ -23,7 +23,6 @@ var ContentRegion = Backbone.Marionette.Region.extend({
 		this.transition(view, 'show zoomin', 'slide up easy');
 	},
 	transition:function(view, animIn, animOut) {
-		this.ensureEl();
 
 		var isReplacingAView = this.currentView!=undefined;
 
@@ -34,8 +33,7 @@ var ContentRegion = Backbone.Marionette.Region.extend({
 				.trigger('pagebeforehide')
 				.on('webkitAnimationEnd', _.bind(function(){
 					this.$el.off('webkitAnimationEnd');
-					this.close();
-					this.remove();
+					this.destroy();
 				}, this.currentView));
 
 			view.render();
@@ -44,14 +42,16 @@ var ContentRegion = Backbone.Marionette.Region.extend({
 				.addClass(animIn)
 				.trigger('pagebeforeshow')
 				.one('webkitAnimationEnd', _.bind(function(){
-					this.off('webkitAnimationEnd')
+					this.currentView = this.toBeCurrentView;
+					this.currentView.$el
+						.off('webkitAnimationEnd')
 						.removeClass(animIn)
 						.trigger('pageshow')
-				}, view.$el));
+				}, this));
 
 			this.$el.append(view.el);
 			
-			this.currentView = view;
+			this.toBeCurrentView = view;
 
 		} else {
 			this.show(view);

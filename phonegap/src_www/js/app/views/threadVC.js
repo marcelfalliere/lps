@@ -1,6 +1,6 @@
 "use strict";
 
-var ThreadVCLayout = Backbone.Marionette.Layout.extend({
+var ThreadVCLayout = Backbone.Marionette.LayoutView.extend({
 	template:'#tpl-thread-layout',
 	className:'page thread-vc',
 	regions:{

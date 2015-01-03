@@ -13,13 +13,15 @@ function initializeApp(){
 	initializePlatformsSquirk();
 	initializeGoogleAnalytics();
 
-
 	initializeRegions();
 	initializeCollections();
 	initializeRouterAfterEverythingElse();
 	initializeScrollBackToTopHelper();
 
 	initializeInAppPush();
+	initializeSocketIo();
+
+	initializePhonegapEvents();
 
 	checkIfUserIsBanned();
 }
@@ -34,6 +36,84 @@ function initializeXhr(){
 			}
 		}
 	);
+}
+
+function initializeSocketIo() {
+	app.socket = io(conf.server.base_url);
+	app.socket.on('threads', function(threads){
+		console.log('threads !');
+
+		if (app.threads) {
+
+			if(!_.isEqual(
+				_.map(threads, function(t){ return t.id }), 
+				_.map(app.threads.toJSON().splice(0,20), function(t){ return t.id }))
+			    ||
+			    !_.isEqual(
+				_.map(threads, function(t){ return t.last_comment }), 
+				_.map(app.threads.toJSON().splice(0,20), function(t){ return t.last_comment }))
+			){
+
+				// new ones !
+				threads.forEach(function(thread){
+					if (!app.threads.get(thread.id)) {
+						console.log('adding thread ', thread);
+						thread.brand_new = true;
+						thread.last_comment = new Date().getTime();
+						app.threads.add(thread);
+					}
+				});
+
+				// delete them
+				app.threads.forEach(function(thread){
+					var possibleMatch = _.filter(threads, function(t){ return t.id == thread.id });
+					if (possibleMatch.length == 0) {
+						thread.set('delete_me', true);
+						thread.collection.trigger('change:delete_me:socketio');
+						console.log('deleting', thread.toJSON());
+					}
+				});
+
+				// refresh order with last comment ?
+				var changed = false;
+				app.threads.forEach(function(thread){
+					var possibleMatch = _.filter(threads, function(t){ return t.id == thread.id });
+					if (possibleMatch.length == 1 
+						&& possibleMatch[0].last_comment != thread.get('last_comment')) {
+						changed = true;
+
+						console.log('hey');
+
+						thread.set({
+							'last_comment': possibleMatch[0].last_comment,
+							'new_comments' : true
+						});
+
+						thread.collection.trigger('change:new_comments:socketio');
+
+					}
+				});
+				if (changed == true) {
+					app.threads.sort();
+				}
+
+			}
+		}
+	});
+}
+
+function initializePhonegapEvents() {
+	document.addEventListener("resume", function(){
+		// fetch new threads
+		if (app.threads) {
+			app.threads.fetch();
+		}
+
+		// register back to websocket ?
+		if (app.socket.disconnected || !app.socket.connected) {
+			initializeSocketIo();
+		}
+	}, false);
 }
 
 function initializeHammerForMarionette(){
@@ -96,7 +176,7 @@ function initializeCollections() {
 
 
 function initializeRouterAfterEverythingElse() {
-	app.on("initialize:after", function(options){
+	app.addInitializer(function(options){
 		
 		if (hasNotSeenEula()){
 			location.hash = 'eula';

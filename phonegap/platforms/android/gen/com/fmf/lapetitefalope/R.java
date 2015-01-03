@@ -702,8 +702,6 @@ containing a value of this type.
         public static final int download_finished_toast=0x7f08005f;
         public static final int download_no_permission_toast=0x7f08005c;
         public static final int download_start_toast=0x7f08005b;
-        public static final int dummy_button=0x7f08006c;
-        public static final int dummy_content=0x7f08006d;
         public static final int go=0x7f08006a;
         public static final int goto_store_button_label=0x7f080067;
         public static final int http_auth_log_in=0x7f080064;
@@ -725,6 +723,7 @@ containing a value of this type.
         public static final int profiler_no_storage_toast=0x7f080044;
         public static final int profiler_started_toast=0x7f080042;
         public static final int profiler_stopped_toast=0x7f080043;
+        public static final int real_app_name=0x7f08006c;
         public static final int report_feedback_button_label=0x7f080068;
         public static final int ssl_alert_title=0x7f080060;
         public static final int store_picture_message=0x7f080001;

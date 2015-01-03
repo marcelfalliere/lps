@@ -17,14 +17,14 @@ var PostCommentView = Backbone.Marionette.ItemView.extend({
 		this.model.set('text', this.$el.find('input').val());
 	},
 	onTapToPost:function(){
-		window.analytics.trackEvent('Thread', 'onTapToPost', 'Tap sur le bouton répondre');
+		if (window.analytics) window.analytics.trackEvent('Thread', 'onTapToPost', 'Tap sur le bouton répondre');
 
 		this.postModelToServer();
 		this.updateLocalCommentsCollection();
 		this.cleanAndPrepareNewModel();
 	},
 	onFocusInput:function(ev){
-		window.analytics.trackEvent('Thread', 'onFocusInput', 'Focus sur le champ de réponse');
+		if (window.analytics) window.analytics.trackEvent('Thread', 'onFocusInput', 'Focus sur le champ de réponse');
 		ev.gesture.preventDefault();
 		this.$el.find('input').focus();
 		this.$el.find('input')[0].select();

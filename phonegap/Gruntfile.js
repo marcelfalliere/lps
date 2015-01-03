@@ -28,6 +28,7 @@ module.exports = function(grunt) {
                     'src_www/js/bower_comps/tinycolor/tinycolor.js',
                     'src_www/js/bower_comps/iscroll/build/iscroll-lite.js',
                     'src_www/js/libs/jquery.hammer-full.js',
+                    'src_www/js/libs/socket.io.js',
                     'src_www/js/app/conf.js',
                     'src_www/js/app/models/thread.js',
                     'src_www/js/app/collections/threads.js',

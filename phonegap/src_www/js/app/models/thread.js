@@ -26,6 +26,7 @@ var ThreadModel = Backbone.Model.extend({
 		app.threads.report(this.get('id'));
 	},
 	defaults:{
+		title:'',
 		comments_count:0,
 		delete_me:false,
 		brand_new:false

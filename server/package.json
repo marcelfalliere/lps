@@ -15,7 +15,8 @@
 		"sinon-chai":"*",
 		"easymongo":"*",
 		"nodemailer":"*",
-		"body-parser":"*"
+		"body-parser":"*",
+		"socket.io":"*"
 	}
 }
 

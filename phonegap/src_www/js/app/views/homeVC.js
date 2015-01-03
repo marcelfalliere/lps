@@ -9,6 +9,8 @@ var HomeItemView = ItemReadOnlyView.extend({
 			className += ' delete_me';
 		if(this.model.get('brand_new') == true)
 			className += ' brand_new';
+		if(this.model.get('new_comments') == true)
+			className += ' new_comments';
 		return className;
 	},
 	home:true,
@@ -38,14 +40,25 @@ var HomeItemView = ItemReadOnlyView.extend({
 		if (this.$el.hasClass('delete_me'))
 			this.$el.on('webkitAnimationEnd', _.bind(function(){
 				this.model.collection.remove(this.model);
-				this.close();
+				this.destroy();
+				this.$el.removeClass('delete_me');
 			},this));
 
 		// focus user interes on this $el
 		if (this.$el.hasClass('brand_new'))
 			this.$el.on('webkitAnimationEnd', _.bind(function(){
 				this.model.set('brand_new', false);
+				this.$el.removeClass('brand_new');
 			},this));
+
+
+		// focus user interes on this $el
+		if (this.$el.hasClass('new_comments'))
+			this.$el.on('webkitAnimationEnd', _.bind(function(){
+				this.model.set('new_comments', false);
+				this.$el.removeClass('new_comments');
+			},this));
+
 	},
 
 	toDetails:function(ev){
@@ -56,9 +69,8 @@ var HomeItemView = ItemReadOnlyView.extend({
 	loadImage:function(){
 
 		if (!_.isEmpty(this.model.get('imageUrl'))){
-			this.$el.find('.blur-bg')
-				.css('background-image', 'url("'+this.model.get('imageUrl')+'")')
-				this.$el.find('.blur-bg').css('background-color', 'transparent');
+			this.$el.find('.blur-bg').css('background-image', 'url("'+this.model.get('imageUrl')+'")')
+			this.$el.find('.blur-bg').css('background-color', 'transparent');
 		}
 
 		ItemReadOnlyView.prototype.loadImage.apply(this, arguments);
@@ -72,6 +84,27 @@ var HomeItemView = ItemReadOnlyView.extend({
 		}
 
 	},
+
+	deleteInUi:function(){
+		if (this.model.get('delete_me')==true) {
+			this.$el.addClass('delete_me');
+			this.$el.on('webkitAnimationEnd', _.bind(function(){
+				this.model.collection.remove(this.model);
+				this.destroy();
+				this.$el.removeClass('delete_me');
+			},this));
+		}
+	},
+
+	highlighNewCommentInUi:function(){
+		if (this.model.get('new_comments')==true) {
+			this.$el.addClass('new_comments');
+			this.$el.on('webkitAnimationEnd', _.bind(function(){
+				this.model.set('new_comments', false);
+				this.$el.removeClass('new_comments');
+			},this));
+		}
+	}
 });
 
 
@@ -79,15 +112,32 @@ var HomeItemView = ItemReadOnlyView.extend({
 var HomeVC = Backbone.Marionette.CompositeView.extend({
 	template:'#tpl-home',
 	className:'page home-vc',
-	itemViewContainer:'ol',
-	itemView:HomeItemView,
+	childViewContainer:'ol',
+	childView:HomeItemView,
 	events:{
 		'swipeleft'	: 'swipeLeft',
 		'swiperight': 'swipeRight',
 		'swipeup'	: 'swipeUp',
 		'swipedown'	: 'swipeDown'
 	},
-	itemViewOptions: function(){
+	initialize:function(){
+		this.collection.on('change:delete_me:socketio', _.bind(function(){
+			this.collection.where({delete_me:true}).forEach(_.bind(function(threadModel){
+				var view = this.children.findByModel(threadModel)
+				if (view) view.deleteInUi();
+			},this));
+
+		},this));
+
+		this.collection.on('change:new_comments:socketio', _.bind(function(){
+			this.collection.where({new_comments:true}).forEach(_.bind(function(threadModel){
+				var view = this.children.findByModel(threadModel)
+				if (view) view.highlighNewCommentInUi();
+			},this));
+
+		},this));
+	},
+	childViewOptions: function(){
 		return {
 			parentView:this
 		}
@@ -124,45 +174,53 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 	},
 
 	swipeLeft:function(ev){
-		var coords = this._getCoordsForModel(this.zoomedModel);
+		if (this.zoomedModel) {
+			var coords = this._getCoordsForModel(this.zoomedModel);
 
-		if (coords.col == 3) {
-			this.deZoom();
-		} else {
-			this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) + 1))
+			if (coords.col == 3) {
+				this.deZoom();
+			} else {
+				this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) + 1))
+			}
+			ev.gesture.preventDefault();
 		}
-		ev.gesture.preventDefault();
 	},
 	swipeRight:function(ev){
-		var coords = this._getCoordsForModel(this.zoomedModel);
+		if (this.zoomedModel) {
+			var coords = this._getCoordsForModel(this.zoomedModel);
 
-		if (coords.col == 0) {
-			this.deZoom();
-		} else {
-			this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) - 1))
+			if (coords.col == 0) {
+				this.deZoom();
+			} else {
+				this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) - 1))
+			}
+			ev.gesture.preventDefault();
 		}
-		ev.gesture.preventDefault();
 	},
 	swipeUp:function(ev){
-		var coords = this._getCoordsForModel(this.zoomedModel);
+		if (this.zoomedModel) {
+			var coords = this._getCoordsForModel(this.zoomedModel);
 
-		if (coords.line == 4) {
-			this.deZoom();
-		} else {
-			this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) + 4))
+			if (coords.line == 4) {
+				this.deZoom();
+			} else {
+				this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) + 4))
+			}
+			ev.gesture.preventDefault();
 		}
-		ev.gesture.preventDefault();
 	},
 
 	swipeDown:function(ev){
-		var coords = this._getCoordsForModel(this.zoomedModel);
+		if (this.zoomedModel) {
+			var coords = this._getCoordsForModel(this.zoomedModel);
 
-		if (coords.line == 0) {
-			this.deZoom();
-		} else {
-			this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) - 4))
+			if (coords.line == 0) {
+				this.deZoom();
+			} else {
+				this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) - 4))
+			}
+			ev.gesture.preventDefault();
 		}
-		ev.gesture.preventDefault();
 	},
 
 

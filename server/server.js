@@ -6,6 +6,7 @@ var fs = require('fs');
 var gm = require('gm').subClass({ imageMagick: true });;
 var path = require('path');
 var bodyparser = require('body-parser');
+var socketio = require('socket.io');
 
 var nodemailer = require("nodemailer");
 var smtpTransport = nodemailer.createTransport("SMTP",{
@@ -24,10 +25,18 @@ function Server(dao, pushInterface, limit, savePath) {
   this._dao = dao;
   this._pushInterface = pushInterface;
   this._server = http.createServer(this._app);
+
+  this._io = socketio(this._server)
   
   this._dao.setLimit(limit);
 
   this._savePath = savePath;
+}
+
+Server.prototype.emitThreads = function (){
+	this._dao.threads(_.bind(function(threads){
+		this._io.emit('threads', threads);
+	},this))
 }
 
 Server.prototype.listen = function(port) {
@@ -80,8 +89,6 @@ Server.prototype.listen = function(port) {
 			var color = body_parsed.color;
 			var pseudonym = body_parsed.pseudonym;
 
-console.log('body_parsed', body_parsed);
-
 			this._dao.post_comment(req.params.id, text, color, pseudonym, _.bind(function(thread){
 				
 				
@@ -89,6 +96,7 @@ console.log('body_parsed', body_parsed);
 					res.status(404).send('Not found');
 				else {
 					this._pushInterface.push('newcomments'+thread[0].thread_id, "Un anonyme vient de contribuer à une \"discussion\" sur laquelle vous avez participé !", thread[0].thread_id);
+					this.emitThreads();
 					res.send(thread[0]);
 				}
 			},this))
@@ -119,6 +127,7 @@ console.log('body_parsed', body_parsed);
 			
 			this._dao.post_thread(title, color, policeName, policeSize, imageUrl, duid, _.bind(function(thread){
 				this._pushInterface.push('newfalope', 'Un nouveau contenu vient d\'être posté...', thread.id+'');
+				this.emitThreads();
 				res.send(thread);
 			},this));
 		},this));
@@ -293,6 +302,7 @@ console.log('body_parsed', body_parsed);
 					res.json(200, {deleted:true});
 				else
 					res.send(500);
+				this.emitThreads();
 			},this))
 		}	
 

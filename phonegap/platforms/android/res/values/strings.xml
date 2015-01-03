@@ -2,6 +2,5 @@
 <resources>
     <string name="app_name">lapetitefalope</string>
     <string name="title_activity_canvas_camera">CanvasCameraActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="real_app_name">la petite s.</string>
 </resources>

@@ -12,9 +12,9 @@ var CommentItemView = Backbone.Marionette.ItemView.extend({
 
 var ThreadCommentsView = Backbone.Marionette.CollectionView.extend({
 	template:'#tpl-thread-comments-view',
-	itemViewContainer:'ol',
+	childViewContainer:'ol',
+	childView:CommentItemView,
 	tagName:'ol',
-	itemView:CommentItemView,
 	initialize:function(){
 		this.collection.on('sync', _.bind(this.render, this));
 		this.collection.on('error', _.bind(this.renderError, this));
