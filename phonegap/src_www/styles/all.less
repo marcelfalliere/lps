@@ -9,7 +9,7 @@
 
 	ol {
 
-		-webkit-transition:all 0.1s linear;
+		-webkit-transition:all 0.2s linear;
 		-webkit-transform:scale(0.25) translateX(-150%);
 		width:400%;
 
@@ -23,7 +23,7 @@
 				}
 			}
 			li:not(.active) {
-				opacity:0.2;
+				opacity:0.4;
 			}
 		}
 
@@ -36,6 +36,38 @@
 			overflow:hidden;
 
 			.item-display;
+
+			@-webkit-keyframes delete_thread{
+			  from {
+			    opacity:1;
+			    -webkit-transform:translate3d(0, 0%, 0);
+			  } 
+			  to {
+			    opacity:0;
+			    -webkit-transform:translate3d(0, 100%, 0);
+			  }
+			}
+
+			@-webkit-keyframes brand_new{
+			  from {
+			  	opacity:0;
+			  	-webkit-transform:rotate(0deg) scale(0.125);
+			  }
+			  to {
+			    -webkit-transform:rotate(360deg) scale(1);
+			    opacity:1;
+			  }
+			}
+
+			&.delete_me {
+				-webkit-animation:delete_thread @normal ease-out;
+				-webkit-animation-delay:1.5s;
+			}
+
+
+			&.brand_new {
+				-webkit-animation:brand_new @slow*4 ease-out;
+			}
 
 			.normal-image {
 

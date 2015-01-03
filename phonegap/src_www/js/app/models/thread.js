@@ -6,12 +6,15 @@ var ThreadModel = Backbone.Model.extend({
 		this.on('sync', _.bind(this.subscribeToNewCommentsPush, this));
 	},
 	subscribeToNewCommentsPush:function(){
+		this.set('isSaving',false);
+
 		// TODO : 2 channel : 1 pour le créateur et 1 pour les participants
 		cordova.exec(function(){
 			console.log('success subscribeToNewCommentsPush');
 		}, function(){
 			console.warn('error subscribeToNewCommentsPush');
 		}, 'PushNotification', 'subscribe', ['newcomments'+this.id]);	
+		
 	
 	},
 	report:function(text){
@@ -23,6 +26,8 @@ var ThreadModel = Backbone.Model.extend({
 		app.threads.report(this.get('id'));
 	},
 	defaults:{
-		comments_count:0
+		comments_count:0,
+		delete_me:false,
+		brand_new:false
 	}
 });

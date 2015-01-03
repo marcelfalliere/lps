@@ -3,7 +3,14 @@
 var HomeItemView = ItemReadOnlyView.extend({
 	template:'#tpl-home-item',
 	tagName:'li',
-	className:'home-item',
+	className:function(){
+		var className = 'home-item';
+		if(this.model.get('delete_me') == true)
+			className += ' delete_me';
+		if(this.model.get('brand_new') == true)
+			className += ' brand_new';
+		return className;
+	},
 	home:true,
 
 	events:{
@@ -26,6 +33,19 @@ var HomeItemView = ItemReadOnlyView.extend({
 		}
 		
 		this.loadImage();
+
+		// delete this $el
+		if (this.$el.hasClass('delete_me'))
+			this.$el.on('webkitAnimationEnd', _.bind(function(){
+				this.model.collection.remove(this.model);
+				this.close();
+			},this));
+
+		// focus user interes on this $el
+		if (this.$el.hasClass('brand_new'))
+			this.$el.on('webkitAnimationEnd', _.bind(function(){
+				this.model.set('brand_new', false);
+			},this));
 	},
 
 	toDetails:function(ev){
@@ -62,10 +82,10 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 	itemViewContainer:'ol',
 	itemView:HomeItemView,
 	events:{
-		'swipeleft li'	: 'swipeLeft',
-		'swiperight li'	: 'swipeRight',
-		'swipeup li'	: 'swipeUp',
-		'swipedown li'	: 'swipeDown'
+		'swipeleft'	: 'swipeLeft',
+		'swiperight': 'swipeRight',
+		'swipeup'	: 'swipeUp',
+		'swipedown'	: 'swipeDown'
 	},
 	itemViewOptions: function(){
 		return {
@@ -102,6 +122,7 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 		this.zoomed = true;
 		this.zoomedModel = model;
 	},
+
 	swipeLeft:function(ev){
 		var coords = this._getCoordsForModel(this.zoomedModel);
 

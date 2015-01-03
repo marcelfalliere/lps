@@ -93,14 +93,21 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 		if (window.analytics) window.analytics.trackEvent('PostThread', 'postModelToServer', this.model.get('title'));
 
 		app.header.headerView.$el.trigger('saving');
-		this.model.set('isSaving',true);
-		this.model.on('sync', _.bind(this.updateLocalThreadsCollectionAndLeaveScreen,this));
+		this.model.set({
+			'isSaving' : true,
+			'last_comment' : new Date().getTime(),
+			'brand_new' : true
+		});
+
+		this.updateLocalThreadsCollectionAndLeaveScreen();
 		this.model.save();
 	},
 	updateLocalThreadsCollectionAndLeaveScreen:function(model){
-		app.threads.add(model);
+		app.threads.add(this.model);
+		if (app.threads.length > 20) {
+			app.threads.at(app.threads.length - 1).set('delete_me', true)
+		}
 
-		this.model.set('isSaving',false);
 		app.router.navigate('', {trigger:'true'});
 	},
 

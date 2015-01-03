@@ -7216,12 +7216,15 @@ var ThreadModel = Backbone.Model.extend({
 		this.on('sync', _.bind(this.subscribeToNewCommentsPush, this));
 	},
 	subscribeToNewCommentsPush:function(){
+		this.set('isSaving',false);
+
 		// TODO : 2 channel : 1 pour le créateur et 1 pour les participants
 		cordova.exec(function(){
 			console.log('success subscribeToNewCommentsPush');
 		}, function(){
 			console.warn('error subscribeToNewCommentsPush');
 		}, 'PushNotification', 'subscribe', ['newcomments'+this.id]);	
+		
 	
 	},
 	report:function(text){
@@ -7233,7 +7236,9 @@ var ThreadModel = Backbone.Model.extend({
 		app.threads.report(this.get('id'));
 	},
 	defaults:{
-		comments_count:0
+		comments_count:0,
+		delete_me:false,
+		brand_new:false
 	}
 });
 "use strict";
@@ -7439,7 +7444,14 @@ var PseudonymVC = Backbone.Marionette.ItemView.extend({
 var HomeItemView = ItemReadOnlyView.extend({
 	template:'#tpl-home-item',
 	tagName:'li',
-	className:'home-item',
+	className:function(){
+		var className = 'home-item';
+		if(this.model.get('delete_me') == true)
+			className += ' delete_me';
+		if(this.model.get('brand_new') == true)
+			className += ' brand_new';
+		return className;
+	},
 	home:true,
 
 	events:{
@@ -7462,6 +7474,19 @@ var HomeItemView = ItemReadOnlyView.extend({
 		}
 		
 		this.loadImage();
+
+		// delete this $el
+		if (this.$el.hasClass('delete_me'))
+			this.$el.on('webkitAnimationEnd', _.bind(function(){
+				this.model.collection.remove(this.model);
+				this.close();
+			},this));
+
+		// focus user interes on this $el
+		if (this.$el.hasClass('brand_new'))
+			this.$el.on('webkitAnimationEnd', _.bind(function(){
+				this.model.set('brand_new', false);
+			},this));
 	},
 
 	toDetails:function(ev){
@@ -7498,10 +7523,10 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 	itemViewContainer:'ol',
 	itemView:HomeItemView,
 	events:{
-		'swipeleft li'	: 'swipeLeft',
-		'swiperight li'	: 'swipeRight',
-		'swipeup li'	: 'swipeUp',
-		'swipedown li'	: 'swipeDown'
+		'swipeleft'	: 'swipeLeft',
+		'swiperight': 'swipeRight',
+		'swipeup'	: 'swipeUp',
+		'swipedown'	: 'swipeDown'
 	},
 	itemViewOptions: function(){
 		return {
@@ -7538,6 +7563,7 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 		this.zoomed = true;
 		this.zoomedModel = model;
 	},
+
 	swipeLeft:function(ev){
 		var coords = this._getCoordsForModel(this.zoomedModel);
 
@@ -7605,10 +7631,6 @@ var ThreadVCLayout = Backbone.Marionette.Layout.extend({
 	},
 	events:{
 		'raporttapped':'onReportTapped',
-		'swiperight':'onSwiperight'
-	},
-	onSwiperight:function(){
-		app.router.navigate('', {trigger:true});
 	},
 	onRender:function(){
 		if (app.thread) {
@@ -7865,14 +7887,21 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 		if (window.analytics) window.analytics.trackEvent('PostThread', 'postModelToServer', this.model.get('title'));
 
 		app.header.headerView.$el.trigger('saving');
-		this.model.set('isSaving',true);
-		this.model.on('sync', _.bind(this.updateLocalThreadsCollectionAndLeaveScreen,this));
+		this.model.set({
+			'isSaving' : true,
+			'last_comment' : new Date().getTime(),
+			'brand_new' : true
+		});
+
+		this.updateLocalThreadsCollectionAndLeaveScreen();
 		this.model.save();
 	},
 	updateLocalThreadsCollectionAndLeaveScreen:function(model){
-		app.threads.add(model);
+		app.threads.add(this.model);
+		if (app.threads.length > 20) {
+			app.threads.at(app.threads.length - 1).set('delete_me', true)
+		}
 
-		this.model.set('isSaving',false);
 		app.router.navigate('', {trigger:'true'});
 	},
 
