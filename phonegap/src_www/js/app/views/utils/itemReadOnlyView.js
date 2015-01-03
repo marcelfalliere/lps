@@ -4,12 +4,14 @@ var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
 	template:'#tpl-home-item',
 	templateHelpers:function(){
 		return {
-			home:false,
 			title:(_.bind(function(){
 				if (this.model)
 					return this.model.get('title');
 				return "";
-			},this))()
+			},this))(),
+			indexInCollection:(_.bind(function(){
+		    	return "#"+ (this.model.collection.indexOf(this.model)+1);
+		    },this)())
 		}
 	},
 	onRender:function(){
@@ -18,6 +20,7 @@ var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
 
 		this.$el.css({
 			"height":size,
+			"width":size,
   			"line-height":size
 		});
 
@@ -29,6 +32,9 @@ var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
 			if (!_.isEmpty(this.model.get('imageUrl'))){
 				this.$el.css('background-image', 'none');
 				this.$el.css('background-color', 'transparent');
+
+				var imageThumbUrl = this.model.get('imageUrl')+'/thumb';
+				this.$el.find('.normal-image').css('background-image', 'url("'+imageThumbUrl+'")')
 			}
 
 			if (!_.isEmpty(this.model.get('policeName'))){
@@ -47,37 +53,9 @@ var ItemReadOnlyView = Backbone.Marionette.ItemView.extend({
 	loadImage:function(){
 		if (!_.isEmpty(this.model.get('imageUrl'))){
 
-			// De base, couleur de fond transparente
-			//this.$el.css('background-color', 'transparent');
-
-			// de base, chargement de l'image thumb
 			var imageUrl = this.model.get('imageUrl');
-			var imageThumbUrl = this.model.get('imageUrl')+'/thumb';
-
-			// si l'image est présente dans le div #cache-images, alors mettre directement la normale
-			if ($('#cache-images').find('img[src="'+imageUrl+'"]').length > 0) {
-				console.log('reusing '+this.model.get('title'));
-
-				this.$el.find('.normal-image').css('background-image', 'url("'+imageUrl+'")')
-			} else {
-				// sinon, charger et cacher
-				console.log('caching '+this.model.get('title'));
-
-				var cacheImages = document.getElementById('cache-images');
-				var thumbImage = new Image();
-				thumbImage.onload = _.bind(function() {
-					this.$el.css('background-image', 'url("'+thumbImage.src+'")')
-					
-					var normalImage = new Image();
-					normalImage.onload = _.bind(function() {
-						this.$el.find('.normal-image').css('background-image', 'url("'+normalImage.src+'")')
-					},this)
-					normalImage.src = imageUrl;
-					cacheImages.appendChild(normalImage);	
-				},this)
-				thumbImage.src = imageThumbUrl;
-				cacheImages.appendChild(thumbImage);
-			}
+			
+			this.$el.find('.normal-image').css('background-image', 'url("'+imageUrl+'")')
 			
 		}
 	}

@@ -21,14 +21,13 @@ module.exports = function(grunt) {
         concat: {
             build: {
                 src: [
-                    'src_www/js/bower_comps/jquery/jquery.min.js',
-                    'src_www/js/bower_comps/underscore/underscore-min.js',
+                    'src_www/js/bower_comps/jquery/dist/jquery.min.js',
+                    'src_www/js/bower_comps/underscore/underscore.js',
                     'src_www/js/bower_comps/backbone/backbone.js',
                     'src_www/js/bower_comps/backbone.marionette/lib/backbone.marionette.min.js',
-                    'src_www/js/bower_comps/jquery-hammerjs/jquery.hammer-full.js',
-                    'src_www/js/bower_comps/iscroll/build/iscroll-probe.js',
-                    'src_www/js/bower_comps/iscroll/build/iscroll-probe.js',
+                    'src_www/js/bower_comps/jquery-hammerjs/jquery.hammer-full.min.js',
                     'src_www/js/bower_comps/tinycolor/tinycolor.js',
+                    'src_www/js/bower_comps/iscroll/build/iscroll-lite.js',
                     'src_www/js/app/conf.js',
                     'src_www/js/app/models/thread.js',
                     'src_www/js/app/collections/threads.js',

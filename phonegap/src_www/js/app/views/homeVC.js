@@ -3,21 +3,19 @@
 var HomeItemView = ItemReadOnlyView.extend({
 	template:'#tpl-home-item',
 	tagName:'li',
+	className:'home-item',
+	home:true,
 	events:{
 		'tap':'onTap',
-		'becomesVisible':'loadImage'
 	},
 	templateHelpers: function(){
 		return {
-		    home:true,
 		    indexInCollection:(_.bind(function(){
 		    	return "#"+ (this.model.collection.indexOf(this.model)+1);
 		    },this)())
 		}
 	},
 	onRender:function(){
-		this.imageLoaded = false;
-
 		ItemReadOnlyView.prototype.onRender.apply(this, arguments);
 
 		if (!_.isEmpty(this.model.get('color'))){
@@ -25,26 +23,18 @@ var HomeItemView = ItemReadOnlyView.extend({
 			this.$el.find('.blur-bg').css('background-color', darkenedColor);
 		}
 		
+		this.loadImage();
 	},
 
-	onTap:function(ev){
+	toDetails:function(ev){
 
 		ev.gesture.preventDefault();
 		app.thread = this.model;
-
-		app.homeViewScrollTop = $(window).scrollTop();
-
-		$(window).scrollTop(0);
-		$('.page.home-vc').css('top','-'+(app.homeViewScrollTop-$('#header').innerHeight())+'px')
 
 		app.router.navigate('thread/'+this.model.get('id'), {trigger:true});
 	},
 
 	loadImage:function(){
-		if (this.imageLoaded)
-			return;
-
-		this.imageLoaded=true;
 
 		if (!_.isEmpty(this.model.get('imageUrl'))){
 			this.$el.find('.blur-bg')
@@ -53,8 +43,19 @@ var HomeItemView = ItemReadOnlyView.extend({
 		}
 
 		ItemReadOnlyView.prototype.loadImage.apply(this, arguments);
-	}
+	},
+
+	onTap:function(ev){
+		if (this.options.parentView.shouldNavigateToDetails(this.model)) {
+			this.toDetails(ev);
+		} else {
+			this.options.parentView.zoomingOnModel(this.model);
+		}
+
+	},
 });
+
+
 
 var HomeVC = Backbone.Marionette.CompositeView.extend({
 	template:'#tpl-home',
@@ -62,130 +63,93 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 	itemViewContainer:'ol',
 	itemView:HomeItemView,
 	events:{
-		'scrollBackToTop':'scrollBackToTop',
-		'touchend .scroll-inner':'onTouchend'
+		'swipeleft'	: 'swipeLeft',
+		'swiperight': 'swipeRight',
+		'swipeup'	: 'swipeUp',
+		'swipedown'	: 'swipeDown'
 	},
-	scrollBackToTop:function() {
-		this.iScrollInstance.scrollTo(0,0, 0);
-		this.onScroll();
+	itemViewOptions: function(){
+		return {
+			parentView:this
+		}
 	},
-	onRender:function(){
-console.log("redner home vc")
-		this.iScrollInstance = new IScroll(this.$el.find('.scroll-wrap')[0], {
-		    fadeScrollbars:true,
-		    probeType: 3,
-		    disableMouse: true,
-    		disablePointer: true,
-    		shrinkScrollbars:'scale',
-    		scrollbars: 'custom'
-		});
+	zoomed:false,
+	deZoom:function(){
+		this.$el.find('ol')
+			.removeAttr('style')
+			.removeClass('zoomed');
+
+		this.zoomed = false;
+	},
+	shouldNavigateToDetails:function(model){
+		return this.zoomed && this.zoomedModel.id == model.id
+	},
+	zoomingOnModel:function(model){
 		
-		this.$p2r = this.$el.find('.pull-to-refresh');
-		this.breakpoint = 80;
-		this.isFetching = false;
-		this.windowW = $(window).width();
-		this.currentPage = 0;
-
-		this.iScrollInstance.on('scroll', _.bind(this.onScroll,this));
-
-		var refreshIScrollFunction = _.bind(function(){
-			this.iScrollInstance.refresh();
-		},this);
-
-		this.collection
-			.on('add', refreshIScrollFunction)
-			.on('remove', refreshIScrollFunction)
-			.on('sync', _.bind(function(){
-				setTimeout(_.bind(function(){
-
-					// TODO : replace this bulk replace with a more fine tuned replace
-					// with animations ?
-					this.closeChildren();
-					this.showCollection();
-				    this.iScrollInstance.refresh();
-				    this.onScroll();
-
-				},this), 300);
-			}, this));
-
-		setTimeout(refreshIScrollFunction, 10);
-
-		if (window.app.homeViewlastCloseIScrollY)
-			this.iScrollInstance.scrollTo(0, window.app.homeViewlastCloseIScrollY);
-
-		this.onScroll();
-	},
-
-	appendHtml: function(collectionView, itemView, index){ // see https://github.com/marionettejs/backbone.marionette/wiki/Adding-support-for-sorted-collections
-		var childrenContainer = collectionView.itemViewContainer ? collectionView.$(collectionView.itemViewContainer) : collectionView.$el;
-		var children = childrenContainer.children();
+		var coords = this._getCoordsForModel(model);
 		
-		if (children.size() <= index) {
-			childrenContainer.append(itemView.el);
+		var translateX = '-' + (coords.col * 25) + '%';
+		var translateY = '-' + (coords.line * $(window).width()) + 'px';
+
+		this.$el.find('ol')
+			.css('-webkit-transform-origin', ($(window).width()/2)+'px '+($(window).height())+'px')
+			.css('-webkit-transform', 'scale(0.8) translateX('+translateX+') translateY('+translateY+')')
+			.addClass('zoomed')
+			.find('li.active').removeClass('active');
+
+
+		this.children.findByModel(model).$el.addClass('active');
+
+		this.zoomed = true;
+		this.zoomedModel = model;
+	},
+	swipeLeft:function(){
+		var coords = this._getCoordsForModel(this.zoomedModel);
+
+		if (coords.col == 3) {
+			this.deZoom();
 		} else {
-			children.eq(index).before(itemView.el);
+			this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) + 1))
 		}
-
 	},
+	swipeRight:function(){
+		var coords = this._getCoordsForModel(this.zoomedModel);
 
-	refreshFunction:function(){
-		setTimeout(_.bind(function(){
-			this.collection.fetch({
-	            success:_.bind(function(){
-	                this.$p2r.text("c'est fait");
-	                setTimeout(_.bind(function(){
-	                	this.isFetching=false;
-	                },this), 500);
-	            },this),
-	            error:_.bind(function(){
-	                this.$p2r.text('une erreur est survenue :(')
-	                setTimeout(_.bind(function(){
-	                	this.isFetching=false;
-	                },this), 1000);
-	            },this)
-	        });
-			
-		},this),100);
-	},
-
-	onClose:function(){
-		window.app.homeViewlastCloseIScrollY = this.iScrollInstance.y;
-	},
-
-	onScroll:function(){
-		if (this.iScrollInstance.y > 0) {
-			if (this.isFetching==true)
-				this.$p2r.text('en cours...')
-			else if (this.iScrollInstance.y < this.breakpoint)
-				this.$p2r.text(dots(parseInt(this.iScrollInstance.y/2,10)));
-			else if (this.iScrollInstance.y >= this.breakpoint)
-				this.$p2r.text('lâcher pour rafraîchir')
+		if (coords.col == 0) {
+			this.deZoom();
+		} else {
+			this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) - 1))
 		}
+	},
+	swipeUp:function(){
+		var coords = this._getCoordsForModel(this.zoomedModel);
 
-		var currentPage = Math.floor(Math.abs(this.iScrollInstance.y) / this.windowW);
-
-		$(this.$el.find('.scroll-inner ol li')[currentPage]).trigger('becomesVisible');
-		$(this.$el.find('.scroll-inner ol li')[currentPage+1]).trigger('becomesVisible');
-
-		// check if item currentPage+2 is near visible ...
-		if ((Math.abs(this.iScrollInstance.y) / this.windowW) % 1 > 0.5 ) {
-			console.log("load currentPage+2")
-			$(this.$el.find('.scroll-inner ol li')[currentPage+2]).trigger('becomesVisible');
+		if (coords.line == 4) {
+			this.deZoom();
+		} else {
+			this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) + 4))
 		}
-
 	},
 
-	onTouchend:function(){
-		if (this.isFetching==false && this.iScrollInstance.y >= this.breakpoint) {
-			this.isFetching=true;
-			this.$p2r.text('en cours...')
-			this.refreshFunction();
+	swipeDown:function(){
+		var coords = this._getCoordsForModel(this.zoomedModel);
+
+		if (coords.line == 0) {
+			this.deZoom();
+		} else {
+			this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) - 4))
+		}
+	},
+
+
+	_getCoordsForModel:function(model){
+		var index = model.collection.indexOf(model);
+
+		return {
+			line : Math.floor(index / 4),
+			col  : index % 4
 		}
 	}
 
+
 });
-
-function dots(howmany) {
-    return Array(howmany).join().split(',').map(function(e, i) { return '.'; }).join(' ');
-}
-

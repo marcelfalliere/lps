@@ -371,18 +371,23 @@ body {
 /* page transitions */
 /* app fonts */
 #content .page.home-vc ol {
-  -webkit-transform-style: preserve-3d;
+  -webkit-transition: all 0.1s linear;
+  -webkit-transform: scale(0.25) translateX(-150%);
+  width: 400%;
+}
+#content .page.home-vc ol.zoomed li.active .normal-image .count-wrap {
+  -webkit-transform: translateY(0px);
+}
+#content .page.home-vc ol.zoomed li:not(.active) {
+  opacity: 0.2;
 }
 #content .page.home-vc ol li {
+  -webkit-transition: all 0.5s ease-in-out;
   background-color: #ccc;
   position: relative;
   background-size: contain;
-  -webkit-animation: all 0.5s ease-in-out;
-  /*
-			h2 {
-				.title-display;
-			}*/
-
+  float: left;
+  overflow: hidden;
   background-color: transparent;
 }
 #content .page.home-vc ol li .normal-image {
@@ -402,6 +407,9 @@ body {
   display: none;
 }
 #content .page.home-vc ol li .normal-image .count-wrap {
+  -webkit-transform: translateY(40px);
+  -webkit-transition: all 0.3s linear;
+  -webkit-transition-delay: 0.3s;
   display: block;
   position: absolute;
   bottom: 0;
@@ -428,7 +436,7 @@ body {
   padding: 0 20px;
   position: absolute;
   z-index: 2;
-  font-size: 14px;
+  font-size: 30px;
 }
 #content .page.home-vc ol li .normal-image .count-wrap .the-index {
   font-family: homizio, 'Helvetica Neue', 'Helvetica', Arial;
@@ -438,7 +446,7 @@ body {
   position: absolute;
   right: 0px;
   z-index: 2;
-  font-size: 14px;
+  font-size: 30px;
 }
 #content .page.thread-vc {
   bottom: 37px;

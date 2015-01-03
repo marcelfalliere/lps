@@ -51,7 +51,7 @@ var PostThreadVC = Backbone.Marionette.ItemView.extend({
 
 		this.onKeyupSaveUserInputAndUpdateTitle();
 		
-		this.startCapture();
+		this.bgcolor();
 	},
 	focus:function(){
 		this.$input.focus();

@@ -36,31 +36,26 @@
         </div>
 
         <script type="html/template" id="tpl-home">
-            <div class="scroll-wrap">
-                <div class="scroll-inner">
-                    <div class="pull-to-refresh"></div>
-                    <ol>
+            <ol>
 
-                    </ol>
-                </div>
-            </div>
+            </ol>
         </script>
 
         <script type="html/template" id="tpl-home-item">
             <div class="normal-image">
                 <h2><%= title %></h2>
-                <% if (home) { %>
-                    <span class="count-wrap">
-                        <span class="the-count">
-                            <%= comments_count %>
-                            commentaire<%= (comments_count>1)?"s":"" %>
-                        </span>
-                        <span class="the-index">
-                            <%= indexInCollection %>
-                        </span>
-                        <div class="blur-bg"></div>
+                
+                <span class="count-wrap">
+                    <span class="the-count">
+                        <%= comments_count %>
+                        commentaire<%= (comments_count>1)?"s":"" %>
                     </span>
-                <% } %>
+                    <span class="the-index">
+                        <%= indexInCollection %>
+                    </span>
+                    <div class="blur-bg"></div>
+                </span>
+                
             </div>
         </script>
 

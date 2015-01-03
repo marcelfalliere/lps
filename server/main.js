@@ -5,6 +5,11 @@ var DaoMongo = require('./daoMongo.js');
 var request = require('request');
 var pushEndPoint = 'http://127.0.0.1:8888/'
 
+
+if (process.argv.indexOf('local') != -1) {
+	var PushInterface = require('./tests/mockPushInterface.js');
+}
+
 var s = new Server(
 	new DaoMongo('lpf-prod'), 
 	new PushInterface(request, pushEndPoint), 
