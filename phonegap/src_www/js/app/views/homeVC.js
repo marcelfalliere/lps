@@ -5,9 +5,11 @@ var HomeItemView = ItemReadOnlyView.extend({
 	tagName:'li',
 	className:'home-item',
 	home:true,
+
 	events:{
 		'tap':'onTap',
 	},
+
 	templateHelpers: function(){
 		return {
 		    indexInCollection:(_.bind(function(){
@@ -27,10 +29,7 @@ var HomeItemView = ItemReadOnlyView.extend({
 	},
 
 	toDetails:function(ev){
-
-		ev.gesture.preventDefault();
 		app.thread = this.model;
-
 		app.router.navigate('thread/'+this.model.get('id'), {trigger:true});
 	},
 
@@ -63,10 +62,10 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 	itemViewContainer:'ol',
 	itemView:HomeItemView,
 	events:{
-		'swipeleft'	: 'swipeLeft',
-		'swiperight': 'swipeRight',
-		'swipeup'	: 'swipeUp',
-		'swipedown'	: 'swipeDown'
+		'swipeleft li'	: 'swipeLeft',
+		'swiperight li'	: 'swipeRight',
+		'swipeup li'	: 'swipeUp',
+		'swipedown li'	: 'swipeDown'
 	},
 	itemViewOptions: function(){
 		return {
@@ -103,7 +102,7 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 		this.zoomed = true;
 		this.zoomedModel = model;
 	},
-	swipeLeft:function(){
+	swipeLeft:function(ev){
 		var coords = this._getCoordsForModel(this.zoomedModel);
 
 		if (coords.col == 3) {
@@ -111,8 +110,9 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 		} else {
 			this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) + 1))
 		}
+		ev.gesture.preventDefault();
 	},
-	swipeRight:function(){
+	swipeRight:function(ev){
 		var coords = this._getCoordsForModel(this.zoomedModel);
 
 		if (coords.col == 0) {
@@ -120,8 +120,9 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 		} else {
 			this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) - 1))
 		}
+		ev.gesture.preventDefault();
 	},
-	swipeUp:function(){
+	swipeUp:function(ev){
 		var coords = this._getCoordsForModel(this.zoomedModel);
 
 		if (coords.line == 4) {
@@ -129,9 +130,10 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 		} else {
 			this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) + 4))
 		}
+		ev.gesture.preventDefault();
 	},
 
-	swipeDown:function(){
+	swipeDown:function(ev){
 		var coords = this._getCoordsForModel(this.zoomedModel);
 
 		if (coords.line == 0) {
@@ -139,6 +141,7 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 		} else {
 			this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) - 4))
 		}
+		ev.gesture.preventDefault();
 	},
 
 

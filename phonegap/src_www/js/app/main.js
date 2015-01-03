@@ -9,7 +9,7 @@ function main(){
 function initializeApp(){
 	initializeXhr();
 	initializeBackbone();
-	initializeHammer();
+	initializeHammerForMarionette();
 	initializePlatformsSquirk();
 	initializeGoogleAnalytics();
 
@@ -36,7 +36,7 @@ function initializeXhr(){
 	);
 }
 
-function initializeHammer(){
+function initializeHammerForMarionette(){
 	$("#viewport").hammer({prevent_default:true});
 }
 

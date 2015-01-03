@@ -2911,14 +2911,6 @@
 
 Backbone.ChildViewContainer=function(a,b){var c=function(a){this._views={},this._indexByModel={},this._indexByCustom={},this._updateLength(),b.each(a,this.add,this)};b.extend(c.prototype,{add:function(a,b){var c=a.cid;this._views[c]=a,a.model&&(this._indexByModel[a.model.cid]=c),b&&(this._indexByCustom[b]=c),this._updateLength()},findByModel:function(a){return this.findByModelCid(a.cid)},findByModelCid:function(a){var b=this._indexByModel[a];return this.findByCid(b)},findByCustom:function(a){var b=this._indexByCustom[a];return this.findByCid(b)},findByIndex:function(a){return b.values(this._views)[a]},findByCid:function(a){return this._views[a]},remove:function(a){var c=a.cid;a.model&&delete this._indexByModel[a.model.cid],b.any(this._indexByCustom,function(a,b){return a===c?(delete this._indexByCustom[b],!0):void 0},this),delete this._views[c],this._updateLength()},call:function(a){this.apply(a,b.tail(arguments))},apply:function(a,c){b.each(this._views,function(d){b.isFunction(d[a])&&d[a].apply(d,c||[])})},_updateLength:function(){this.length=b.size(this._views)}});var d=["forEach","each","map","find","detect","filter","select","reject","every","all","some","any","include","contains","invoke","toArray","first","initial","rest","last","without","isEmpty","pluck"];return b.each(d,function(a){c.prototype[a]=function(){var c=b.values(this._views),d=[c].concat(b.toArray(arguments));return b[a].apply(b,d)}}),c}(Backbone,_),Backbone.Wreqr=function(a,b,c){"use strict";var d={};return d.Handlers=function(a,b){var c=function(a){this.options=a,this._wreqrHandlers={},b.isFunction(this.initialize)&&this.initialize(a)};return c.extend=a.Model.extend,b.extend(c.prototype,a.Events,{setHandlers:function(a){b.each(a,function(a,c){var d=null;b.isObject(a)&&!b.isFunction(a)&&(d=a.context,a=a.callback),this.setHandler(c,a,d)},this)},setHandler:function(a,b,c){var d={callback:b,context:c};this._wreqrHandlers[a]=d,this.trigger("handler:add",a,b,c)},hasHandler:function(a){return!!this._wreqrHandlers[a]},getHandler:function(a){var b=this._wreqrHandlers[a];if(!b)throw new Error("Handler not found for '"+a+"'");return function(){var a=Array.prototype.slice.apply(arguments);return b.callback.apply(b.context,a)}},removeHandler:function(a){delete this._wreqrHandlers[a]},removeAllHandlers:function(){this._wreqrHandlers={}}}),c}(a,c),d.CommandStorage=function(){var b=function(a){this.options=a,this._commands={},c.isFunction(this.initialize)&&this.initialize(a)};return c.extend(b.prototype,a.Events,{getCommands:function(a){var b=this._commands[a];return b||(b={command:a,instances:[]},this._commands[a]=b),b},addCommand:function(a,b){var c=this.getCommands(a);c.instances.push(b)},clearCommands:function(a){var b=this.getCommands(a);b.instances=[]}}),b}(),d.Commands=function(a){return a.Handlers.extend({storageType:a.CommandStorage,constructor:function(b){this.options=b||{},this._initializeStorage(this.options),this.on("handler:add",this._executeCommands,this);var c=Array.prototype.slice.call(arguments);a.Handlers.prototype.constructor.apply(this,c)},execute:function(a,b){a=arguments[0],b=Array.prototype.slice.call(arguments,1),this.hasHandler(a)?this.getHandler(a).apply(this,b):this.storage.addCommand(a,b)},_executeCommands:function(a,b,d){var e=this.storage.getCommands(a);c.each(e.instances,function(a){b.apply(d,a)}),this.storage.clearCommands(a)},_initializeStorage:function(a){var b,d=a.storageType||this.storageType;b=c.isFunction(d)?new d:d,this.storage=b}})}(d),d.RequestResponse=function(a){return a.Handlers.extend({request:function(){var a=arguments[0],b=Array.prototype.slice.call(arguments,1);return this.getHandler(a).apply(this,b)}})}(d),d.EventAggregator=function(a,b){var c=function(){};return c.extend=a.Model.extend,b.extend(c.prototype,a.Events),c}(a,c),d}(Backbone,Backbone.Marionette,_);var Marionette=function(a,b,c){"use strict";function d(a){return g.call(a)}function e(a,b){var c=new Error(a);throw c.name=b||"Error",c}var f={};b.Marionette=f,f.$=b.$;var g=Array.prototype.slice;return f.extend=b.Model.extend,f.getOption=function(a,b){if(a&&b){var c;return c=a.options&&b in a.options&&void 0!==a.options[b]?a.options[b]:a[b]}},f.normalizeMethods=function(a){var b,d={};return c.each(a,function(a,e){b=a,c.isFunction(b)||(b=this[b]),b&&(d[e]=b)},this),d},f.triggerMethod=function(){function a(a,b,c){return c.toUpperCase()}var b=/(^|:)(\w)/gi,d=function(d){var e="on"+d.replace(b,a),f=this[e];return c.isFunction(this.trigger)&&this.trigger.apply(this,arguments),c.isFunction(f)?f.apply(this,c.tail(arguments)):void 0};return d}(),f.MonitorDOMRefresh=function(a){function b(a){a._isShown=!0,e(a)}function d(a){a._isRendered=!0,e(a)}function e(a){a._isShown&&a._isRendered&&f(a)&&c.isFunction(a.triggerMethod)&&a.triggerMethod("dom:refresh")}function f(b){return a.contains(b.el)}return function(a){a.listenTo(a,"show",function(){b(a)}),a.listenTo(a,"render",function(){d(a)})}}(document.documentElement),function(a){function b(a,b,d,f){var g=f.split(/\s+/);c.each(g,function(c){var f=a[c];f||e("Method '"+c+"' was configured as an event handler, but does not exist."),a.listenTo(b,d,f,a)})}function d(a,b,c,d){a.listenTo(b,c,d,a)}function f(a,b,d,e){var f=e.split(/\s+/);c.each(f,function(c){var e=a[c];a.stopListening(b,d,e,a)})}function g(a,b,c,d){a.stopListening(b,c,d,a)}function h(a,b,d,e,f){b&&d&&(c.isFunction(d)&&(d=d.call(a)),c.each(d,function(d,g){c.isFunction(d)?e(a,b,g,d):f(a,b,g,d)}))}a.bindEntityEvents=function(a,c,e){h(a,c,e,d,b)},a.unbindEntityEvents=function(a,b,c){h(a,b,c,g,f)}}(f),f.Callbacks=function(){this._deferred=f.$.Deferred(),this._callbacks=[]},c.extend(f.Callbacks.prototype,{add:function(a,b){this._callbacks.push({cb:a,ctx:b}),this._deferred.done(function(c,d){b&&(c=b),a.call(c,d)})},run:function(a,b){this._deferred.resolve(b,a)},reset:function(){var a=this._callbacks;this._deferred=f.$.Deferred(),this._callbacks=[],c.each(a,function(a){this.add(a.cb,a.ctx)},this)}}),f.Controller=function(a){this.triggerMethod=f.triggerMethod,this.options=a||{},c.isFunction(this.initialize)&&this.initialize(this.options)},f.Controller.extend=f.extend,c.extend(f.Controller.prototype,b.Events,{close:function(){this.stopListening(),this.triggerMethod("close"),this.unbind()}}),f.Region=function(a){if(this.options=a||{},this.el=f.getOption(this,"el"),!this.el){var b=new Error("An 'el' must be specified for a region.");throw b.name="NoElError",b}if(this.initialize){var c=Array.prototype.slice.apply(arguments);this.initialize.apply(this,c)}},c.extend(f.Region,{buildRegion:function(a,b){var d="string"==typeof a,e="string"==typeof a.selector,f="undefined"==typeof a.regionType,g="function"==typeof a;if(!g&&!d&&!e)throw new Error("Region must be specified as a Region type, a selector string or an object with selector property");var h,i;d&&(h=a),a.selector&&(h=a.selector,delete a.selector),g&&(i=a),!g&&f&&(i=b),a.regionType&&(i=a.regionType,delete a.regionType),(d||g)&&(a={}),a.el=h;var j=new i(a);return a.parentEl&&(j.getEl=function(b){var d=a.parentEl;return c.isFunction(d)&&(d=d()),d.find(b)}),j}}),c.extend(f.Region.prototype,b.Events,{show:function(a){this.ensureEl();var b=a.isClosed||c.isUndefined(a.$el),d=a!==this.currentView;d&&this.close(),a.render(),(d||b)&&this.open(a),this.currentView=a,f.triggerMethod.call(this,"show",a),f.triggerMethod.call(a,"show")},ensureEl:function(){this.$el&&0!==this.$el.length||(this.$el=this.getEl(this.el))},getEl:function(a){return f.$(a)},open:function(a){this.$el.empty().append(a.el)},close:function(){var a=this.currentView;a&&!a.isClosed&&(a.close?a.close():a.remove&&a.remove(),f.triggerMethod.call(this,"close",a),delete this.currentView)},attachView:function(a){this.currentView=a},reset:function(){this.close(),delete this.$el}}),f.Region.extend=f.extend,f.RegionManager=function(a){var b=a.Controller.extend({constructor:function(b){this._regions={},a.Controller.prototype.constructor.call(this,b)},addRegions:function(a,b){var d={};return c.each(a,function(a,e){"string"==typeof a&&(a={selector:a}),a.selector&&(a=c.defaults({},a,b));var f=this.addRegion(e,a);d[e]=f},this),d},addRegion:function(b,d){var e,f=c.isObject(d),g=c.isString(d),h=!!d.selector;return e=g||f&&h?a.Region.buildRegion(d,a.Region):c.isFunction(d)?a.Region.buildRegion(d,a.Region):d,this._store(b,e),this.triggerMethod("region:add",b,e),e},get:function(a){return this._regions[a]},removeRegion:function(a){var b=this._regions[a];this._remove(a,b)},removeRegions:function(){c.each(this._regions,function(a,b){this._remove(b,a)},this)},closeRegions:function(){c.each(this._regions,function(a){a.close()},this)},close:function(){this.removeRegions();var b=Array.prototype.slice.call(arguments);a.Controller.prototype.close.apply(this,b)},_store:function(a,b){this._regions[a]=b,this._setLength()},_remove:function(a,b){b.close(),delete this._regions[a],this._setLength(),this.triggerMethod("region:remove",a,b)},_setLength:function(){this.length=c.size(this._regions)}}),d=["forEach","each","map","find","detect","filter","select","reject","every","all","some","any","include","contains","invoke","toArray","first","initial","rest","last","without","isEmpty","pluck"];return c.each(d,function(a){b.prototype[a]=function(){var b=c.values(this._regions),d=[b].concat(c.toArray(arguments));return c[a].apply(c,d)}}),b}(f),f.TemplateCache=function(a){this.templateId=a},c.extend(f.TemplateCache,{templateCaches:{},get:function(a){var b=this.templateCaches[a];return b||(b=new f.TemplateCache(a),this.templateCaches[a]=b),b.load()},clear:function(){var a,b=d(arguments),c=b.length;if(c>0)for(a=0;c>a;a++)delete this.templateCaches[b[a]];else this.templateCaches={}}}),c.extend(f.TemplateCache.prototype,{load:function(){if(this.compiledTemplate)return this.compiledTemplate;var a=this.loadTemplate(this.templateId);return this.compiledTemplate=this.compileTemplate(a),this.compiledTemplate},loadTemplate:function(a){var b=f.$(a).html();return b&&0!==b.length||e("Could not find template: '"+a+"'","NoTemplateError"),b},compileTemplate:function(a){return c.template(a)}}),f.Renderer={render:function(a,b){if(!a){var c=new Error("Cannot render the template since it's false, null or undefined.");throw c.name="TemplateNotFoundError",c}var d;return d="function"==typeof a?a:f.TemplateCache.get(a),d(b)}},f.View=b.View.extend({constructor:function(a){c.bindAll(this,"render");var d=Array.prototype.slice.apply(arguments);this.options=c.extend({},c.result(this,"options"),c.isFunction(a)?a.call(this):a),this.events=this.normalizeUIKeys(c.result(this,"events")),b.View.prototype.constructor.apply(this,d),f.MonitorDOMRefresh(this),this.listenTo(this,"show",this.onShowCalled,this)},triggerMethod:f.triggerMethod,normalizeMethods:f.normalizeMethods,getTemplate:function(){return f.getOption(this,"template")},mixinTemplateHelpers:function(a){a=a||{};var b=f.getOption(this,"templateHelpers");return c.isFunction(b)&&(b=b.call(this)),c.extend(a,b)},normalizeUIKeys:function(a){return"undefined"!=typeof a?(c.each(c.keys(a),function(b){var c=b.split("@ui.");2===c.length&&(a[c[0]+this.ui[c[1]]]=a[b],delete a[b])},this),a):void 0},configureTriggers:function(){if(this.triggers){var a={},b=this.normalizeUIKeys(c.result(this,"triggers"));return c.each(b,function(b,d){var e=c.isObject(b),f=e?b.event:b;a[d]=function(a){if(a){var c=a.preventDefault,d=a.stopPropagation,g=e?b.preventDefault:c,h=e?b.stopPropagation:d;g&&c&&c.apply(a),h&&d&&d.apply(a)}var i={view:this,model:this.model,collection:this.collection};this.triggerMethod(f,i)}},this),a}},delegateEvents:function(a){this._delegateDOMEvents(a),f.bindEntityEvents(this,this.model,f.getOption(this,"modelEvents")),f.bindEntityEvents(this,this.collection,f.getOption(this,"collectionEvents"))},_delegateDOMEvents:function(a){a=a||this.events,c.isFunction(a)&&(a=a.call(this));var d={},e=this.configureTriggers();c.extend(d,a,e),b.View.prototype.delegateEvents.call(this,d)},undelegateEvents:function(){var a=Array.prototype.slice.call(arguments);b.View.prototype.undelegateEvents.apply(this,a),f.unbindEntityEvents(this,this.model,f.getOption(this,"modelEvents")),f.unbindEntityEvents(this,this.collection,f.getOption(this,"collectionEvents"))},onShowCalled:function(){},close:function(){if(!this.isClosed){var a=this.triggerMethod("before:close");a!==!1&&(this.isClosed=!0,this.triggerMethod("close"),this.unbindUIElements(),this.remove())}},bindUIElements:function(){if(this.ui){this._uiBindings||(this._uiBindings=this.ui);var a=c.result(this,"_uiBindings");this.ui={},c.each(c.keys(a),function(b){var c=a[b];this.ui[b]=this.$(c)},this)}},unbindUIElements:function(){this.ui&&this._uiBindings&&(c.each(this.ui,function(a,b){delete this.ui[b]},this),this.ui=this._uiBindings,delete this._uiBindings)}}),f.ItemView=f.View.extend({constructor:function(){f.View.prototype.constructor.apply(this,d(arguments))},serializeData:function(){var a={};return this.model?a=this.model.toJSON():this.collection&&(a={items:this.collection.toJSON()}),a},render:function(){this.isClosed=!1,this.triggerMethod("before:render",this),this.triggerMethod("item:before:render",this);var a=this.serializeData();a=this.mixinTemplateHelpers(a);var b=this.getTemplate(),c=f.Renderer.render(b,a);return this.$el.html(c),this.bindUIElements(),this.triggerMethod("render",this),this.triggerMethod("item:rendered",this),this},close:function(){this.isClosed||(this.triggerMethod("item:before:close"),f.View.prototype.close.apply(this,d(arguments)),this.triggerMethod("item:closed"))}}),f.CollectionView=f.View.extend({itemViewEventPrefix:"itemview",constructor:function(){this._initChildViewStorage(),f.View.prototype.constructor.apply(this,d(arguments)),this._initialEvents(),this.initRenderBuffer()},initRenderBuffer:function(){this.elBuffer=document.createDocumentFragment(),this._bufferedChildren=[]},startBuffering:function(){this.initRenderBuffer(),this.isBuffering=!0},endBuffering:function(){this.isBuffering=!1,this.appendBuffer(this,this.elBuffer),this._triggerShowBufferedChildren(),this.initRenderBuffer()},_triggerShowBufferedChildren:function(){this._isShown&&(c.each(this._bufferedChildren,function(a){f.triggerMethod.call(a,"show")}),this._bufferedChildren=[])},_initialEvents:function(){this.collection&&(this.listenTo(this.collection,"add",this.addChildView,this),this.listenTo(this.collection,"remove",this.removeItemView,this),this.listenTo(this.collection,"reset",this.render,this))},addChildView:function(a){this.closeEmptyView();var b=this.getItemView(a),c=this.collection.indexOf(a);this.addItemView(a,b,c)},onShowCalled:function(){this.children.each(function(a){f.triggerMethod.call(a,"show")})},triggerBeforeRender:function(){this.triggerMethod("before:render",this),this.triggerMethod("collection:before:render",this)},triggerRendered:function(){this.triggerMethod("render",this),this.triggerMethod("collection:rendered",this)},render:function(){return this.isClosed=!1,this.triggerBeforeRender(),this._renderChildren(),this.triggerRendered(),this},_renderChildren:function(){this.startBuffering(),this.closeEmptyView(),this.closeChildren(),this.isEmpty(this.collection)?this.showEmptyView():this.showCollection(),this.endBuffering()},showCollection:function(){var a;this.collection.each(function(b,c){a=this.getItemView(b),this.addItemView(b,a,c)},this)},showEmptyView:function(){var a=this.getEmptyView();if(a&&!this._showingEmptyView){this._showingEmptyView=!0;var c=new b.Model;this.addItemView(c,a,0)}},closeEmptyView:function(){this._showingEmptyView&&(this.closeChildren(),delete this._showingEmptyView)},getEmptyView:function(){return f.getOption(this,"emptyView")},getItemView:function(){var a=f.getOption(this,"itemView");return a||e("An `itemView` must be specified","NoItemViewError"),a},addItemView:function(a,b,d){var e=f.getOption(this,"itemViewOptions");c.isFunction(e)&&(e=e.call(this,a,d));var g=this.buildItemView(a,b,e);return this.addChildViewEventForwarding(g),this.triggerMethod("before:item:added",g),this.children.add(g),this.renderItemView(g,d),this._isShown&&!this.isBuffering&&f.triggerMethod.call(g,"show"),this.triggerMethod("after:item:added",g),g},addChildViewEventForwarding:function(a){var b=f.getOption(this,"itemViewEventPrefix");this.listenTo(a,"all",function(){var e=d(arguments),g=e[0],h=this.normalizeMethods(this.getItemEvents());e[0]=b+":"+g,e.splice(1,0,a),"undefined"!=typeof h&&c.isFunction(h[g])&&h[g].apply(this,e),f.triggerMethod.apply(this,e)},this)},getItemEvents:function(){return c.isFunction(this.itemEvents)?this.itemEvents.call(this):this.itemEvents},renderItemView:function(a,b){a.render(),this.appendHtml(this,a,b)},buildItemView:function(a,b,d){var e=c.extend({model:a},d);return new b(e)},removeItemView:function(a){var b=this.children.findByModel(a);this.removeChildView(b),this.checkEmpty()},removeChildView:function(a){a&&(this.stopListening(a),a.close?a.close():a.remove&&a.remove(),this.children.remove(a)),this.triggerMethod("item:removed",a)},isEmpty:function(){return!this.collection||0===this.collection.length},checkEmpty:function(){this.isEmpty(this.collection)&&this.showEmptyView()},appendBuffer:function(a,b){a.$el.append(b)},appendHtml:function(a,b){a.isBuffering?(a.elBuffer.appendChild(b.el),a._bufferedChildren.push(b)):a.$el.append(b.el)},_initChildViewStorage:function(){this.children=new b.ChildViewContainer},close:function(){this.isClosed||(this.triggerMethod("collection:before:close"),this.closeChildren(),this.triggerMethod("collection:closed"),f.View.prototype.close.apply(this,d(arguments)))},closeChildren:function(){this.children.each(function(a){this.removeChildView(a)},this),this.checkEmpty()}}),f.CompositeView=f.CollectionView.extend({constructor:function(){f.CollectionView.prototype.constructor.apply(this,d(arguments))},_initialEvents:function(){this.once("render",function(){this.collection&&(this.listenTo(this.collection,"add",this.addChildView,this),this.listenTo(this.collection,"remove",this.removeItemView,this),this.listenTo(this.collection,"reset",this._renderChildren,this))})},getItemView:function(){var a=f.getOption(this,"itemView")||this.constructor;return a||e("An `itemView` must be specified","NoItemViewError"),a},serializeData:function(){var a={};return this.model&&(a=this.model.toJSON()),a},render:function(){this.isRendered=!0,this.isClosed=!1,this.resetItemViewContainer(),this.triggerBeforeRender();var a=this.renderModel();return this.$el.html(a),this.bindUIElements(),this.triggerMethod("composite:model:rendered"),this._renderChildren(),this.triggerMethod("composite:rendered"),this.triggerRendered(),this},_renderChildren:function(){this.isRendered&&(this.triggerMethod("composite:collection:before:render"),f.CollectionView.prototype._renderChildren.call(this),this.triggerMethod("composite:collection:rendered"))},renderModel:function(){var a={};a=this.serializeData(),a=this.mixinTemplateHelpers(a);var b=this.getTemplate();return f.Renderer.render(b,a)},appendBuffer:function(a,b){var c=this.getItemViewContainer(a);c.append(b)},appendHtml:function(a,b){if(a.isBuffering)a.elBuffer.appendChild(b.el),a._bufferedChildren.push(b);else{var c=this.getItemViewContainer(a);c.append(b.el)}},getItemViewContainer:function(a){if("$itemViewContainer"in a)return a.$itemViewContainer;var b,d=f.getOption(a,"itemViewContainer");if(d){var g=c.isFunction(d)?d.call(this):d;b=a.$(g),b.length<=0&&e("The specified `itemViewContainer` was not found: "+a.itemViewContainer,"ItemViewContainerMissingError")}else b=a.$el;return a.$itemViewContainer=b,b},resetItemViewContainer:function(){this.$itemViewContainer&&delete this.$itemViewContainer}}),f.Layout=f.ItemView.extend({regionType:f.Region,constructor:function(a){a=a||{},this._firstRender=!0,this._initializeRegions(a),f.ItemView.prototype.constructor.call(this,a)},render:function(){this.isClosed&&this._initializeRegions(),this._firstRender?this._firstRender=!1:this.isClosed||this._reInitializeRegions();var a=Array.prototype.slice.apply(arguments),b=f.ItemView.prototype.render.apply(this,a);return b},close:function(){if(!this.isClosed){this.regionManager.close();var a=Array.prototype.slice.apply(arguments);f.ItemView.prototype.close.apply(this,a)}},addRegion:function(a,b){var c={};return c[a]=b,this._buildRegions(c)[a]},addRegions:function(a){return this.regions=c.extend({},this.regions,a),this._buildRegions(a)},removeRegion:function(a){return delete this.regions[a],this.regionManager.removeRegion(a)},_buildRegions:function(a){var b=this,c={regionType:f.getOption(this,"regionType"),parentEl:function(){return b.$el}};return this.regionManager.addRegions(a,c)},_initializeRegions:function(a){var b;this._initRegionManager(),b=c.isFunction(this.regions)?this.regions(a):this.regions||{},this.addRegions(b)},_reInitializeRegions:function(){this.regionManager.closeRegions(),this.regionManager.each(function(a){a.reset()})},_initRegionManager:function(){this.regionManager=new f.RegionManager,this.listenTo(this.regionManager,"region:add",function(a,b){this[a]=b,this.trigger("region:add",a,b)}),this.listenTo(this.regionManager,"region:remove",function(a,b){delete this[a],this.trigger("region:remove",a,b)})}}),f.AppRouter=b.Router.extend({constructor:function(a){b.Router.prototype.constructor.apply(this,d(arguments)),this.options=a||{};var c=f.getOption(this,"appRoutes"),e=this._getController();this.processAppRoutes(e,c)},appRoute:function(a,b){var c=this._getController();this._addAppRoute(c,a,b)},processAppRoutes:function(a,b){if(b){var d=c.keys(b).reverse();c.each(d,function(c){this._addAppRoute(a,c,b[c])},this)}},_getController:function(){return f.getOption(this,"controller")},_addAppRoute:function(a,b,d){var e=a[d];if(!e)throw new Error("Method '"+d+"' was not found on the controller");this.route(b,d,c.bind(e,a))}}),f.Application=function(a){this._initRegionManager(),this._initCallbacks=new f.Callbacks,this.vent=new b.Wreqr.EventAggregator,this.commands=new b.Wreqr.Commands,this.reqres=new b.Wreqr.RequestResponse,this.submodules={},c.extend(this,a),this.triggerMethod=f.triggerMethod},c.extend(f.Application.prototype,b.Events,{execute:function(){var a=Array.prototype.slice.apply(arguments);this.commands.execute.apply(this.commands,a)},request:function(){var a=Array.prototype.slice.apply(arguments);return this.reqres.request.apply(this.reqres,a)},addInitializer:function(a){this._initCallbacks.add(a)},start:function(a){this.triggerMethod("initialize:before",a),this._initCallbacks.run(a,this),this.triggerMethod("initialize:after",a),this.triggerMethod("start",a)},addRegions:function(a){return this._regionManager.addRegions(a)},closeRegions:function(){this._regionManager.closeRegions()},removeRegion:function(a){this._regionManager.removeRegion(a)},getRegion:function(a){return this._regionManager.get(a)},module:function(a,b){var c=f.Module;b&&(c=b.moduleClass||c);var e=d(arguments);return e.unshift(this),c.create.apply(c,e)},_initRegionManager:function(){this._regionManager=new f.RegionManager,this.listenTo(this._regionManager,"region:add",function(a,b){this[a]=b}),this.listenTo(this._regionManager,"region:remove",function(a){delete this[a]})}}),f.Application.extend=f.extend,f.Module=function(a,b,d){this.moduleName=a,this.options=c.extend({},this.options,d),this.initialize=d.initialize||this.initialize,this.submodules={},this._setupInitializersAndFinalizers(),this.app=b,this.startWithParent=!0,this.triggerMethod=f.triggerMethod,c.isFunction(this.initialize)&&this.initialize(this.options,a,b)},f.Module.extend=f.extend,c.extend(f.Module.prototype,b.Events,{initialize:function(){},addInitializer:function(a){this._initializerCallbacks.add(a)},addFinalizer:function(a){this._finalizerCallbacks.add(a)},start:function(a){this._isInitialized||(c.each(this.submodules,function(b){b.startWithParent&&b.start(a)}),this.triggerMethod("before:start",a),this._initializerCallbacks.run(a,this),this._isInitialized=!0,this.triggerMethod("start",a))},stop:function(){this._isInitialized&&(this._isInitialized=!1,f.triggerMethod.call(this,"before:stop"),c.each(this.submodules,function(a){a.stop()}),this._finalizerCallbacks.run(void 0,this),this._initializerCallbacks.reset(),this._finalizerCallbacks.reset(),f.triggerMethod.call(this,"stop"))},addDefinition:function(a,b){this._runModuleDefinition(a,b)},_runModuleDefinition:function(a,d){if(a){var e=c.flatten([this,this.app,b,f,f.$,c,d]);a.apply(this,e)}},_setupInitializersAndFinalizers:function(){this._initializerCallbacks=new f.Callbacks,this._finalizerCallbacks=new f.Callbacks}}),c.extend(f.Module,{create:function(a,b,e){var f=a,g=d(arguments);g.splice(0,3),b=b.split(".");var h=b.length,i=[];return i[h-1]=e,c.each(b,function(b,c){var d=f;f=this._getModule(d,b,a,e),this._addModuleDefinition(d,f,i[c],g)},this),f},_getModule:function(a,b,d,e){var g=f.Module,h=c.extend({},e);e&&(g=e.moduleClass||g);var i=a[b];return i||(i=new g(b,d,h),a[b]=i,a.submodules[b]=i),i},_addModuleDefinition:function(a,b,d,e){var f,g;c.isFunction(d)?(f=d,g=!0):c.isObject(d)?(f=d.define,g="undefined"!=typeof d.startWithParent?d.startWithParent:!0):g=!0,f&&b.addDefinition(f,e),b.startWithParent=b.startWithParent&&g,b.startWithParent&&!b.startWithParentIsConfigured&&(b.startWithParentIsConfigured=!0,a.addInitializer(function(a){b.startWithParent&&b.start(a)}))}}),f}(this,Backbone,_);
 //# sourceMappingURL=backbone.marionette.map
-/*! jQuery plugin for Hammer.JS - v1.1.3 - 2014-05-20
- * http://eightmedia.github.com/hammer.js
- *
- * Copyright (c) 2014 Jorik Tangelder <j.tangelder@gmail.com>;
- * Licensed under the MIT license */
-
-!function(a,b){"use strict";function c(){e.READY||(t.determineEventTypes(),s.each(e.gestures,function(a){v.register(a)}),t.onTouch(e.DOCUMENT,o,v.detect),t.onTouch(e.DOCUMENT,p,v.detect),e.READY=!0)}function d(a,c){Date.now||(Date.now=function(){return(new Date).getTime()}),a.utils.each(["on","off"],function(d){a.utils[d]=function(a,e,f){c(a)[d](e,function(a){var d=c.extend({},a.originalEvent,a);d.button===b&&(d.button=a.which-1),f.call(this,d)})}}),a.Instance.prototype.trigger=function(a,b){var d=c(this.element);return d.has(b.target).length&&(d=c(b.target)),d.trigger({type:a,gesture:b})},c.fn.hammer=function(b){return this.each(function(){var d=c(this),e=d.data("hammer");e?e&&b&&a.utils.extend(e.options,b):d.data("hammer",new a(this,b||{}))})}}var e=function w(a,b){return new w.Instance(a,b||{})};e.VERSION="1.1.3",e.defaults={behavior:{userSelect:"none",touchAction:"pan-y",touchCallout:"none",contentZooming:"none",userDrag:"none",tapHighlightColor:"rgba(0,0,0,0)"}},e.DOCUMENT=document,e.HAS_POINTEREVENTS=navigator.pointerEnabled||navigator.msPointerEnabled,e.HAS_TOUCHEVENTS="ontouchstart"in a,e.IS_MOBILE=/mobile|tablet|ip(ad|hone|od)|android|silk/i.test(navigator.userAgent),e.NO_MOUSEEVENTS=e.HAS_TOUCHEVENTS&&e.IS_MOBILE||e.HAS_POINTEREVENTS,e.CALCULATE_INTERVAL=25;var f={},g=e.DIRECTION_DOWN="down",h=e.DIRECTION_LEFT="left",i=e.DIRECTION_UP="up",j=e.DIRECTION_RIGHT="right",k=e.POINTER_MOUSE="mouse",l=e.POINTER_TOUCH="touch",m=e.POINTER_PEN="pen",n=e.EVENT_START="start",o=e.EVENT_MOVE="move",p=e.EVENT_END="end",q=e.EVENT_RELEASE="release",r=e.EVENT_TOUCH="touch";e.READY=!1,e.plugins=e.plugins||{},e.gestures=e.gestures||{};var s=e.utils={extend:function(a,c,d){for(var e in c)!c.hasOwnProperty(e)||a[e]!==b&&d||(a[e]=c[e]);return a},on:function(a,b,c){a.addEventListener(b,c,!1)},off:function(a,b,c){a.removeEventListener(b,c,!1)},each:function(a,c,d){var e,f;if("forEach"in a)a.forEach(c,d);else if(a.length!==b){for(e=0,f=a.length;f>e;e++)if(c.call(d,a[e],e,a)===!1)return}else for(e in a)if(a.hasOwnProperty(e)&&c.call(d,a[e],e,a)===!1)return},inStr:function(a,b){return a.indexOf(b)>-1},inArray:function(a,b){if(a.indexOf){var c=a.indexOf(b);return-1===c?!1:c}for(var d=0,e=a.length;e>d;d++)if(a[d]===b)return d;return!1},toArray:function(a){return Array.prototype.slice.call(a,0)},hasParent:function(a,b){for(;a;){if(a==b)return!0;a=a.parentNode}return!1},getCenter:function(a){var b=[],c=[],d=[],e=[],f=Math.min,g=Math.max;return 1===a.length?{pageX:a[0].pageX,pageY:a[0].pageY,clientX:a[0].clientX,clientY:a[0].clientY}:(s.each(a,function(a){b.push(a.pageX),c.push(a.pageY),d.push(a.clientX),e.push(a.clientY)}),{pageX:(f.apply(Math,b)+g.apply(Math,b))/2,pageY:(f.apply(Math,c)+g.apply(Math,c))/2,clientX:(f.apply(Math,d)+g.apply(Math,d))/2,clientY:(f.apply(Math,e)+g.apply(Math,e))/2})},getVelocity:function(a,b,c){return{x:Math.abs(b/a)||0,y:Math.abs(c/a)||0}},getAngle:function(a,b){var c=b.clientX-a.clientX,d=b.clientY-a.clientY;return 180*Math.atan2(d,c)/Math.PI},getDirection:function(a,b){var c=Math.abs(a.clientX-b.clientX),d=Math.abs(a.clientY-b.clientY);return c>=d?a.clientX-b.clientX>0?h:j:a.clientY-b.clientY>0?i:g},getDistance:function(a,b){var c=b.clientX-a.clientX,d=b.clientY-a.clientY;return Math.sqrt(c*c+d*d)},getScale:function(a,b){return a.length>=2&&b.length>=2?this.getDistance(b[0],b[1])/this.getDistance(a[0],a[1]):1},getRotation:function(a,b){return a.length>=2&&b.length>=2?this.getAngle(b[1],b[0])-this.getAngle(a[1],a[0]):0},isVertical:function(a){return a==i||a==g},setPrefixedCss:function(a,b,c,d){var e=["","Webkit","Moz","O","ms"];b=s.toCamelCase(b);for(var f=0;f<e.length;f++){var g=b;if(e[f]&&(g=e[f]+g.slice(0,1).toUpperCase()+g.slice(1)),g in a.style){a.style[g]=(null==d||d)&&c||"";break}}},toggleBehavior:function(a,b,c){if(b&&a&&a.style){s.each(b,function(b,d){s.setPrefixedCss(a,d,b,c)});var d=c&&function(){return!1};"none"==b.userSelect&&(a.onselectstart=d),"none"==b.userDrag&&(a.ondragstart=d)}},toCamelCase:function(a){return a.replace(/[_-]([a-z])/g,function(a){return a[1].toUpperCase()})}};e.Instance=function(a,b){var d=this;c(),this.element=a,this.enabled=!0,s.each(b,function(a,c){delete b[c],b[s.toCamelCase(c)]=a}),this.options=s.extend(s.extend({},e.defaults),b||{}),this.options.behavior&&s.toggleBehavior(this.element,this.options.behavior,!0),this.eventStartHandler=t.onTouch(a,n,function(a){d.enabled&&a.eventType==n?v.startDetect(d,a):a.eventType==r&&v.detect(a)}),this.eventHandlers=[]},e.Instance.prototype={on:function(a,b){var c=this;return t.on(c.element,a,b,function(a){c.eventHandlers.push({gesture:a,handler:b})}),c},off:function(a,b){var c=this;return t.off(c.element,a,b,function(a){var d=s.inArray({gesture:a,handler:b});d!==!1&&c.eventHandlers.splice(d,1)}),c},trigger:function(a,b){b||(b={});var c=e.DOCUMENT.createEvent("Event");c.initEvent(a,!0,!0),c.gesture=b;var d=this.element;return s.hasParent(b.target,d)&&(d=b.target),d.dispatchEvent(c),this},enable:function(a){return this.enabled=a,this},dispose:function(){var a,b;for(s.toggleBehavior(this.element,this.options.behavior,!1),a=-1;b=this.eventHandlers[++a];)s.off(this.element,b.gesture,b.handler);return this.eventHandlers=[],t.off(this.element,f[n],this.eventStartHandler),null}};var t=e.event={preventMouseEvents:!1,started:!1,shouldDetect:!1,on:function(a,b,c,d){var e=b.split(" ");s.each(e,function(b){s.on(a,b,c),d&&d(b)})},off:function(a,b,c,d){var e=b.split(" ");s.each(e,function(b){s.off(a,b,c),d&&d(b)})},onTouch:function(a,b,c){var d=this,g=function(f){var g,h=f.type.toLowerCase(),i=e.HAS_POINTEREVENTS,j=s.inStr(h,"mouse");j&&d.preventMouseEvents||(j&&b==n&&0===f.button?(d.preventMouseEvents=!1,d.shouldDetect=!0):i&&b==n?d.shouldDetect=1===f.buttons||u.matchType(l,f):j||b!=n||(d.preventMouseEvents=!0,d.shouldDetect=!0),i&&b!=p&&u.updatePointer(b,f),d.shouldDetect&&(g=d.doDetect.call(d,f,b,a,c)),g==p&&(d.preventMouseEvents=!1,d.shouldDetect=!1,u.reset()),i&&b==p&&u.updatePointer(b,f))};return this.on(a,f[b],g),g},doDetect:function(a,b,c,d){var e=this.getTouchList(a,b),f=e.length,g=b,h=e.trigger,i=f;b==n?h=r:b==p&&(h=q,i=e.length-(a.changedTouches?a.changedTouches.length:1)),i>0&&this.started&&(g=o),this.started=!0;var j=this.collectEventData(c,g,e,a);return b!=p&&d.call(v,j),h&&(j.changedLength=i,j.eventType=h,d.call(v,j),j.eventType=g,delete j.changedLength),g==p&&(d.call(v,j),this.started=!1),g},determineEventTypes:function(){var b;return b=e.HAS_POINTEREVENTS?a.PointerEvent?["pointerdown","pointermove","pointerup pointercancel lostpointercapture"]:["MSPointerDown","MSPointerMove","MSPointerUp MSPointerCancel MSLostPointerCapture"]:e.NO_MOUSEEVENTS?["touchstart","touchmove","touchend touchcancel"]:["touchstart mousedown","touchmove mousemove","touchend touchcancel mouseup"],f[n]=b[0],f[o]=b[1],f[p]=b[2],f},getTouchList:function(a,b){if(e.HAS_POINTEREVENTS)return u.getTouchList();if(a.touches){if(b==o)return a.touches;var c=[],d=[].concat(s.toArray(a.touches),s.toArray(a.changedTouches)),f=[];return s.each(d,function(a){s.inArray(c,a.identifier)===!1&&f.push(a),c.push(a.identifier)}),f}return a.identifier=1,[a]},collectEventData:function(a,b,c,d){var e=l;return s.inStr(d.type,"mouse")||u.matchType(k,d)?e=k:u.matchType(m,d)&&(e=m),{center:s.getCenter(c),timeStamp:Date.now(),target:d.target,touches:c,eventType:b,pointerType:e,srcEvent:d,preventDefault:function(){var a=this.srcEvent;a.preventManipulation&&a.preventManipulation(),a.preventDefault&&a.preventDefault()},stopPropagation:function(){this.srcEvent.stopPropagation()},stopDetect:function(){return v.stopDetect()}}}},u=e.PointerEvent={pointers:{},getTouchList:function(){var a=[];return s.each(this.pointers,function(b){a.push(b)}),a},updatePointer:function(a,b){a==p||a!=p&&1!==b.buttons?delete this.pointers[b.pointerId]:(b.identifier=b.pointerId,this.pointers[b.pointerId]=b)},matchType:function(a,b){if(!b.pointerType)return!1;var c=b.pointerType,d={};return d[k]=c===(b.MSPOINTER_TYPE_MOUSE||k),d[l]=c===(b.MSPOINTER_TYPE_TOUCH||l),d[m]=c===(b.MSPOINTER_TYPE_PEN||m),d[a]},reset:function(){this.pointers={}}},v=e.detection={gestures:[],current:null,previous:null,stopped:!1,startDetect:function(a,b){this.current||(this.stopped=!1,this.current={inst:a,startEvent:s.extend({},b),lastEvent:!1,lastCalcEvent:!1,futureCalcEvent:!1,lastCalcData:{},name:""},this.detect(b))},detect:function(a){if(this.current&&!this.stopped){a=this.extendEventData(a);var b=this.current.inst,c=b.options;return s.each(this.gestures,function(d){!this.stopped&&b.enabled&&c[d.name]&&d.handler.call(d,a,b)},this),this.current&&(this.current.lastEvent=a),a.eventType==p&&this.stopDetect(),a}},stopDetect:function(){this.previous=s.extend({},this.current),this.current=null,this.stopped=!0},getCalculatedData:function(a,b,c,d,f){var g=this.current,h=!1,i=g.lastCalcEvent,j=g.lastCalcData;i&&a.timeStamp-i.timeStamp>e.CALCULATE_INTERVAL&&(b=i.center,c=a.timeStamp-i.timeStamp,d=a.center.clientX-i.center.clientX,f=a.center.clientY-i.center.clientY,h=!0),(a.eventType==r||a.eventType==q)&&(g.futureCalcEvent=a),(!g.lastCalcEvent||h)&&(j.velocity=s.getVelocity(c,d,f),j.angle=s.getAngle(b,a.center),j.direction=s.getDirection(b,a.center),g.lastCalcEvent=g.futureCalcEvent||a,g.futureCalcEvent=a),a.velocityX=j.velocity.x,a.velocityY=j.velocity.y,a.interimAngle=j.angle,a.interimDirection=j.direction},extendEventData:function(a){var b=this.current,c=b.startEvent,d=b.lastEvent||c;(a.eventType==r||a.eventType==q)&&(c.touches=[],s.each(a.touches,function(a){c.touches.push({clientX:a.clientX,clientY:a.clientY})}));var e=a.timeStamp-c.timeStamp,f=a.center.clientX-c.center.clientX,g=a.center.clientY-c.center.clientY;return this.getCalculatedData(a,d.center,e,f,g),s.extend(a,{startEvent:c,deltaTime:e,deltaX:f,deltaY:g,distance:s.getDistance(c.center,a.center),angle:s.getAngle(c.center,a.center),direction:s.getDirection(c.center,a.center),scale:s.getScale(c.touches,a.touches),rotation:s.getRotation(c.touches,a.touches)}),a},register:function(a){var c=a.defaults||{};return c[a.name]===b&&(c[a.name]=!0),s.extend(e.defaults,c,!0),a.index=a.index||1e3,this.gestures.push(a),this.gestures.sort(function(a,b){return a.index<b.index?-1:a.index>b.index?1:0}),this.gestures}};!function(a){function b(b,d){var e=v.current;if(!(d.options.dragMaxTouches>0&&b.touches.length>d.options.dragMaxTouches))switch(b.eventType){case n:c=!1;break;case o:if(b.distance<d.options.dragMinDistance&&e.name!=a)return;var f=e.startEvent.center;if(e.name!=a&&(e.name=a,d.options.dragDistanceCorrection&&b.distance>0)){var k=Math.abs(d.options.dragMinDistance/b.distance);f.pageX+=b.deltaX*k,f.pageY+=b.deltaY*k,f.clientX+=b.deltaX*k,f.clientY+=b.deltaY*k,b=v.extendEventData(b)}(e.lastEvent.dragLockToAxis||d.options.dragLockToAxis&&d.options.dragLockMinDistance<=b.distance)&&(b.dragLockToAxis=!0);var l=e.lastEvent.direction;b.dragLockToAxis&&l!==b.direction&&(b.direction=s.isVertical(l)?b.deltaY<0?i:g:b.deltaX<0?h:j),c||(d.trigger(a+"start",b),c=!0),d.trigger(a,b),d.trigger(a+b.direction,b);var m=s.isVertical(b.direction);(d.options.dragBlockVertical&&m||d.options.dragBlockHorizontal&&!m)&&b.preventDefault();break;case q:c&&b.changedLength<=d.options.dragMaxTouches&&(d.trigger(a+"end",b),c=!1);break;case p:c=!1}}var c=!1;e.gestures.Drag={name:a,index:50,handler:b,defaults:{dragMinDistance:10,dragDistanceCorrection:!0,dragMaxTouches:1,dragBlockHorizontal:!1,dragBlockVertical:!1,dragLockToAxis:!1,dragLockMinDistance:25}}}("drag"),e.gestures.Gesture={name:"gesture",index:1337,handler:function(a,b){b.trigger(this.name,a)}},function(a){function b(b,d){var e=d.options,f=v.current;switch(b.eventType){case n:clearTimeout(c),f.name=a,c=setTimeout(function(){f&&f.name==a&&d.trigger(a,b)},e.holdTimeout);break;case o:b.distance>e.holdThreshold&&clearTimeout(c);break;case q:clearTimeout(c)}}var c;e.gestures.Hold={name:a,index:10,defaults:{holdTimeout:500,holdThreshold:2},handler:b}}("hold"),e.gestures.Release={name:"release",index:1/0,handler:function(a,b){a.eventType==q&&b.trigger(this.name,a)}},e.gestures.Swipe={name:"swipe",index:40,defaults:{swipeMinTouches:1,swipeMaxTouches:1,swipeVelocityX:.6,swipeVelocityY:.6},handler:function(a,b){if(a.eventType==q){var c=a.touches.length,d=b.options;if(c<d.swipeMinTouches||c>d.swipeMaxTouches)return;(a.velocityX>d.swipeVelocityX||a.velocityY>d.swipeVelocityY)&&(b.trigger(this.name,a),b.trigger(this.name+a.direction,a))}}},function(a){function b(b,d){var e,f,g=d.options,h=v.current,i=v.previous;switch(b.eventType){case n:c=!1;break;case o:c=c||b.distance>g.tapMaxDistance;break;case p:!s.inStr(b.srcEvent.type,"cancel")&&b.deltaTime<g.tapMaxTime&&!c&&(e=i&&i.lastEvent&&b.timeStamp-i.lastEvent.timeStamp,f=!1,i&&i.name==a&&e&&e<g.doubleTapInterval&&b.distance<g.doubleTapDistance&&(d.trigger("doubletap",b),f=!0),(!f||g.tapAlways)&&(h.name=a,d.trigger(h.name,b)))}}var c=!1;e.gestures.Tap={name:a,index:100,handler:b,defaults:{tapMaxTime:250,tapMaxDistance:10,tapAlways:!0,doubleTapDistance:20,doubleTapInterval:300}}}("tap"),e.gestures.Touch={name:"touch",index:-1/0,defaults:{preventDefault:!1,preventMouse:!1},handler:function(a,b){return b.options.preventMouse&&a.pointerType==k?void a.stopDetect():(b.options.preventDefault&&a.preventDefault(),void(a.eventType==r&&b.trigger("touch",a)))}},function(a){function b(b,d){switch(b.eventType){case n:c=!1;break;case o:if(b.touches.length<2)return;var e=Math.abs(1-b.scale),f=Math.abs(b.rotation);if(e<d.options.transformMinScale&&f<d.options.transformMinRotation)return;v.current.name=a,c||(d.trigger(a+"start",b),c=!0),d.trigger(a,b),f>d.options.transformMinRotation&&d.trigger("rotate",b),e>d.options.transformMinScale&&(d.trigger("pinch",b),d.trigger("pinch"+(b.scale<1?"in":"out"),b));break;case q:c&&b.changedLength<2&&(d.trigger(a+"end",b),c=!1)}}var c=!1;e.gestures.Transform={name:a,index:45,defaults:{transformMinScale:.01,transformMinRotation:1},handler:b}}("transform"),a.Hammer=e,"undefined"!=typeof module&&module.exports&&(module.exports=e),"function"==typeof define&&define.amd?define(["jquery"],function(b){return d(a.Hammer,b)}):d(a.Hammer,a.jQuery||a.Zepto)}(window);
-//# sourceMappingURL=jquery.hammer-full.min.map
 // TinyColor v1.1.0
 // https://github.com/bgrins/TinyColor
 // Brian Grinstead, MIT License
@@ -4975,6 +4967,2237 @@ if ( typeof module != 'undefined' && module.exports ) {
 }
 
 })(window, document, Math);
+/*! jQuery plugin for Hammer.JS - v1.1.3 - 2014-05-20
+ * http://eightmedia.github.com/hammer.js
+ *
+ * Copyright (c) 2014 Jorik Tangelder <j.tangelder@gmail.com>;
+ * Licensed under the MIT license */
+(function(window, undefined) {
+  'use strict';
+
+/**
+ * @main
+ * @module hammer
+ *
+ * @class Hammer
+ * @static
+ */
+
+/**
+ * Hammer, use this to create instances
+ * ````
+ * var hammertime = new Hammer(myElement);
+ * ````
+ *
+ * @method Hammer
+ * @param {HTMLElement} element
+ * @param {Object} [options={}]
+ * @return {Hammer.Instance}
+ */
+var Hammer = function Hammer(element, options) {
+    return new Hammer.Instance(element, options || {});
+};
+
+/**
+ * version, as defined in package.json
+ * the value will be set at each build
+ * @property VERSION
+ * @final
+ * @type {String}
+ */
+Hammer.VERSION = '1.1.3';
+
+/**
+ * default settings.
+ * more settings are defined per gesture at `/gestures`. Each gesture can be disabled/enabled
+ * by setting it's name (like `swipe`) to false.
+ * You can set the defaults for all instances by changing this object before creating an instance.
+ * @example
+ * ````
+ *  Hammer.defaults.drag = false;
+ *  Hammer.defaults.behavior.touchAction = 'pan-y';
+ *  delete Hammer.defaults.behavior.userSelect;
+ * ````
+ * @property defaults
+ * @type {Object}
+ */
+Hammer.defaults = {
+    /**
+     * this setting object adds styles and attributes to the element to prevent the browser from doing
+     * its native behavior. The css properties are auto prefixed for the browsers when needed.
+     * @property defaults.behavior
+     * @type {Object}
+     */
+    behavior: {
+        /**
+         * Disables text selection to improve the dragging gesture. When the value is `none` it also sets
+         * `onselectstart=false` for IE on the element. Mainly for desktop browsers.
+         * @property defaults.behavior.userSelect
+         * @type {String}
+         * @default 'none'
+         */
+        userSelect: 'none',
+
+        /**
+         * Specifies whether and how a given region can be manipulated by the user (for instance, by panning or zooming).
+         * Used by Chrome 35> and IE10>. By default this makes the element blocking any touch event.
+         * @property defaults.behavior.touchAction
+         * @type {String}
+         * @default: 'pan-y'
+         */
+        touchAction: 'pan-y',
+
+        /**
+         * Disables the default callout shown when you touch and hold a touch target.
+         * On iOS, when you touch and hold a touch target such as a link, Safari displays
+         * a callout containing information about the link. This property allows you to disable that callout.
+         * @property defaults.behavior.touchCallout
+         * @type {String}
+         * @default 'none'
+         */
+        touchCallout: 'none',
+
+        /**
+         * Specifies whether zooming is enabled. Used by IE10>
+         * @property defaults.behavior.contentZooming
+         * @type {String}
+         * @default 'none'
+         */
+        contentZooming: 'none',
+
+        /**
+         * Specifies that an entire element should be draggable instead of its contents.
+         * Mainly for desktop browsers.
+         * @property defaults.behavior.userDrag
+         * @type {String}
+         * @default 'none'
+         */
+        userDrag: 'none',
+
+        /**
+         * Overrides the highlight color shown when the user taps a link or a JavaScript
+         * clickable element in Safari on iPhone. This property obeys the alpha value, if specified.
+         *
+         * If you don't specify an alpha value, Safari on iPhone applies a default alpha value
+         * to the color. To disable tap highlighting, set the alpha value to 0 (invisible).
+         * If you set the alpha value to 1.0 (opaque), the element is not visible when tapped.
+         * @property defaults.behavior.tapHighlightColor
+         * @type {String}
+         * @default 'rgba(0,0,0,0)'
+         */
+        tapHighlightColor: 'rgba(0,0,0,0)'
+    }
+};
+
+/**
+ * hammer document where the base events are added at
+ * @property DOCUMENT
+ * @type {HTMLElement}
+ * @default window.document
+ */
+Hammer.DOCUMENT = document;
+
+/**
+ * detect support for pointer events
+ * @property HAS_POINTEREVENTS
+ * @type {Boolean}
+ */
+Hammer.HAS_POINTEREVENTS = navigator.pointerEnabled || navigator.msPointerEnabled;
+
+/**
+ * detect support for touch events
+ * @property HAS_TOUCHEVENTS
+ * @type {Boolean}
+ */
+Hammer.HAS_TOUCHEVENTS = ('ontouchstart' in window);
+
+/**
+ * detect mobile browsers
+ * @property IS_MOBILE
+ * @type {Boolean}
+ */
+Hammer.IS_MOBILE = /mobile|tablet|ip(ad|hone|od)|android|silk/i.test(navigator.userAgent);
+
+/**
+ * detect if we want to support mouseevents at all
+ * @property NO_MOUSEEVENTS
+ * @type {Boolean}
+ */
+Hammer.NO_MOUSEEVENTS = (Hammer.HAS_TOUCHEVENTS && Hammer.IS_MOBILE) || Hammer.HAS_POINTEREVENTS;
+
+/**
+ * interval in which Hammer recalculates current velocity/direction/angle in ms
+ * @property CALCULATE_INTERVAL
+ * @type {Number}
+ * @default 25
+ */
+Hammer.CALCULATE_INTERVAL = 25;
+
+/**
+ * eventtypes per touchevent (start, move, end) are filled by `Event.determineEventTypes` on `setup`
+ * the object contains the DOM event names per type (`EVENT_START`, `EVENT_MOVE`, `EVENT_END`)
+ * @property EVENT_TYPES
+ * @private
+ * @writeOnce
+ * @type {Object}
+ */
+var EVENT_TYPES = {};
+
+/**
+ * direction strings, for safe comparisons
+ * @property DIRECTION_DOWN|LEFT|UP|RIGHT
+ * @final
+ * @type {String}
+ * @default 'down' 'left' 'up' 'right'
+ */
+var DIRECTION_DOWN = Hammer.DIRECTION_DOWN = 'down';
+var DIRECTION_LEFT = Hammer.DIRECTION_LEFT = 'left';
+var DIRECTION_UP = Hammer.DIRECTION_UP = 'up';
+var DIRECTION_RIGHT = Hammer.DIRECTION_RIGHT = 'right';
+
+/**
+ * pointertype strings, for safe comparisons
+ * @property POINTER_MOUSE|TOUCH|PEN
+ * @final
+ * @type {String}
+ * @default 'mouse' 'touch' 'pen'
+ */
+var POINTER_MOUSE = Hammer.POINTER_MOUSE = 'mouse';
+var POINTER_TOUCH = Hammer.POINTER_TOUCH = 'touch';
+var POINTER_PEN = Hammer.POINTER_PEN = 'pen';
+
+/**
+ * eventtypes
+ * @property EVENT_START|MOVE|END|RELEASE|TOUCH
+ * @final
+ * @type {String}
+ * @default 'start' 'change' 'move' 'end' 'release' 'touch'
+ */
+var EVENT_START = Hammer.EVENT_START = 'start';
+var EVENT_MOVE = Hammer.EVENT_MOVE = 'move';
+var EVENT_END = Hammer.EVENT_END = 'end';
+var EVENT_RELEASE = Hammer.EVENT_RELEASE = 'release';
+var EVENT_TOUCH = Hammer.EVENT_TOUCH = 'touch';
+
+/**
+ * if the window events are set...
+ * @property READY
+ * @writeOnce
+ * @type {Boolean}
+ * @default false
+ */
+Hammer.READY = false;
+
+/**
+ * plugins namespace
+ * @property plugins
+ * @type {Object}
+ */
+Hammer.plugins = Hammer.plugins || {};
+
+/**
+ * gestures namespace
+ * see `/gestures` for the definitions
+ * @property gestures
+ * @type {Object}
+ */
+Hammer.gestures = Hammer.gestures || {};
+
+/**
+ * setup events to detect gestures on the document
+ * this function is called when creating an new instance
+ * @private
+ */
+function setup() {
+    if(Hammer.READY) {
+        return;
+    }
+
+    // find what eventtypes we add listeners to
+    Event.determineEventTypes();
+
+    // Register all gestures inside Hammer.gestures
+    Utils.each(Hammer.gestures, function(gesture) {
+        Detection.register(gesture);
+    });
+
+    // Add touch events on the document
+    Event.onTouch(Hammer.DOCUMENT, EVENT_MOVE, Detection.detect);
+    Event.onTouch(Hammer.DOCUMENT, EVENT_END, Detection.detect);
+
+    // Hammer is ready...!
+    Hammer.READY = true;
+}
+
+/**
+ * @module hammer
+ *
+ * @class Utils
+ * @static
+ */
+var Utils = Hammer.utils = {
+    /**
+     * extend method, could also be used for cloning when `dest` is an empty object.
+     * changes the dest object
+     * @method extend
+     * @param {Object} dest
+     * @param {Object} src
+     * @param {Boolean} [merge=false]  do a merge
+     * @return {Object} dest
+     */
+    extend: function extend(dest, src, merge) {
+        for(var key in src) {
+            if(!src.hasOwnProperty(key) || (dest[key] !== undefined && merge)) {
+                continue;
+            }
+            dest[key] = src[key];
+        }
+        return dest;
+    },
+
+    /**
+     * simple addEventListener wrapper
+     * @method on
+     * @param {HTMLElement} element
+     * @param {String} type
+     * @param {Function} handler
+     */
+    on: function on(element, type, handler) {
+        element.addEventListener(type, handler, false);
+    },
+
+    /**
+     * simple removeEventListener wrapper
+     * @method off
+     * @param {HTMLElement} element
+     * @param {String} type
+     * @param {Function} handler
+     */
+    off: function off(element, type, handler) {
+        element.removeEventListener(type, handler, false);
+    },
+
+    /**
+     * forEach over arrays and objects
+     * @method each
+     * @param {Object|Array} obj
+     * @param {Function} iterator
+     * @param {any} iterator.item
+     * @param {Number} iterator.index
+     * @param {Object|Array} iterator.obj the source object
+     * @param {Object} context value to use as `this` in the iterator
+     */
+    each: function each(obj, iterator, context) {
+        var i, len;
+
+        // native forEach on arrays
+        if('forEach' in obj) {
+            obj.forEach(iterator, context);
+        // arrays
+        } else if(obj.length !== undefined) {
+            for(i = 0, len = obj.length; i < len; i++) {
+                if(iterator.call(context, obj[i], i, obj) === false) {
+                    return;
+                }
+            }
+        // objects
+        } else {
+            for(i in obj) {
+                if(obj.hasOwnProperty(i) &&
+                    iterator.call(context, obj[i], i, obj) === false) {
+                    return;
+                }
+            }
+        }
+    },
+
+    /**
+     * find if a string contains the string using indexOf
+     * @method inStr
+     * @param {String} src
+     * @param {String} find
+     * @return {Boolean} found
+     */
+    inStr: function inStr(src, find) {
+        return src.indexOf(find) > -1;
+    },
+
+    /**
+     * find if a array contains the object using indexOf or a simple polyfill
+     * @method inArray
+     * @param {String} src
+     * @param {String} find
+     * @return {Boolean|Number} false when not found, or the index
+     */
+    inArray: function inArray(src, find) {
+        if(src.indexOf) {
+            var index = src.indexOf(find);
+            return (index === -1) ? false : index;
+        } else {
+            for(var i = 0, len = src.length; i < len; i++) {
+                if(src[i] === find) {
+                    return i;
+                }
+            }
+            return false;
+        }
+    },
+
+    /**
+     * convert an array-like object (`arguments`, `touchlist`) to an array
+     * @method toArray
+     * @param {Object} obj
+     * @return {Array}
+     */
+    toArray: function toArray(obj) {
+        return Array.prototype.slice.call(obj, 0);
+    },
+
+    /**
+     * find if a node is in the given parent
+     * @method hasParent
+     * @param {HTMLElement} node
+     * @param {HTMLElement} parent
+     * @return {Boolean} found
+     */
+    hasParent: function hasParent(node, parent) {
+        while(node) {
+            if(node == parent) {
+                return true;
+            }
+            node = node.parentNode;
+        }
+        return false;
+    },
+
+    /**
+     * get the center of all the touches
+     * @method getCenter
+     * @param {Array} touches
+     * @return {Object} center contains `pageX`, `pageY`, `clientX` and `clientY` properties
+     */
+    getCenter: function getCenter(touches) {
+        var pageX = [],
+            pageY = [],
+            clientX = [],
+            clientY = [],
+            min = Math.min,
+            max = Math.max;
+
+        // no need to loop when only one touch
+        if(touches.length === 1) {
+            return {
+                pageX: touches[0].pageX,
+                pageY: touches[0].pageY,
+                clientX: touches[0].clientX,
+                clientY: touches[0].clientY
+            };
+        }
+
+        Utils.each(touches, function(touch) {
+            pageX.push(touch.pageX);
+            pageY.push(touch.pageY);
+            clientX.push(touch.clientX);
+            clientY.push(touch.clientY);
+        });
+
+        return {
+            pageX: (min.apply(Math, pageX) + max.apply(Math, pageX)) / 2,
+            pageY: (min.apply(Math, pageY) + max.apply(Math, pageY)) / 2,
+            clientX: (min.apply(Math, clientX) + max.apply(Math, clientX)) / 2,
+            clientY: (min.apply(Math, clientY) + max.apply(Math, clientY)) / 2
+        };
+    },
+
+    /**
+     * calculate the velocity between two points. unit is in px per ms.
+     * @method getVelocity
+     * @param {Number} deltaTime
+     * @param {Number} deltaX
+     * @param {Number} deltaY
+     * @return {Object} velocity `x` and `y`
+     */
+    getVelocity: function getVelocity(deltaTime, deltaX, deltaY) {
+        return {
+            x: Math.abs(deltaX / deltaTime) || 0,
+            y: Math.abs(deltaY / deltaTime) || 0
+        };
+    },
+
+    /**
+     * calculate the angle between two coordinates
+     * @method getAngle
+     * @param {Touch} touch1
+     * @param {Touch} touch2
+     * @return {Number} angle
+     */
+    getAngle: function getAngle(touch1, touch2) {
+        var x = touch2.clientX - touch1.clientX,
+            y = touch2.clientY - touch1.clientY;
+
+        return Math.atan2(y, x) * 180 / Math.PI;
+    },
+
+    /**
+     * do a small comparision to get the direction between two touches.
+     * @method getDirection
+     * @param {Touch} touch1
+     * @param {Touch} touch2
+     * @return {String} direction matches `DIRECTION_LEFT|RIGHT|UP|DOWN`
+     */
+    getDirection: function getDirection(touch1, touch2) {
+        var x = Math.abs(touch1.clientX - touch2.clientX),
+            y = Math.abs(touch1.clientY - touch2.clientY);
+
+        if(x >= y) {
+            return touch1.clientX - touch2.clientX > 0 ? DIRECTION_LEFT : DIRECTION_RIGHT;
+        }
+        return touch1.clientY - touch2.clientY > 0 ? DIRECTION_UP : DIRECTION_DOWN;
+    },
+
+    /**
+     * calculate the distance between two touches
+     * @method getDistance
+     * @param {Touch}touch1
+     * @param {Touch} touch2
+     * @return {Number} distance
+     */
+    getDistance: function getDistance(touch1, touch2) {
+        var x = touch2.clientX - touch1.clientX,
+            y = touch2.clientY - touch1.clientY;
+
+        return Math.sqrt((x * x) + (y * y));
+    },
+
+    /**
+     * calculate the scale factor between two touchLists
+     * no scale is 1, and goes down to 0 when pinched together, and bigger when pinched out
+     * @method getScale
+     * @param {Array} start array of touches
+     * @param {Array} end array of touches
+     * @return {Number} scale
+     */
+    getScale: function getScale(start, end) {
+        // need two fingers...
+        if(start.length >= 2 && end.length >= 2) {
+            return this.getDistance(end[0], end[1]) / this.getDistance(start[0], start[1]);
+        }
+        return 1;
+    },
+
+    /**
+     * calculate the rotation degrees between two touchLists
+     * @method getRotation
+     * @param {Array} start array of touches
+     * @param {Array} end array of touches
+     * @return {Number} rotation
+     */
+    getRotation: function getRotation(start, end) {
+        // need two fingers
+        if(start.length >= 2 && end.length >= 2) {
+            return this.getAngle(end[1], end[0]) - this.getAngle(start[1], start[0]);
+        }
+        return 0;
+    },
+
+    /**
+     * find out if the direction is vertical   *
+     * @method isVertical
+     * @param {String} direction matches `DIRECTION_UP|DOWN`
+     * @return {Boolean} is_vertical
+     */
+    isVertical: function isVertical(direction) {
+        return direction == DIRECTION_UP || direction == DIRECTION_DOWN;
+    },
+
+    /**
+     * set css properties with their prefixes
+     * @param {HTMLElement} element
+     * @param {String} prop
+     * @param {String} value
+     * @param {Boolean} [toggle=true]
+     * @return {Boolean}
+     */
+    setPrefixedCss: function setPrefixedCss(element, prop, value, toggle) {
+        var prefixes = ['', 'Webkit', 'Moz', 'O', 'ms'];
+        prop = Utils.toCamelCase(prop);
+
+        for(var i = 0; i < prefixes.length; i++) {
+            var p = prop;
+            // prefixes
+            if(prefixes[i]) {
+                p = prefixes[i] + p.slice(0, 1).toUpperCase() + p.slice(1);
+            }
+
+            // test the style
+            if(p in element.style) {
+                element.style[p] = (toggle == null || toggle) && value || '';
+                break;
+            }
+        }
+    },
+
+    /**
+     * toggle browser default behavior by setting css properties.
+     * `userSelect='none'` also sets `element.onselectstart` to false
+     * `userDrag='none'` also sets `element.ondragstart` to false
+     *
+     * @method toggleBehavior
+     * @param {HtmlElement} element
+     * @param {Object} props
+     * @param {Boolean} [toggle=true]
+     */
+    toggleBehavior: function toggleBehavior(element, props, toggle) {
+        if(!props || !element || !element.style) {
+            return;
+        }
+
+        // set the css properties
+        Utils.each(props, function(value, prop) {
+            Utils.setPrefixedCss(element, prop, value, toggle);
+        });
+
+        var falseFn = toggle && function() {
+            return false;
+        };
+
+        // also the disable onselectstart
+        if(props.userSelect == 'none') {
+            element.onselectstart = falseFn;
+        }
+        // and disable ondragstart
+        if(props.userDrag == 'none') {
+            element.ondragstart = falseFn;
+        }
+    },
+
+    /**
+     * convert a string with underscores to camelCase
+     * so prevent_default becomes preventDefault
+     * @param {String} str
+     * @return {String} camelCaseStr
+     */
+    toCamelCase: function toCamelCase(str) {
+        return str.replace(/[_-]([a-z])/g, function(s) {
+            return s[1].toUpperCase();
+        });
+    }
+};
+
+
+/**
+ * @module hammer
+ */
+
+/**
+ * create new hammer instance
+ * all methods should return the instance itself, so it is chainable.
+ *
+ * @class Instance
+ * @constructor
+ * @param {HTMLElement} element
+ * @param {Object} [options={}] options are merged with `Hammer.defaults`
+ * @return {Hammer.Instance}
+ */
+Hammer.Instance = function(element, options) {
+    var self = this;
+
+    // setup HammerJS window events and register all gestures
+    // this also sets up the default options
+    setup();
+
+    /**
+     * @property element
+     * @type {HTMLElement}
+     */
+    this.element = element;
+
+    /**
+     * @property enabled
+     * @type {Boolean}
+     * @protected
+     */
+    this.enabled = true;
+
+    /**
+     * options, merged with the defaults
+     * options with an _ are converted to camelCase
+     * @property options
+     * @type {Object}
+     */
+    Utils.each(options, function(value, name) {
+        delete options[name];
+        options[Utils.toCamelCase(name)] = value;
+    });
+
+    this.options = Utils.extend(Utils.extend({}, Hammer.defaults), options || {});
+
+    // add some css to the element to prevent the browser from doing its native behavoir
+    if(this.options.behavior) {
+        Utils.toggleBehavior(this.element, this.options.behavior, true);
+    }
+
+    /**
+     * event start handler on the element to start the detection
+     * @property eventStartHandler
+     * @type {Object}
+     */
+    this.eventStartHandler = Event.onTouch(element, EVENT_START, function(ev) {
+        if(self.enabled && ev.eventType == EVENT_START) {
+            Detection.startDetect(self, ev);
+        } else if(ev.eventType == EVENT_TOUCH) {
+            Detection.detect(ev);
+        }
+    });
+
+    /**
+     * keep a list of user event handlers which needs to be removed when calling 'dispose'
+     * @property eventHandlers
+     * @type {Array}
+     */
+    this.eventHandlers = [];
+};
+
+Hammer.Instance.prototype = {
+    /**
+     * bind events to the instance
+     * @method on
+     * @chainable
+     * @param {String} gestures multiple gestures by splitting with a space
+     * @param {Function} handler
+     * @param {Object} handler.ev event object
+     */
+    on: function onEvent(gestures, handler) {
+        var self = this;
+        Event.on(self.element, gestures, handler, function(type) {
+            self.eventHandlers.push({ gesture: type, handler: handler });
+        });
+        return self;
+    },
+
+    /**
+     * unbind events to the instance
+     * @method off
+     * @chainable
+     * @param {String} gestures
+     * @param {Function} handler
+     */
+    off: function offEvent(gestures, handler) {
+        var self = this;
+
+        Event.off(self.element, gestures, handler, function(type) {
+            var index = Utils.inArray({ gesture: type, handler: handler });
+            if(index !== false) {
+                self.eventHandlers.splice(index, 1);
+            }
+        });
+        return self;
+    },
+
+    /**
+     * trigger gesture event
+     * @method trigger
+     * @chainable
+     * @param {String} gesture
+     * @param {Object} [eventData]
+     */
+    trigger: function triggerEvent(gesture, eventData) {
+        // optional
+        if(!eventData) {
+            eventData = {};
+        }
+
+        // create DOM event
+        var event = Hammer.DOCUMENT.createEvent('Event');
+        event.initEvent(gesture, true, true);
+        event.gesture = eventData;
+
+        // trigger on the target if it is in the instance element,
+        // this is for event delegation tricks
+        var element = this.element;
+        if(Utils.hasParent(eventData.target, element)) {
+            element = eventData.target;
+        }
+
+        element.dispatchEvent(event);
+        return this;
+    },
+
+    /**
+     * enable of disable hammer.js detection
+     * @method enable
+     * @chainable
+     * @param {Boolean} state
+     */
+    enable: function enable(state) {
+        this.enabled = state;
+        return this;
+    },
+
+    /**
+     * dispose this hammer instance
+     * @method dispose
+     * @return {Null}
+     */
+    dispose: function dispose() {
+        var i, eh;
+
+        // undo all changes made by stop_browser_behavior
+        Utils.toggleBehavior(this.element, this.options.behavior, false);
+
+        // unbind all custom event handlers
+        for(i = -1; (eh = this.eventHandlers[++i]);) {
+            Utils.off(this.element, eh.gesture, eh.handler);
+        }
+
+        this.eventHandlers = [];
+
+        // unbind the start event listener
+        Event.off(this.element, EVENT_TYPES[EVENT_START], this.eventStartHandler);
+
+        return null;
+    }
+};
+
+
+/**
+ * @module hammer
+ */
+/**
+ * @class Event
+ * @static
+ */
+var Event = Hammer.event = {
+    /**
+     * when touch events have been fired, this is true
+     * this is used to stop mouse events
+     * @property prevent_mouseevents
+     * @private
+     * @type {Boolean}
+     */
+    preventMouseEvents: false,
+
+    /**
+     * if EVENT_START has been fired
+     * @property started
+     * @private
+     * @type {Boolean}
+     */
+    started: false,
+
+    /**
+     * when the mouse is hold down, this is true
+     * @property should_detect
+     * @private
+     * @type {Boolean}
+     */
+    shouldDetect: false,
+
+    /**
+     * simple event binder with a hook and support for multiple types
+     * @method on
+     * @param {HTMLElement} element
+     * @param {String} type
+     * @param {Function} handler
+     * @param {Function} [hook]
+     * @param {Object} hook.type
+     */
+    on: function on(element, type, handler, hook) {
+        var types = type.split(' ');
+        Utils.each(types, function(type) {
+            Utils.on(element, type, handler);
+            hook && hook(type);
+        });
+    },
+
+    /**
+     * simple event unbinder with a hook and support for multiple types
+     * @method off
+     * @param {HTMLElement} element
+     * @param {String} type
+     * @param {Function} handler
+     * @param {Function} [hook]
+     * @param {Object} hook.type
+     */
+    off: function off(element, type, handler, hook) {
+        var types = type.split(' ');
+        Utils.each(types, function(type) {
+            Utils.off(element, type, handler);
+            hook && hook(type);
+        });
+    },
+
+    /**
+     * the core touch event handler.
+     * this finds out if we should to detect gestures
+     * @method onTouch
+     * @param {HTMLElement} element
+     * @param {String} eventType matches `EVENT_START|MOVE|END`
+     * @param {Function} handler
+     * @return onTouchHandler {Function} the core event handler
+     */
+    onTouch: function onTouch(element, eventType, handler) {
+        var self = this;
+
+        var onTouchHandler = function onTouchHandler(ev) {
+            var srcType = ev.type.toLowerCase(),
+                isPointer = Hammer.HAS_POINTEREVENTS,
+                isMouse = Utils.inStr(srcType, 'mouse'),
+                triggerType;
+
+            // if we are in a mouseevent, but there has been a touchevent triggered in this session
+            // we want to do nothing. simply break out of the event.
+            if(isMouse && self.preventMouseEvents) {
+                return;
+
+            // mousebutton must be down
+            } else if(isMouse && eventType == EVENT_START && ev.button === 0) {
+                self.preventMouseEvents = false;
+                self.shouldDetect = true;
+            } else if(isPointer && eventType == EVENT_START) {
+                self.shouldDetect = (ev.buttons === 1 || PointerEvent.matchType(POINTER_TOUCH, ev));
+            // just a valid start event, but no mouse
+            } else if(!isMouse && eventType == EVENT_START) {
+                self.preventMouseEvents = true;
+                self.shouldDetect = true;
+            }
+
+            // update the pointer event before entering the detection
+            if(isPointer && eventType != EVENT_END) {
+                PointerEvent.updatePointer(eventType, ev);
+            }
+
+            // we are in a touch/down state, so allowed detection of gestures
+            if(self.shouldDetect) {
+                triggerType = self.doDetect.call(self, ev, eventType, element, handler);
+            }
+
+            // ...and we are done with the detection
+            // so reset everything to start each detection totally fresh
+            if(triggerType == EVENT_END) {
+                self.preventMouseEvents = false;
+                self.shouldDetect = false;
+                PointerEvent.reset();
+            // update the pointerevent object after the detection
+            }
+
+            if(isPointer && eventType == EVENT_END) {
+                PointerEvent.updatePointer(eventType, ev);
+            }
+        };
+
+        this.on(element, EVENT_TYPES[eventType], onTouchHandler);
+        return onTouchHandler;
+    },
+
+    /**
+     * the core detection method
+     * this finds out what hammer-touch-events to trigger
+     * @method doDetect
+     * @param {Object} ev
+     * @param {String} eventType matches `EVENT_START|MOVE|END`
+     * @param {HTMLElement} element
+     * @param {Function} handler
+     * @return {String} triggerType matches `EVENT_START|MOVE|END`
+     */
+    doDetect: function doDetect(ev, eventType, element, handler) {
+        var touchList = this.getTouchList(ev, eventType);
+        var touchListLength = touchList.length;
+        var triggerType = eventType;
+        var triggerChange = touchList.trigger; // used by fakeMultitouch plugin
+        var changedLength = touchListLength;
+
+        // at each touchstart-like event we want also want to trigger a TOUCH event...
+        if(eventType == EVENT_START) {
+            triggerChange = EVENT_TOUCH;
+        // ...the same for a touchend-like event
+        } else if(eventType == EVENT_END) {
+            triggerChange = EVENT_RELEASE;
+
+            // keep track of how many touches have been removed
+            changedLength = touchList.length - ((ev.changedTouches) ? ev.changedTouches.length : 1);
+        }
+
+        // after there are still touches on the screen,
+        // we just want to trigger a MOVE event. so change the START or END to a MOVE
+        // but only after detection has been started, the first time we actualy want a START
+        if(changedLength > 0 && this.started) {
+            triggerType = EVENT_MOVE;
+        }
+
+        // detection has been started, we keep track of this, see above
+        this.started = true;
+
+        // generate some event data, some basic information
+        var evData = this.collectEventData(element, triggerType, touchList, ev);
+
+        // trigger the triggerType event before the change (TOUCH, RELEASE) events
+        // but the END event should be at last
+        if(eventType != EVENT_END) {
+            handler.call(Detection, evData);
+        }
+
+        // trigger a change (TOUCH, RELEASE) event, this means the length of the touches changed
+        if(triggerChange) {
+            evData.changedLength = changedLength;
+            evData.eventType = triggerChange;
+
+            handler.call(Detection, evData);
+
+            evData.eventType = triggerType;
+            delete evData.changedLength;
+        }
+
+        // trigger the END event
+        if(triggerType == EVENT_END) {
+            handler.call(Detection, evData);
+
+            // ...and we are done with the detection
+            // so reset everything to start each detection totally fresh
+            this.started = false;
+        }
+
+        return triggerType;
+    },
+
+    /**
+     * we have different events for each device/browser
+     * determine what we need and set them in the EVENT_TYPES constant
+     * the `onTouch` method is bind to these properties.
+     * @method determineEventTypes
+     * @return {Object} events
+     */
+    determineEventTypes: function determineEventTypes() {
+        var types;
+        if(Hammer.HAS_POINTEREVENTS) {
+            if(window.PointerEvent) {
+                types = [
+                    'pointerdown',
+                    'pointermove',
+                    'pointerup pointercancel lostpointercapture'
+                ];
+            } else {
+                types = [
+                    'MSPointerDown',
+                    'MSPointerMove',
+                    'MSPointerUp MSPointerCancel MSLostPointerCapture'
+                ];
+            }
+        } else if(Hammer.NO_MOUSEEVENTS) {
+            types = [
+                'touchstart',
+                'touchmove',
+                'touchend touchcancel'
+            ];
+        } else {
+            types = [
+                'touchstart mousedown',
+                'touchmove mousemove',
+                'touchend touchcancel mouseup'
+            ];
+        }
+
+        EVENT_TYPES[EVENT_START] = types[0];
+        EVENT_TYPES[EVENT_MOVE] = types[1];
+        EVENT_TYPES[EVENT_END] = types[2];
+        return EVENT_TYPES;
+    },
+
+    /**
+     * create touchList depending on the event
+     * @method getTouchList
+     * @param {Object} ev
+     * @param {String} eventType
+     * @return {Array} touches
+     */
+    getTouchList: function getTouchList(ev, eventType) {
+        // get the fake pointerEvent touchlist
+        if(Hammer.HAS_POINTEREVENTS) {
+            return PointerEvent.getTouchList();
+        }
+
+        // get the touchlist
+        if(ev.touches) {
+            if(eventType == EVENT_MOVE) {
+                return ev.touches;
+            }
+
+            var identifiers = [];
+            var concat = [].concat(Utils.toArray(ev.touches), Utils.toArray(ev.changedTouches));
+            var touchList = [];
+
+            Utils.each(concat, function(touch) {
+                if(Utils.inArray(identifiers, touch.identifier) === false) {
+                    touchList.push(touch);
+                }
+                identifiers.push(touch.identifier);
+            });
+
+            return touchList;
+        }
+
+        // make fake touchList from mouse position
+        ev.identifier = 1;
+        return [ev];
+    },
+
+    /**
+     * collect basic event data
+     * @method collectEventData
+     * @param {HTMLElement} element
+     * @param {String} eventType matches `EVENT_START|MOVE|END`
+     * @param {Array} touches
+     * @param {Object} ev
+     * @return {Object} ev
+     */
+    collectEventData: function collectEventData(element, eventType, touches, ev) {
+        // find out pointerType
+        var pointerType = POINTER_TOUCH;
+        if(Utils.inStr(ev.type, 'mouse') || PointerEvent.matchType(POINTER_MOUSE, ev)) {
+            pointerType = POINTER_MOUSE;
+        } else if(PointerEvent.matchType(POINTER_PEN, ev)) {
+            pointerType = POINTER_PEN;
+        }
+
+        return {
+            center: Utils.getCenter(touches),
+            timeStamp: Date.now(),
+            target: ev.target,
+            touches: touches,
+            eventType: eventType,
+            pointerType: pointerType,
+            srcEvent: ev,
+
+            /**
+             * prevent the browser default actions
+             * mostly used to disable scrolling of the browser
+             */
+            preventDefault: function() {
+                var srcEvent = this.srcEvent;
+                srcEvent.preventManipulation && srcEvent.preventManipulation();
+                srcEvent.preventDefault && srcEvent.preventDefault();
+            },
+
+            /**
+             * stop bubbling the event up to its parents
+             */
+            stopPropagation: function() {
+                this.srcEvent.stopPropagation();
+            },
+
+            /**
+             * immediately stop gesture detection
+             * might be useful after a swipe was detected
+             * @return {*}
+             */
+            stopDetect: function() {
+                return Detection.stopDetect();
+            }
+        };
+    }
+};
+
+
+/**
+ * @module hammer
+ *
+ * @class PointerEvent
+ * @static
+ */
+var PointerEvent = Hammer.PointerEvent = {
+    /**
+     * holds all pointers, by `identifier`
+     * @property pointers
+     * @type {Object}
+     */
+    pointers: {},
+
+    /**
+     * get the pointers as an array
+     * @method getTouchList
+     * @return {Array} touchlist
+     */
+    getTouchList: function getTouchList() {
+        var touchlist = [];
+        // we can use forEach since pointerEvents only is in IE10
+        Utils.each(this.pointers, function(pointer) {
+            touchlist.push(pointer);
+        });
+        return touchlist;
+    },
+
+    /**
+     * update the position of a pointer
+     * @method updatePointer
+     * @param {String} eventType matches `EVENT_START|MOVE|END`
+     * @param {Object} pointerEvent
+     */
+    updatePointer: function updatePointer(eventType, pointerEvent) {
+        if(eventType == EVENT_END || (eventType != EVENT_END && pointerEvent.buttons !== 1)) {
+            delete this.pointers[pointerEvent.pointerId];
+        } else {
+            pointerEvent.identifier = pointerEvent.pointerId;
+            this.pointers[pointerEvent.pointerId] = pointerEvent;
+        }
+    },
+
+    /**
+     * check if ev matches pointertype
+     * @method matchType
+     * @param {String} pointerType matches `POINTER_MOUSE|TOUCH|PEN`
+     * @param {PointerEvent} ev
+     */
+    matchType: function matchType(pointerType, ev) {
+        if(!ev.pointerType) {
+            return false;
+        }
+
+        var pt = ev.pointerType,
+            types = {};
+
+        types[POINTER_MOUSE] = (pt === (ev.MSPOINTER_TYPE_MOUSE || POINTER_MOUSE));
+        types[POINTER_TOUCH] = (pt === (ev.MSPOINTER_TYPE_TOUCH || POINTER_TOUCH));
+        types[POINTER_PEN] = (pt === (ev.MSPOINTER_TYPE_PEN || POINTER_PEN));
+        return types[pointerType];
+    },
+
+    /**
+     * reset the stored pointers
+     * @method reset
+     */
+    reset: function resetList() {
+        this.pointers = {};
+    }
+};
+
+
+/**
+ * @module hammer
+ *
+ * @class Detection
+ * @static
+ */
+var Detection = Hammer.detection = {
+    // contains all registred Hammer.gestures in the correct order
+    gestures: [],
+
+    // data of the current Hammer.gesture detection session
+    current: null,
+
+    // the previous Hammer.gesture session data
+    // is a full clone of the previous gesture.current object
+    previous: null,
+
+    // when this becomes true, no gestures are fired
+    stopped: false,
+
+    /**
+     * start Hammer.gesture detection
+     * @method startDetect
+     * @param {Hammer.Instance} inst
+     * @param {Object} eventData
+     */
+    startDetect: function startDetect(inst, eventData) {
+        // already busy with a Hammer.gesture detection on an element
+        if(this.current) {
+            return;
+        }
+
+        this.stopped = false;
+
+        // holds current session
+        this.current = {
+            inst: inst, // reference to HammerInstance we're working for
+            startEvent: Utils.extend({}, eventData), // start eventData for distances, timing etc
+            lastEvent: false, // last eventData
+            lastCalcEvent: false, // last eventData for calculations.
+            futureCalcEvent: false, // last eventData for calculations.
+            lastCalcData: {}, // last lastCalcData
+            name: '' // current gesture we're in/detected, can be 'tap', 'hold' etc
+        };
+
+        this.detect(eventData);
+    },
+
+    /**
+     * Hammer.gesture detection
+     * @method detect
+     * @param {Object} eventData
+     * @return {any}
+     */
+    detect: function detect(eventData) {
+        if(!this.current || this.stopped) {
+            return;
+        }
+
+        // extend event data with calculations about scale, distance etc
+        eventData = this.extendEventData(eventData);
+
+        // hammer instance and instance options
+        var inst = this.current.inst,
+            instOptions = inst.options;
+
+        // call Hammer.gesture handlers
+        Utils.each(this.gestures, function triggerGesture(gesture) {
+            // only when the instance options have enabled this gesture
+            if(!this.stopped && inst.enabled && instOptions[gesture.name]) {
+                gesture.handler.call(gesture, eventData, inst);
+            }
+        }, this);
+
+        // store as previous event event
+        if(this.current) {
+            this.current.lastEvent = eventData;
+        }
+
+        if(eventData.eventType == EVENT_END) {
+            this.stopDetect();
+        }
+
+        return eventData;
+    },
+
+    /**
+     * clear the Hammer.gesture vars
+     * this is called on endDetect, but can also be used when a final Hammer.gesture has been detected
+     * to stop other Hammer.gestures from being fired
+     * @method stopDetect
+     */
+    stopDetect: function stopDetect() {
+        // clone current data to the store as the previous gesture
+        // used for the double tap gesture, since this is an other gesture detect session
+        this.previous = Utils.extend({}, this.current);
+
+        // reset the current
+        this.current = null;
+        this.stopped = true;
+    },
+
+    /**
+     * calculate velocity, angle and direction
+     * @method getVelocityData
+     * @param {Object} ev
+     * @param {Object} center
+     * @param {Number} deltaTime
+     * @param {Number} deltaX
+     * @param {Number} deltaY
+     */
+    getCalculatedData: function getCalculatedData(ev, center, deltaTime, deltaX, deltaY) {
+        var cur = this.current,
+            recalc = false,
+            calcEv = cur.lastCalcEvent,
+            calcData = cur.lastCalcData;
+
+        if(calcEv && ev.timeStamp - calcEv.timeStamp > Hammer.CALCULATE_INTERVAL) {
+            center = calcEv.center;
+            deltaTime = ev.timeStamp - calcEv.timeStamp;
+            deltaX = ev.center.clientX - calcEv.center.clientX;
+            deltaY = ev.center.clientY - calcEv.center.clientY;
+            recalc = true;
+        }
+
+        if(ev.eventType == EVENT_TOUCH || ev.eventType == EVENT_RELEASE) {
+            cur.futureCalcEvent = ev;
+        }
+
+        if(!cur.lastCalcEvent || recalc) {
+            calcData.velocity = Utils.getVelocity(deltaTime, deltaX, deltaY);
+            calcData.angle = Utils.getAngle(center, ev.center);
+            calcData.direction = Utils.getDirection(center, ev.center);
+
+            cur.lastCalcEvent = cur.futureCalcEvent || ev;
+            cur.futureCalcEvent = ev;
+        }
+
+        ev.velocityX = calcData.velocity.x;
+        ev.velocityY = calcData.velocity.y;
+        ev.interimAngle = calcData.angle;
+        ev.interimDirection = calcData.direction;
+    },
+
+    /**
+     * extend eventData for Hammer.gestures
+     * @method extendEventData
+     * @param {Object} ev
+     * @return {Object} ev
+     */
+    extendEventData: function extendEventData(ev) {
+        var cur = this.current,
+            startEv = cur.startEvent,
+            lastEv = cur.lastEvent || startEv;
+
+        // update the start touchlist to calculate the scale/rotation
+        if(ev.eventType == EVENT_TOUCH || ev.eventType == EVENT_RELEASE) {
+            startEv.touches = [];
+            Utils.each(ev.touches, function(touch) {
+                startEv.touches.push({
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+            });
+        }
+
+        var deltaTime = ev.timeStamp - startEv.timeStamp,
+            deltaX = ev.center.clientX - startEv.center.clientX,
+            deltaY = ev.center.clientY - startEv.center.clientY;
+
+        this.getCalculatedData(ev, lastEv.center, deltaTime, deltaX, deltaY);
+
+        Utils.extend(ev, {
+            startEvent: startEv,
+
+            deltaTime: deltaTime,
+            deltaX: deltaX,
+            deltaY: deltaY,
+
+            distance: Utils.getDistance(startEv.center, ev.center),
+            angle: Utils.getAngle(startEv.center, ev.center),
+            direction: Utils.getDirection(startEv.center, ev.center),
+            scale: Utils.getScale(startEv.touches, ev.touches),
+            rotation: Utils.getRotation(startEv.touches, ev.touches)
+        });
+
+        return ev;
+    },
+
+    /**
+     * register new gesture
+     * @method register
+     * @param {Object} gesture object, see `gestures/` for documentation
+     * @return {Array} gestures
+     */
+    register: function register(gesture) {
+        // add an enable gesture options if there is no given
+        var options = gesture.defaults || {};
+        if(options[gesture.name] === undefined) {
+            options[gesture.name] = true;
+        }
+
+        // extend Hammer default options with the Hammer.gesture options
+        Utils.extend(Hammer.defaults, options, true);
+
+        // set its index
+        gesture.index = gesture.index || 1000;
+
+        // add Hammer.gesture to the list
+        this.gestures.push(gesture);
+
+        // sort the list by index
+        this.gestures.sort(function(a, b) {
+            if(a.index < b.index) {
+                return -1;
+            }
+            if(a.index > b.index) {
+                return 1;
+            }
+            return 0;
+        });
+
+        return this.gestures;
+    }
+};
+
+
+/**
+ * @module gestures
+ */
+/**
+ * Move with x fingers (default 1) around on the page.
+ * Preventing the default browser behavior is a good way to improve feel and working.
+ * ````
+ *  hammertime.on("drag", function(ev) {
+ *    console.log(ev);
+ *    ev.gesture.preventDefault();
+ *  });
+ * ````
+ *
+ * @class Drag
+ * @static
+ */
+/**
+ * @event drag
+ * @param {Object} ev
+ */
+/**
+ * @event dragstart
+ * @param {Object} ev
+ */
+/**
+ * @event dragend
+ * @param {Object} ev
+ */
+/**
+ * @event drapleft
+ * @param {Object} ev
+ */
+/**
+ * @event dragright
+ * @param {Object} ev
+ */
+/**
+ * @event dragup
+ * @param {Object} ev
+ */
+/**
+ * @event dragdown
+ * @param {Object} ev
+ */
+
+/**
+ * @param {String} name
+ */
+(function(name) {
+    var triggered = false;
+
+    function dragGesture(ev, inst) {
+        var cur = Detection.current;
+
+        // max touches
+        if(inst.options.dragMaxTouches > 0 &&
+            ev.touches.length > inst.options.dragMaxTouches) {
+            return;
+        }
+
+        switch(ev.eventType) {
+            case EVENT_START:
+                triggered = false;
+                break;
+
+            case EVENT_MOVE:
+                // when the distance we moved is too small we skip this gesture
+                // or we can be already in dragging
+                if(ev.distance < inst.options.dragMinDistance &&
+                    cur.name != name) {
+                    return;
+                }
+
+                var startCenter = cur.startEvent.center;
+
+                // we are dragging!
+                if(cur.name != name) {
+                    cur.name = name;
+                    if(inst.options.dragDistanceCorrection && ev.distance > 0) {
+                        // When a drag is triggered, set the event center to dragMinDistance pixels from the original event center.
+                        // Without this correction, the dragged distance would jumpstart at dragMinDistance pixels instead of at 0.
+                        // It might be useful to save the original start point somewhere
+                        var factor = Math.abs(inst.options.dragMinDistance / ev.distance);
+                        startCenter.pageX += ev.deltaX * factor;
+                        startCenter.pageY += ev.deltaY * factor;
+                        startCenter.clientX += ev.deltaX * factor;
+                        startCenter.clientY += ev.deltaY * factor;
+
+                        // recalculate event data using new start point
+                        ev = Detection.extendEventData(ev);
+                    }
+                }
+
+                // lock drag to axis?
+                if(cur.lastEvent.dragLockToAxis ||
+                    ( inst.options.dragLockToAxis &&
+                        inst.options.dragLockMinDistance <= ev.distance
+                        )) {
+                    ev.dragLockToAxis = true;
+                }
+
+                // keep direction on the axis that the drag gesture started on
+                var lastDirection = cur.lastEvent.direction;
+                if(ev.dragLockToAxis && lastDirection !== ev.direction) {
+                    if(Utils.isVertical(lastDirection)) {
+                        ev.direction = (ev.deltaY < 0) ? DIRECTION_UP : DIRECTION_DOWN;
+                    } else {
+                        ev.direction = (ev.deltaX < 0) ? DIRECTION_LEFT : DIRECTION_RIGHT;
+                    }
+                }
+
+                // first time, trigger dragstart event
+                if(!triggered) {
+                    inst.trigger(name + 'start', ev);
+                    triggered = true;
+                }
+
+                // trigger events
+                inst.trigger(name, ev);
+                inst.trigger(name + ev.direction, ev);
+
+                var isVertical = Utils.isVertical(ev.direction);
+
+                // block the browser events
+                if((inst.options.dragBlockVertical && isVertical) ||
+                    (inst.options.dragBlockHorizontal && !isVertical)) {
+                    ev.preventDefault();
+                }
+                break;
+
+            case EVENT_RELEASE:
+                if(triggered && ev.changedLength <= inst.options.dragMaxTouches) {
+                    inst.trigger(name + 'end', ev);
+                    triggered = false;
+                }
+                break;
+
+            case EVENT_END:
+                triggered = false;
+                break;
+        }
+    }
+
+    Hammer.gestures.Drag = {
+        name: name,
+        index: 50,
+        handler: dragGesture,
+        defaults: {
+            /**
+             * minimal movement that have to be made before the drag event gets triggered
+             * @property dragMinDistance
+             * @type {Number}
+             * @default 10
+             */
+            dragMinDistance: 10,
+
+            /**
+             * Set dragDistanceCorrection to true to make the starting point of the drag
+             * be calculated from where the drag was triggered, not from where the touch started.
+             * Useful to avoid a jerk-starting drag, which can make fine-adjustments
+             * through dragging difficult, and be visually unappealing.
+             * @property dragDistanceCorrection
+             * @type {Boolean}
+             * @default true
+             */
+            dragDistanceCorrection: true,
+
+            /**
+             * set 0 for unlimited, but this can conflict with transform
+             * @property dragMaxTouches
+             * @type {Number}
+             * @default 1
+             */
+            dragMaxTouches: 1,
+
+            /**
+             * prevent default browser behavior when dragging occurs
+             * be careful with it, it makes the element a blocking element
+             * when you are using the drag gesture, it is a good practice to set this true
+             * @property dragBlockHorizontal
+             * @type {Boolean}
+             * @default false
+             */
+            dragBlockHorizontal: false,
+
+            /**
+             * same as `dragBlockHorizontal`, but for vertical movement
+             * @property dragBlockVertical
+             * @type {Boolean}
+             * @default false
+             */
+            dragBlockVertical: false,
+
+            /**
+             * dragLockToAxis keeps the drag gesture on the axis that it started on,
+             * It disallows vertical directions if the initial direction was horizontal, and vice versa.
+             * @property dragLockToAxis
+             * @type {Boolean}
+             * @default false
+             */
+            dragLockToAxis: false,
+
+            /**
+             * drag lock only kicks in when distance > dragLockMinDistance
+             * This way, locking occurs only when the distance has become large enough to reliably determine the direction
+             * @property dragLockMinDistance
+             * @type {Number}
+             * @default 25
+             */
+            dragLockMinDistance: 25
+        }
+    };
+})('drag');
+
+/**
+ * @module gestures
+ */
+/**
+ * trigger a simple gesture event, so you can do anything in your handler.
+ * only usable if you know what your doing...
+ *
+ * @class Gesture
+ * @static
+ */
+/**
+ * @event gesture
+ * @param {Object} ev
+ */
+Hammer.gestures.Gesture = {
+    name: 'gesture',
+    index: 1337,
+    handler: function releaseGesture(ev, inst) {
+        inst.trigger(this.name, ev);
+    }
+};
+
+/**
+ * @module gestures
+ */
+/**
+ * Touch stays at the same place for x time
+ *
+ * @class Hold
+ * @static
+ */
+/**
+ * @event hold
+ * @param {Object} ev
+ */
+
+/**
+ * @param {String} name
+ */
+(function(name) {
+    var timer;
+
+    function holdGesture(ev, inst) {
+        var options = inst.options,
+            current = Detection.current;
+
+        switch(ev.eventType) {
+            case EVENT_START:
+                clearTimeout(timer);
+
+                // set the gesture so we can check in the timeout if it still is
+                current.name = name;
+
+                // set timer and if after the timeout it still is hold,
+                // we trigger the hold event
+                timer = setTimeout(function() {
+                    if(current && current.name == name) {
+                        inst.trigger(name, ev);
+                    }
+                }, options.holdTimeout);
+                break;
+
+            case EVENT_MOVE:
+                if(ev.distance > options.holdThreshold) {
+                    clearTimeout(timer);
+                }
+                break;
+
+            case EVENT_RELEASE:
+                clearTimeout(timer);
+                break;
+        }
+    }
+
+    Hammer.gestures.Hold = {
+        name: name,
+        index: 10,
+        defaults: {
+            /**
+             * @property holdTimeout
+             * @type {Number}
+             * @default 500
+             */
+            holdTimeout: 500,
+
+            /**
+             * movement allowed while holding
+             * @property holdThreshold
+             * @type {Number}
+             * @default 2
+             */
+            holdThreshold: 2
+        },
+        handler: holdGesture
+    };
+})('hold');
+
+/**
+ * @module gestures
+ */
+/**
+ * when a touch is being released from the page
+ *
+ * @class Release
+ * @static
+ */
+/**
+ * @event release
+ * @param {Object} ev
+ */
+Hammer.gestures.Release = {
+    name: 'release',
+    index: Infinity,
+    handler: function releaseGesture(ev, inst) {
+        if(ev.eventType == EVENT_RELEASE) {
+            inst.trigger(this.name, ev);
+        }
+    }
+};
+
+/**
+ * @module gestures
+ */
+/**
+ * triggers swipe events when the end velocity is above the threshold
+ * for best usage, set `preventDefault` (on the drag gesture) to `true`
+ * ````
+ *  hammertime.on("dragleft swipeleft", function(ev) {
+ *    console.log(ev);
+ *    ev.gesture.preventDefault();
+ *  });
+ * ````
+ *
+ * @class Swipe
+ * @static
+ */
+/**
+ * @event swipe
+ * @param {Object} ev
+ */
+/**
+ * @event swipeleft
+ * @param {Object} ev
+ */
+/**
+ * @event swiperight
+ * @param {Object} ev
+ */
+/**
+ * @event swipeup
+ * @param {Object} ev
+ */
+/**
+ * @event swipedown
+ * @param {Object} ev
+ */
+Hammer.gestures.Swipe = {
+    name: 'swipe',
+    index: 40,
+    defaults: {
+        /**
+         * @property swipeMinTouches
+         * @type {Number}
+         * @default 1
+         */
+        swipeMinTouches: 1,
+
+        /**
+         * @property swipeMaxTouches
+         * @type {Number}
+         * @default 1
+         */
+        swipeMaxTouches: 1,
+
+        /**
+         * horizontal swipe velocity
+         * @property swipeVelocityX
+         * @type {Number}
+         * @default 0.6
+         */
+        swipeVelocityX: 0.01,
+
+        /**
+         * vertical swipe velocity
+         * @property swipeVelocityY
+         * @type {Number}
+         * @default 0.6
+         */
+        swipeVelocityY: 0.01
+    },
+
+    handler: function swipeGesture(ev, inst) {
+        if(ev.eventType == EVENT_RELEASE) {
+            var touches = ev.touches.length,
+                options = inst.options;
+
+            // max touches
+            if(touches < options.swipeMinTouches ||
+                touches > options.swipeMaxTouches) {
+                return;
+            }
+
+            // when the distance we moved is too small we skip this gesture
+            // or we can be already in dragging
+            if(ev.velocityX > options.swipeVelocityX ||
+                ev.velocityY > options.swipeVelocityY) {
+                // trigger swipe events
+                inst.trigger(this.name, ev);
+                inst.trigger(this.name + ev.direction, ev);
+            }
+        }
+    }
+};
+
+/**
+ * @module gestures
+ */
+/**
+ * Single tap and a double tap on a place
+ *
+ * @class Tap
+ * @static
+ */
+/**
+ * @event tap
+ * @param {Object} ev
+ */
+/**
+ * @event doubletap
+ * @param {Object} ev
+ */
+
+/**
+ * @param {String} name
+ */
+(function(name) {
+    var hasMoved = false;
+
+    function tapGesture(ev, inst) {
+        var options = inst.options,
+            current = Detection.current,
+            prev = Detection.previous,
+            sincePrev,
+            didDoubleTap;
+
+        switch(ev.eventType) {
+            case EVENT_START:
+                hasMoved = false;
+                break;
+
+            case EVENT_MOVE:
+                hasMoved = hasMoved || (ev.distance > options.tapMaxDistance);
+                break;
+
+            case EVENT_END:
+                if(!Utils.inStr(ev.srcEvent.type, 'cancel') && ev.deltaTime < options.tapMaxTime && !hasMoved) {
+                    // previous gesture, for the double tap since these are two different gesture detections
+                    sincePrev = prev && prev.lastEvent && ev.timeStamp - prev.lastEvent.timeStamp;
+                    didDoubleTap = false;
+
+                    // check if double tap
+                    if(prev && prev.name == name &&
+                        (sincePrev && sincePrev < options.doubleTapInterval) &&
+                        ev.distance < options.doubleTapDistance) {
+                        inst.trigger('doubletap', ev);
+                        didDoubleTap = true;
+                    }
+
+                    // do a single tap
+                    if(!didDoubleTap || options.tapAlways) {
+                        current.name = name;
+                        inst.trigger(current.name, ev);
+                    }
+                }
+                break;
+        }
+    }
+
+    Hammer.gestures.Tap = {
+        name: name,
+        index: 100,
+        handler: tapGesture,
+        defaults: {
+            /**
+             * max time of a tap, this is for the slow tappers
+             * @property tapMaxTime
+             * @type {Number}
+             * @default 250
+             */
+            tapMaxTime: 250,
+
+            /**
+             * max distance of movement of a tap, this is for the slow tappers
+             * @property tapMaxDistance
+             * @type {Number}
+             * @default 10
+             */
+            tapMaxDistance: 10,
+
+            /**
+             * always trigger the `tap` event, even while double-tapping
+             * @property tapAlways
+             * @type {Boolean}
+             * @default true
+             */
+            tapAlways: true,
+
+            /**
+             * max distance between two taps
+             * @property doubleTapDistance
+             * @type {Number}
+             * @default 20
+             */
+            doubleTapDistance: 20,
+
+            /**
+             * max time between two taps
+             * @property doubleTapInterval
+             * @type {Number}
+             * @default 300
+             */
+            doubleTapInterval: 300
+        }
+    };
+})('tap');
+
+/**
+ * @module gestures
+ */
+/**
+ * when a touch is being touched at the page
+ *
+ * @class Touch
+ * @static
+ */
+/**
+ * @event touch
+ * @param {Object} ev
+ */
+Hammer.gestures.Touch = {
+    name: 'touch',
+    index: -Infinity,
+    defaults: {
+        /**
+         * call preventDefault at touchstart, and makes the element blocking by disabling the scrolling of the page,
+         * but it improves gestures like transforming and dragging.
+         * be careful with using this, it can be very annoying for users to be stuck on the page
+         * @property preventDefault
+         * @type {Boolean}
+         * @default false
+         */
+        preventDefault: false,
+
+        /**
+         * disable mouse events, so only touch (or pen!) input triggers events
+         * @property preventMouse
+         * @type {Boolean}
+         * @default false
+         */
+        preventMouse: false
+    },
+    handler: function touchGesture(ev, inst) {
+        if(inst.options.preventMouse && ev.pointerType == POINTER_MOUSE) {
+            ev.stopDetect();
+            return;
+        }
+
+        if(inst.options.preventDefault) {
+            ev.preventDefault();
+        }
+
+        if(ev.eventType == EVENT_TOUCH) {
+            inst.trigger('touch', ev);
+        }
+    }
+};
+
+/**
+ * @module gestures
+ */
+/**
+ * User want to scale or rotate with 2 fingers
+ * Preventing the default browser behavior is a good way to improve feel and working. This can be done with the
+ * `preventDefault` option.
+ *
+ * @class Transform
+ * @static
+ */
+/**
+ * @event transform
+ * @param {Object} ev
+ */
+/**
+ * @event transformstart
+ * @param {Object} ev
+ */
+/**
+ * @event transformend
+ * @param {Object} ev
+ */
+/**
+ * @event pinchin
+ * @param {Object} ev
+ */
+/**
+ * @event pinchout
+ * @param {Object} ev
+ */
+/**
+ * @event rotate
+ * @param {Object} ev
+ */
+
+/**
+ * @param {String} name
+ */
+(function(name) {
+    var triggered = false;
+
+    function transformGesture(ev, inst) {
+        switch(ev.eventType) {
+            case EVENT_START:
+                triggered = false;
+                break;
+
+            case EVENT_MOVE:
+                // at least multitouch
+                if(ev.touches.length < 2) {
+                    return;
+                }
+
+                var scaleThreshold = Math.abs(1 - ev.scale);
+                var rotationThreshold = Math.abs(ev.rotation);
+
+                // when the distance we moved is too small we skip this gesture
+                // or we can be already in dragging
+                if(scaleThreshold < inst.options.transformMinScale &&
+                    rotationThreshold < inst.options.transformMinRotation) {
+                    return;
+                }
+
+                // we are transforming!
+                Detection.current.name = name;
+
+                // first time, trigger dragstart event
+                if(!triggered) {
+                    inst.trigger(name + 'start', ev);
+                    triggered = true;
+                }
+
+                inst.trigger(name, ev); // basic transform event
+
+                // trigger rotate event
+                if(rotationThreshold > inst.options.transformMinRotation) {
+                    inst.trigger('rotate', ev);
+                }
+
+                // trigger pinch event
+                if(scaleThreshold > inst.options.transformMinScale) {
+                    inst.trigger('pinch', ev);
+                    inst.trigger('pinch' + (ev.scale < 1 ? 'in' : 'out'), ev);
+                }
+                break;
+
+            case EVENT_RELEASE:
+                if(triggered && ev.changedLength < 2) {
+                    inst.trigger(name + 'end', ev);
+                    triggered = false;
+                }
+                break;
+        }
+    }
+
+    Hammer.gestures.Transform = {
+        name: name,
+        index: 45,
+        defaults: {
+            /**
+             * minimal scale factor, no scale is 1, zoomin is to 0 and zoomout until higher then 1
+             * @property transformMinScale
+             * @type {Number}
+             * @default 0.01
+             */
+            transformMinScale: 0.01,
+
+            /**
+             * rotation in degrees
+             * @property transformMinRotation
+             * @type {Number}
+             * @default 1
+             */
+            transformMinRotation: 1
+        },
+
+        handler: transformGesture
+    };
+})('transform');
+
+window.Hammer = Hammer;
+
+if(typeof module !== 'undefined' && module.exports) {
+    module.exports = Hammer;
+}
+
+function setupPlugin(Hammer, $) {
+    // provide polyfill for Date.now()
+    // browser support: http://kangax.github.io/es5-compat-table/#Date.now
+    if(!Date.now) {
+        Date.now = function now() {
+            return new Date().getTime();
+        };
+    }
+
+    /**
+     * the methods on/off are called by the instance, but with the jquery plugin
+     * we use the jquery event methods instead.
+     * @this    {Hammer.Instance}
+     * @return  {jQuery}
+     */
+    Hammer.utils.each(['on', 'off'], function(method) {
+        Hammer.utils[method] = function(element, type, handler) {
+            $(element)[method](type, function($ev) {
+                // append the jquery fixed properties/methods
+                var data = $.extend({}, $ev.originalEvent, $ev);
+                if(data.button === undefined) {
+                    data.button = $ev.which - 1;
+                }
+                handler.call(this, data);
+            });
+        };
+    });
+
+    /**
+     * trigger events
+     * this is called by the gestures to trigger an event like 'tap'
+     * @this    {Hammer.Instance}
+     * @param   {String}    gesture
+     * @param   {Object}    eventData
+     * @return  {jQuery}
+     */
+    Hammer.Instance.prototype.trigger = function(gesture, eventData) {
+        var el = $(this.element);
+        if(el.has(eventData.target).length) {
+            el = $(eventData.target);
+        }
+
+        return el.trigger({
+            type: gesture,
+            gesture: eventData
+        });
+    };
+
+    /**
+     * jQuery plugin
+     * create instance of Hammer and watch for gestures,
+     * and when called again you can change the options
+     * @param   {Object}    [options={}]
+     * @return  {jQuery}
+     */
+    $.fn.hammer = function(options) {
+        return this.each(function() {
+            var el = $(this);
+            var inst = el.data('hammer');
+
+            // start new hammer instance
+            if(!inst) {
+                el.data('hammer', new Hammer(this, options || {}));
+                // change the options
+            } else if(inst && options) {
+                Hammer.utils.extend(inst.options, options);
+            }
+        });
+    };
+}
+
+
+// AMD
+if(typeof define == 'function' && define.amd) {
+    define(['jquery'], function($) {
+        return setupPlugin(window.Hammer, $);
+    });
+} else {
+    setupPlugin(window.Hammer, window.jQuery || window.Zepto);
+}
+
+})(window);
 (function(){
 	window.conf = {
 		server : {
@@ -5218,9 +7441,11 @@ var HomeItemView = ItemReadOnlyView.extend({
 	tagName:'li',
 	className:'home-item',
 	home:true,
+
 	events:{
 		'tap':'onTap',
 	},
+
 	templateHelpers: function(){
 		return {
 		    indexInCollection:(_.bind(function(){
@@ -5240,10 +7465,7 @@ var HomeItemView = ItemReadOnlyView.extend({
 	},
 
 	toDetails:function(ev){
-
-		ev.gesture.preventDefault();
 		app.thread = this.model;
-
 		app.router.navigate('thread/'+this.model.get('id'), {trigger:true});
 	},
 
@@ -5276,10 +7498,10 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 	itemViewContainer:'ol',
 	itemView:HomeItemView,
 	events:{
-		'swipeleft'	: 'swipeLeft',
-		'swiperight': 'swipeRight',
-		'swipeup'	: 'swipeUp',
-		'swipedown'	: 'swipeDown'
+		'swipeleft li'	: 'swipeLeft',
+		'swiperight li'	: 'swipeRight',
+		'swipeup li'	: 'swipeUp',
+		'swipedown li'	: 'swipeDown'
 	},
 	itemViewOptions: function(){
 		return {
@@ -5316,7 +7538,7 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 		this.zoomed = true;
 		this.zoomedModel = model;
 	},
-	swipeLeft:function(){
+	swipeLeft:function(ev){
 		var coords = this._getCoordsForModel(this.zoomedModel);
 
 		if (coords.col == 3) {
@@ -5324,8 +7546,9 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 		} else {
 			this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) + 1))
 		}
+		ev.gesture.preventDefault();
 	},
-	swipeRight:function(){
+	swipeRight:function(ev){
 		var coords = this._getCoordsForModel(this.zoomedModel);
 
 		if (coords.col == 0) {
@@ -5333,8 +7556,9 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 		} else {
 			this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) - 1))
 		}
+		ev.gesture.preventDefault();
 	},
-	swipeUp:function(){
+	swipeUp:function(ev){
 		var coords = this._getCoordsForModel(this.zoomedModel);
 
 		if (coords.line == 4) {
@@ -5342,9 +7566,10 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 		} else {
 			this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) + 4))
 		}
+		ev.gesture.preventDefault();
 	},
 
-	swipeDown:function(){
+	swipeDown:function(ev){
 		var coords = this._getCoordsForModel(this.zoomedModel);
 
 		if (coords.line == 0) {
@@ -5352,6 +7577,7 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 		} else {
 			this.zoomingOnModel(this.zoomedModel.collection.at(this.zoomedModel.collection.indexOf(this.zoomedModel) - 4))
 		}
+		ev.gesture.preventDefault();
 	},
 
 
@@ -6307,7 +8533,7 @@ function main(){
 function initializeApp(){
 	initializeXhr();
 	initializeBackbone();
-	initializeHammer();
+	initializeHammerForMarionette();
 	initializePlatformsSquirk();
 	initializeGoogleAnalytics();
 
@@ -6334,7 +8560,7 @@ function initializeXhr(){
 	);
 }
 
-function initializeHammer(){
+function initializeHammerForMarionette(){
 	$("#viewport").hammer({prevent_default:true});
 }
 

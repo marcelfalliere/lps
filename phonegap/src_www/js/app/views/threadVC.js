@@ -10,10 +10,6 @@ var ThreadVCLayout = Backbone.Marionette.Layout.extend({
 	},
 	events:{
 		'raporttapped':'onReportTapped',
-		'swiperight':'onSwiperight'
-	},
-	onSwiperight:function(){
-		app.router.navigate('', {trigger:true});
 	},
 	onRender:function(){
 		if (app.thread) {
