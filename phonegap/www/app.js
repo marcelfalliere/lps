@@ -14154,6 +14154,9 @@ var PseudonymVC = Backbone.Marionette.ItemView.extend({
 		ev.gesture.preventDefault();
 		this.$el.find('input').focus();
 		this.$el.find('input')[0].select();
+	},
+	onBeforeDestroy:function(){
+		debugger;
 	}
 });
 "use strict";
@@ -15171,30 +15174,35 @@ var ContentRegion = Backbone.Marionette.Region.extend({
 
 		if (isReplacingAView) {
 
-			this.currentView.$el
+			this.previousView = this.currentView;
+			this.currentView = view;
+
+			this.previousView.$el
 				.addClass(animOut)
 				.trigger('pagebeforehide')
 				.on('webkitAnimationEnd', _.bind(function(){
-					this.$el.off('webkitAnimationEnd');
-					this.destroy();
-				}, this.currentView));
 
-			view.render();
+					this.$el
+						.off('webkitAnimationEnd')
+						.remove();
 
-			view.$el
+				}, this.previousView));
+
+			this.currentView.render();
+
+			this.currentView.$el
 				.addClass(animIn)
 				.trigger('pagebeforeshow')
 				.one('webkitAnimationEnd', _.bind(function(){
-					this.currentView = this.toBeCurrentView;
-					this.currentView.$el
+
+					this.$el
 						.off('webkitAnimationEnd')
 						.removeClass(animIn)
 						.trigger('pageshow')
-				}, this));
 
-			this.$el.append(view.el);
-			
-			this.toBeCurrentView = view;
+				}, this.currentView));
+
+			this.$el.append(this.currentView.el);
 
 		} else {
 			this.show(view);
@@ -15368,7 +15376,6 @@ function initializeXhr(){
 function initializeSocketIo() {
 	app.socket = io(conf.server.base_url);
 	app.socket.on('threads', function(threads){
-		console.log('threads !');
 
 		if (app.threads) {
 

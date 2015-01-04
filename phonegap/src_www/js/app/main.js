@@ -41,7 +41,6 @@ function initializeXhr(){
 function initializeSocketIo() {
 	app.socket = io(conf.server.base_url);
 	app.socket.on('threads', function(threads){
-		console.log('threads !');
 
 		if (app.threads) {
 

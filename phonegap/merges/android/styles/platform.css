@@ -13,11 +13,10 @@ header #h1.main-title { letter-spacing: -1px; line-height: 50px; }
 	text-indent:-99999px;
 	background-image: url('../images/logo.png');
 	width:200px;
-	height:58px;
 	background-size: contain;
 	display:block;
-	height: 80%;
-	top:10%;
+	height: 50%;
+	top:30%;
 	background-repeat: no-repeat;
 	background-position: center;
 	left: 50%;
@@ -60,7 +59,7 @@ header #h1.main-title { letter-spacing: -1px; line-height: 50px; }
 	background-repeat: no-repeat;
 	background-position: center;
 	width:200px;
-	height:58px;
+	height:30px;
 	margin-left:-100px;
 	left:50%;
 }

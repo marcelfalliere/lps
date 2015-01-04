@@ -32,5 +32,8 @@ var PseudonymVC = Backbone.Marionette.ItemView.extend({
 		ev.gesture.preventDefault();
 		this.$el.find('input').focus();
 		this.$el.find('input')[0].select();
+	},
+	onBeforeDestroy:function(){
+		debugger;
 	}
 });
