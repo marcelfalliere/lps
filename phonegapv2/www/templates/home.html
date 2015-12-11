@@ -1,0 +1,22 @@
+<ion-view id="page-home">
+  <ion-header-bar>
+    <h1 class="title">la&nbsp;&nbsp;petite&nbsp;&nbsp;s.</h1>
+    <a class="button button-icon icon ion-compose" ui-sref="compose"></a>
+  </ion-header-bar>
+  <ion-content delegate-handle="homeScroll">
+    
+		<ion-list>
+			<ion-item class="thread" collection-repeat="thread in threads">
+
+				<img ng-if="thread.image" img-cache ic-src="{{imgUrl}}"ng-src="{{thread.image}}">
+
+				<div class="seen">
+					<i class="icon ion-eye"></i><span class="count">{{thread.seen}}</span>
+				</div>
+
+			</ion-item>
+		</ion-list>
+
+
+  </ion-content>
+</ion-view>

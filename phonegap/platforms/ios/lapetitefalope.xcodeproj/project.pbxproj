@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -25,6 +26,10 @@
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
 		7034D790DFF24A69A6750492 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A323DE73D73843ADA1F998CB /* libz.dylib */; };
 		82B426AD5EB94EC6A8112EC8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46B2AAAD67143BCBCAB2650 /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8654E87C1C19D7BD0088BB44 /* CDVSquareCamera-close-touched.png in Resources */ = {isa = PBXBuildFile; fileRef = 8654E8781C19D7BD0088BB44 /* CDVSquareCamera-close-touched.png */; };
+		8654E87D1C19D7BD0088BB44 /* CDVSquareCamera-close.png in Resources */ = {isa = PBXBuildFile; fileRef = 8654E8791C19D7BD0088BB44 /* CDVSquareCamera-close.png */; };
+		8654E87E1C19D7BD0088BB44 /* CDVSquareCamera-take-touched.png in Resources */ = {isa = PBXBuildFile; fileRef = 8654E87A1C19D7BD0088BB44 /* CDVSquareCamera-take-touched.png */; };
+		8654E87F1C19D7BD0088BB44 /* CDVSquareCamera-take.png in Resources */ = {isa = PBXBuildFile; fileRef = 8654E87B1C19D7BD0088BB44 /* CDVSquareCamera-take.png */; };
 		867D9E8118CAE55E003C7541 /* icon~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 867D9E8018CAE55E003C7541 /* icon~iphone.png */; };
 		867E4C2218B5D85E00791714 /* CanvasCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 867E4C2118B5D85E00791714 /* CanvasCamera.m */; };
 		867E4C2418B5D89800791714 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 867E4C2318B5D89800791714 /* CoreVideo.framework */; };
@@ -103,6 +108,10 @@
 		5AEE5B34173C68D80009041E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		69E14BCA28FD4F13A36F9C54 /* CoreData.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		8654E8781C19D7BD0088BB44 /* CDVSquareCamera-close-touched.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CDVSquareCamera-close-touched.png"; sourceTree = "<group>"; };
+		8654E8791C19D7BD0088BB44 /* CDVSquareCamera-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CDVSquareCamera-close.png"; sourceTree = "<group>"; };
+		8654E87A1C19D7BD0088BB44 /* CDVSquareCamera-take-touched.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CDVSquareCamera-take-touched.png"; sourceTree = "<group>"; };
+		8654E87B1C19D7BD0088BB44 /* CDVSquareCamera-take.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CDVSquareCamera-take.png"; sourceTree = "<group>"; };
 		867D9E8018CAE55E003C7541 /* icon~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon~iphone.png"; sourceTree = "<group>"; };
 		867E4C2018B5D85E00791714 /* CanvasCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasCamera.h; sourceTree = "<group>"; };
 		867E4C2118B5D85E00791714 /* CanvasCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasCamera.m; sourceTree = "<group>"; };
@@ -258,6 +267,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8654E8781C19D7BD0088BB44 /* CDVSquareCamera-close-touched.png */,
+				8654E8791C19D7BD0088BB44 /* CDVSquareCamera-close.png */,
+				8654E87A1C19D7BD0088BB44 /* CDVSquareCamera-take-touched.png */,
+				8654E87B1C19D7BD0088BB44 /* CDVSquareCamera-take.png */,
 				86F72E7B19A5C4F100A95E0E /* simulatorpicture.png */,
 				86DF1AF018BD901500B3A212 /* icon-close.png */,
 				86A27E2B18BCED40009F27F1 /* CDVNotification.bundle */,
@@ -491,17 +504,21 @@
 				867D9E8118CAE55E003C7541 /* icon~iphone.png in Resources */,
 				308D05371370CCF300D202BF /* icon-72.png in Resources */,
 				86F72E7C19A5C4F100A95E0E /* simulatorpicture.png in Resources */,
+				8654E87F1C19D7BD0088BB44 /* CDVSquareCamera-take.png in Resources */,
+				8654E87D1C19D7BD0088BB44 /* CDVSquareCamera-close.png in Resources */,
 				308D05381370CCF300D202BF /* icon.png in Resources */,
 				308D05391370CCF300D202BF /* icon@2x.png in Resources */,
 				1F766FE113BBADB100FB74C0 /* Localizable.strings in Resources */,
 				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
 				30A0434814DC770100060A13 /* Localizable.strings in Resources */,
 				867E4C2918B796FA00791714 /* icon-camera.png in Resources */,
+				8654E87C1C19D7BD0088BB44 /* CDVSquareCamera-close-touched.png in Resources */,
 				86A27E2C18BCED40009F27F1 /* CDVNotification.bundle in Resources */,
 				86DF1AF118BD901500B3A212 /* icon-close.png in Resources */,
 				3088BBC1154F3926009F9C59 /* Default@2x~iphone.png in Resources */,
 				3088BBC2154F3926009F9C59 /* Default~iphone.png in Resources */,
 				D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */,
+				8654E87E1C19D7BD0088BB44 /* CDVSquareCamera-take-touched.png in Resources */,
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

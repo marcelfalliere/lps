@@ -1,0 +1,13 @@
+{
+  "name": "la petite s.",
+  "app_id": "",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*.html",
+    "www/**/*.js",
+    "www/css/*.css"
+  ]
+}

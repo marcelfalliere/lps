@@ -1,0 +1,18 @@
+<ion-view id="page-compose">
+  <ion-header-bar>
+    <a class="button button-icon icon ion-close" ng-click="quit()"></a>
+    <a class="send button" 
+    	 ng-show="threadData.id!=undefined" 
+    	 lps-line-height 
+    	 ng-disabled="publishing"
+    	 ng-click="send()">Publier</a>
+  </ion-header-bar>
+  <ion-content delegate-handle="composeScroll">
+    
+    <div class="thread">
+			<img ng-src="{{threadData.image}}"/>
+			<div ng-hide="!uploading" style="width:{{progressWidth}}%" class="progress {{progressClass}}"></div>
+		</div>
+
+  </ion-content>
+</ion-view>

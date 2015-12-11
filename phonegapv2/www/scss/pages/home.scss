@@ -1,0 +1,7 @@
+#page-home {
+	@include thread();
+
+	.list {
+		padding-bottom:0;
+	}
+}

@@ -374,12 +374,21 @@ body {
   -webkit-transition: all 0.2s linear;
   -webkit-transform: scale(0.25) translateX(-150%);
   width: 400%;
-}
-#content .page.home-vc ol.zoomed li.active .normal-image .count-wrap {
-  -webkit-transform: translateY(0px);
-}
-#content .page.home-vc ol.zoomed li:not(.active) {
-  opacity: 0.4;
+  /*
+		&.zoomed {
+
+			li.active {
+				.normal-image {
+					.count-wrap {
+						-webkit-transform:translateY(0px);
+					}
+				}
+			}
+			li:not(.active) {
+				opacity:0.4;
+			}
+		}*/
+
 }
 #content .page.home-vc ol li {
   -webkit-transition: all 0.5s ease-in-out;

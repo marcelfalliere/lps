@@ -116,7 +116,7 @@ function initializePhonegapEvents() {
 }
 
 function initializeHammerForMarionette(){
-	$("#viewport").hammer({prevent_default:true});
+	$("#viewport").hammer({prevent_default:true}); // TODO : remove prevent_default !!!!!
 }
 
 function initializeBackbone(){

@@ -13917,7 +13917,7 @@ function toArray(list, index) {
 (function(){
 	window.conf = {
 		server : {
-			base_url:'http://192.168.1.20:9999/',
+			base_url:'http://192.168.254.88:9999/',
 			//base_url:'http://127.0.0.1:9999/',
 			//base_url:'http://api.lapetitefalope.fr/'
 		}
@@ -14325,10 +14325,10 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 			.css('-webkit-transform-origin', ($(window).width()/2)+'px '+($(window).height())+'px')
 			.css('-webkit-transform', 'scale(0.8) translateX('+translateX+') translateY('+translateY+')')
 			.addClass('zoomed')
-			.find('li.active').removeClass('active');
+			//.find('li.active').removeClass('active');
 
 
-		this.children.findByModel(model).$el.addClass('active');
+		//this.children.findByModel(model).$el.addClass('active');
 
 		this.zoomed = true;
 		this.zoomedModel = model;
@@ -15451,7 +15451,7 @@ function initializePhonegapEvents() {
 }
 
 function initializeHammerForMarionette(){
-	$("#viewport").hammer({prevent_default:true});
+	$("#viewport").hammer({prevent_default:true}); // TODO : remove prevent_default !!!!!
 }
 
 function initializeBackbone(){

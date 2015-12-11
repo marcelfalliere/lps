@@ -164,10 +164,10 @@ var HomeVC = Backbone.Marionette.CompositeView.extend({
 			.css('-webkit-transform-origin', ($(window).width()/2)+'px '+($(window).height())+'px')
 			.css('-webkit-transform', 'scale(0.8) translateX('+translateX+') translateY('+translateY+')')
 			.addClass('zoomed')
-			.find('li.active').removeClass('active');
+			//.find('li.active').removeClass('active');
 
 
-		this.children.findByModel(model).$el.addClass('active');
+		//this.children.findByModel(model).$el.addClass('active');
 
 		this.zoomed = true;
 		this.zoomedModel = model;
