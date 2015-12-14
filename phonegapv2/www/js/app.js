@@ -7,6 +7,7 @@ angular.module('lps', [
   'ionic',
   'ngAnimate',
   'ImgCache',
+  'tagged.directives.autogrow',
   'lps.controllers', 
   'lps.constants', 
   'lps.services', 
@@ -36,7 +37,7 @@ angular.module('lps', [
 
 .run(function($ionicPlatform, ImgCache) {
     $ionicPlatform.ready(function() {
-        ImgCache.$init();
+      ImgCache.$init();
     });
 })
 
@@ -61,6 +62,11 @@ angular.module('lps', [
     url: '/compose',
     templateUrl : 'templates/compose.html',
     controller: 'ComposeCtrl'
+  })
+  .state('see', {
+    url: '/see/{thread_id}',
+    templateUrl : 'templates/see.html',
+    controller: 'SeeCtrl'
   })
   location.hash='#home';
 })

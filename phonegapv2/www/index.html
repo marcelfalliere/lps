@@ -16,6 +16,8 @@
     <script src="lib/parse/parse-1.6.7.min.js"></script>
     <script src="lib/imgcache.js/js/imgcache.js"></script>
     <script src="lib/angular-imgcache.js/angular-imgcache.js"></script>
+    <script src="lib/lodash/lodash.js"></script>
+    <script src="lib/tagged-autogrow/taggedAutogrow.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
@@ -23,11 +25,13 @@
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/modules.js"></script>
+    <script src="js/services/threads.js"></script>
     <script src="js/controllers/home.js"></script>
     <script src="js/controllers/compose.js"></script>
-    <script src="js/services/threads.js"></script>
+    <script src="js/controllers/see.js"></script>
     <script src="js/directives/lpsLoader.js"></script>
     <script src="js/directives/lpsLineHeight.js"></script>
+    <script src="js/directives/lpsViewer.js"></script>
 
   </head>
   <body ng-app="lps">

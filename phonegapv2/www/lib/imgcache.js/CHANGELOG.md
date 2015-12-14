@@ -2,6 +2,33 @@
 
 ## master ##
 
+## 1.0rc2 ##
+
+### FIXED ###
+* Fix for Windows Phone 8.1 (#132 thanks badpenguin and Sturgelose)
+* Fix for empty cache size on Chrome
+* Fix for 'Not allowed to load local resource' error (#97, #115 thanks Maistho)
+
+### IMPROVED ###
+* Don't set iCloud-related metadata outside iOS (#112)
+* Added note about bower & npm in the README (#104)
+* Avoid double forward slashes in cached files paths (#108)
+* Added Meteor integration (#125 thanks @caio-ribeiro-pereira)
+
+## 1.0rc1 ##
+
+### NEW ###
+* Added a wrapper for imgcache that supports Promises (qimgcache.js)
+* Helpers, DomHelpers and Private classes are now available publicly via ImgCache.helpers, ImgCache.domHelpers and ImgCache.private respectively. Those are not just plain public because you generally shouldn't need them, though they're now accessible
+
+### FIXED ###
+* Fixed issue on iOS devices (#93)
+
+### IMPROVED ###
+* Replaced tabs with whitespaces throughout the code and examples
+* Readme: added a Troubleshooting section to help you solve the most common issues
+* Readme: added links to angular wrappers for imgcache
+* Reviewed examples
 
 ## 0.7.6 ##
 

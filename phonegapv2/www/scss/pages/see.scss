@@ -1,0 +1,74 @@
+#page-see {
+	@include thread();
+	.thread-wrapper {
+		position:absolute;
+	}
+	ion-scroll {
+		height:100%;
+		overflow:visible;
+
+		.thread-placeholder {
+			width:100vw;
+			height:100vw;
+		}
+	}
+
+	.answer {
+		display:block;
+		padding:50px;
+		margin:20px;
+	}
+
+	.bar-footer {
+
+		@-webkit-keyframes answer_form_enter {
+			0% 		  { transform:translateY(100%) 		rotateZ(-10deg);	}
+			20% 		{ transform:translateY(80%) 		rotateZ(10deg);	}
+			30% 		{ transform:translateY(100%) 		rotateZ(-5deg);	}
+			50% 		{ transform:translateY(70%) 		rotateZ(5deg);	}
+			60% 		{ transform:translateY(100%) 		rotateZ(-14deg);	}
+			67% 		{ transform:translateY(100%) 		rotateZ(-14deg);	}
+			77% 		{ transform:translateY(30%) 		rotateZ(14deg);	}
+			90% 		{ transform:translateY(60%) 		rotateZ(-5deg);	}
+			100% 		{ transform:translateY(0%) 		rotateZ(0deg);	 	}
+		}
+		animation: answer_form_enter 2.1s ease-in;
+
+		height:auto;
+		max-height:200px;
+		background-color:#444;
+
+		form {
+			width:100%;
+			textarea {
+				display:block;
+				width:100%;
+				transition:width .2s ease-in;
+				max-height:180px;
+			}
+			.button {
+				font-weight:300;
+				text-transform:uppercase;		
+				color:white;
+				position:absolute;
+				right:0;
+				bottom:0;
+				height:100%;
+				transform:translateX(100%);
+				width:30%;
+				transition:all .2s ease-in;
+			}
+
+			&:not(.button-visible) {
+			}
+			&.button-visible {
+				textarea {
+					width:70%;
+				}
+				.button {
+					transform:translateX(0);
+				}
+			}
+		}
+	}
+}

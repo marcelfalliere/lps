@@ -5,9 +5,13 @@
     "ionic": "driftyco/ionic-bower#1.1.1"
   },
   "resolutions": {
-    "angular": "1.4.3"
+    "angular": "1.4.3",
+    "imgcache.js": "v1.0rc2"
   },
   "dependencies": {
-    "angular-imgcache.js": "~0.1.0"
+    "angular-imgcache.js": "~0.1.0",
+    "imgcache.js": "v1.0rc2",
+    "lodash": "~3.10.1",
+    "tagged-autogrow": "~1.0.4"
   }
 }

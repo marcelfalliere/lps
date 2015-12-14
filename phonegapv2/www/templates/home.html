@@ -3,20 +3,37 @@
     <h1 class="title">la&nbsp;&nbsp;petite&nbsp;&nbsp;s.</h1>
     <a class="button button-icon icon ion-compose" ui-sref="compose"></a>
   </ion-header-bar>
-  <ion-content delegate-handle="homeScroll">
+  <ion-content scroll="false" delegate-handle="homeScroll">
     
-		<ion-list>
-			<ion-item class="thread" collection-repeat="thread in threads">
-
-				<img ng-if="thread.image" img-cache ic-src="{{imgUrl}}"ng-src="{{thread.image}}">
-
-				<div class="seen">
-					<i class="icon ion-eye"></i><span class="count">{{thread.seen}}</span>
+    <div class="lpsViewer">
+			<div class="lpsViewer-item" 
+					ng-repeat="thread in threads track by $index" 
+					ng-class="{
+						'lpsViewer-current':isCurrent($index),
+						'lpsViewer-next':isNext($index)
+					}"
+					on-touch="onTouch(thread, $event)" 
+					on-drag="onDrag(thread, $event)" 
+					on-release="onRelease(thread, $event)" 
+					>
+					<!-- on-drag="onDrag($event)" -->
+					<!--ng-click="see(thread)"-->
+				<div ng-if="shouldLoadThreadItem($index)"
+						 class="lpsViewer-itemViewport" 
+						 style="{{getItemStyle(thread).viewport}};">
+					<div class="thread lpsViewer-itemContent" 
+							 style="{{getItemStyle(thread).content}};">
+						<img img-cache 
+								 ic-src="{{thread.image}}" />
+						<div class="seen">
+							<i class="icon ion-eye"></i><span class="count">{{thread.seen}}</span>
+						</div>
+					</div>
 				</div>
 
-			</ion-item>
-		</ion-list>
 
+			</div>
+		</div>
 
   </ion-content>
 </ion-view>

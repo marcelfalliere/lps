@@ -7,27 +7,82 @@ angular.module('lps.services')
 	var Answer = Parse.Object.extend("answer");
 	var currentThread;
 	var threads = [];
+	var cpt = 20;
+	while (cpt > 0) {
+		threads.push({
+			image:'img/CDVSquareCameraDefaultPicture.png',
+			seen:cpt
+		});
+		cpt--;
+	}
 
 	this.all = function(){
 		var deferred = $q.defer();
 
-		query = new Parse.Query(Thread);
-		query.descending('updatedAt');
-		query.equalTo('published', true);
+		if (threads.length!=0){
+			deferred.resolve(threads);
+		} else {
+			query = new Parse.Query(Thread);
+			query.descending('updatedAt');
+			query.equalTo('published', true);
+			query.find({
+				success:function(results){
+					for (var i = 0; i < results.length; i++) {
+			      threads.push(transformParseThreadToFlatObject(results[i]));
+			    }
+					deferred.resolve(threads);
+				},
+				error:function(error){
+					console.error("ThreadsService#all ParseError: " + error.code + " \n Message: " + error.message+" \n");
+					deferred.reject();
+				}
+			});
+		}
+
+		return deferred.promise;
+	}
+
+	this.thread = function(thread_id) {
+		var deferred = $q.defer();
+
+		incrementThreadSeenCount(thread_id);
+
+		var thread = _.find(threads, {id:thread_id});
+		if (thread){
+			deferred.resolve(thread);
+		} else {
+			query = new Parse.Query(Thread);
+			query.get(thread_id, {
+				success:function(object){
+					deferred.resolve(transformParseThreadToFlatObject(object));
+				},
+				error:function(error){
+					console.error("ThreadsService#all ParseError: " + error.code + " \n Message: " + error.message+" \n");
+					deferred.reject();
+				}
+			});
+		}
+
+		return deferred.promise;
+	}
+
+	this.answers = function(thread_id){
+		var deferred = $q.defer();
+
+		query = new Parse.Query(Answer);
+		var thread = new Thread();
+		thread.id = thread_id;
+		query.equalTo('thread', thread)
 		query.find({
 			success:function(results){
+				var answers = [];
 				for (var i = 0; i < results.length; i++) {
-					var image = results[i].get('image');
-		      var object = {
-		      	image: image?image.url():undefined,
-		      	seen: results[i].get('seen')
-		      };
-		      threads.push(object);
+		      answers.push(transformParseAnswerToFlatObject(results[i]));
 		    }
-				deferred.resolve(threads);
+				deferred.resolve(answers);
 			},
 			error:function(error){
-				console.error("ThreadsService#all ParseError: " + error.code + " \n Message: " + error.message+" \n");
+				console.error("ThreadsService#answers {thread_id="+thread_id+"} ParseError: " + error.code + " \n Message: " + error.message+" \n");
 				deferred.reject();
 			}
 		});
@@ -59,21 +114,67 @@ angular.module('lps.services')
 
 		var deferred = $q.defer();
 		currentThread.set('published',true);
-		currentThread.set('seen',1);
+		currentThread.set('seen',0);
 		currentThread.save().then(function(){
-			var object = {
-      	image: currentThread.get('image')._url,
-      	seen: 0
-      };
-      threads.unshift(object);
-
+      // ajout au tableau des threads locaux
+      threads.unshift(transformParseThreadToFlatObject(currentThread));
 			deferred.resolve();
 		}, deferred.reject);
 		return deferred.promise;
 	}
 
+	this.publishAnswerToThread = function(thread_id, answerData){
+		var deferred = $q.defer();
+		var answer = new Answer();
+		answer.set('text', answerData.text);
+		var thread = new Thread();
+		thread.id = thread_id;
+		answer.set('thread', thread);
+		answer.save({
+			success:function(answer){
+				debugger;
+				deferred.resolve();
+			},
+			error:deferred.reject
+		});
+		return deferred.promise;
+	}
 
-	// private functions
+	// ----------------------------------------
+	// Private functions
+
+
+	var incrementThreadSeenCount = function(thread_id){
+		var thread = new Thread();
+		thread.id = thread_id;
+		thread.increment('seen');
+		thread.save({
+			success:function(t){
+				var thread = _.find(threads, {id:thread_id});
+				if (thread){
+					thread.seen = t.get('seen');
+				}
+			}
+		});
+	}
+
+	var transformParseAnswerToFlatObject = function(parseAnswer) {
+		var object = {
+			id:parseAnswer.id,
+			text:parseAnswer.get('text')
+		};
+		return object;
+	}
+
+	var transformParseThreadToFlatObject = function(parseThread) {
+		var image = parseThread.get('image');
+    var object = {
+    	image: image?image.url():undefined,
+    	seen: parseThread.get('seen'),
+    	id: parseThread.id
+    };
+    return object;
+	}
 
 	var convertFileToBase64viaFileReader = function(url, callback){
 		var deferred = $q.defer();
