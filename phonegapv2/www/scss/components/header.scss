@@ -1,6 +1,8 @@
 ion-header-bar.bar.bar-header {
 	background-image:none;
 	background-color:transparent;
+	z-index:20;
+	border:none;
 	h1 {
 		font-family:'Birds';
 		font-size:2em;

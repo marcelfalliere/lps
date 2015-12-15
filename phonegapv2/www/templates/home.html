@@ -4,10 +4,14 @@
     <a class="button button-icon icon ion-compose" ui-sref="compose"></a>
   </ion-header-bar>
   <ion-content scroll="false" delegate-handle="homeScroll">
-    
-    <div class="lpsViewer">
+    {{viewIndex}}
+    <div class="lpsViewer" ng-class="{
+    	'lpViewer-disabled':viewerDisabled,
+			'lpsViewer-moving':usingViewer
+    }">
 			<div class="lpsViewer-item" 
 					ng-repeat="thread in threads track by $index" 
+					style="{{getItemStyle(thread)}}"
 					ng-class="{
 						'lpsViewer-current':isCurrent($index),
 						'lpsViewer-next':isNext($index)
@@ -16,22 +20,12 @@
 					on-drag="onDrag(thread, $event)" 
 					on-release="onRelease(thread, $event)" 
 					>
-					<!-- on-drag="onDrag($event)" -->
-					<!--ng-click="see(thread)"-->
-				<div ng-if="shouldLoadThreadItem($index)"
-						 class="lpsViewer-itemViewport" 
-						 style="{{getItemStyle(thread).viewport}};">
-					<div class="thread lpsViewer-itemContent" 
-							 style="{{getItemStyle(thread).content}};">
-						<img img-cache 
-								 ic-src="{{thread.image}}" />
-						<div class="seen">
-							<i class="icon ion-eye"></i><span class="count">{{thread.seen}}</span>
-						</div>
+				<div class="thread">
+					<img img-cache ic-src="{{thread.image}}" />
+					<div class="seen">
+						<i class="icon ion-eye"></i><span class="count">{{thread.seen}}</span>
 					</div>
 				</div>
-
-
 			</div>
 		</div>
 

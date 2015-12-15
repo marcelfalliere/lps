@@ -1,10 +1,9 @@
 
 angular.module('lps.controllers')
 
-.controller('HomeCtrl', function($scope, $state, ThreadsService, $ionicLoading, $ionicGesture){
+.controller('HomeCtrl', function($scope, $state, ThreadsService, $ionicLoading, $ionicGesture, $timeout, MathUtils){
 
 	$scope.threads = [];
-	$scope.viewIndex = 0;
 	
 	var init = function(){
 		$ionicLoading.show();
@@ -22,7 +21,20 @@ angular.module('lps.controllers')
 	}
 
 	// below -> viewer
-	$scope.isUsingLpsViewer = false;
+	$scope.viewIndex = 0;
+	$scope.usingViewer = false;
+	$scope.viewerDisabled = false;
+
+	$scope.doNext = function(){
+		if ($scope.viewIndex < $scope.threads.length && !$scope.usingViewer && !$scope.viewerDisabled) {
+			$scope.usingViewer = false;
+			$scope.viewerDisabled = true;
+			$timeout(function(){
+				$scope.viewIndex = $scope.viewIndex+1;
+				$scope.viewerDisabled = false;
+			}, 400);
+		}
+	}
 
 	$scope.shouldLoadThreadItem = function(threadIndex) {
 		return threadIndex == $scope.viewIndex 
@@ -34,36 +46,12 @@ angular.module('lps.controllers')
 	$scope.isNext = function(threadIndex) { return threadIndex-1 == $scope.viewIndex; }
 
 	$scope.onDrag = function(thread, $event) {
-		
-		$scope.isUsingLpsViewer=true;
-		thread.lpsviewer_gesture = {
-			center : {
-				pageX: $event.gesture.center.pageX,
-				pageY: $event.gesture.center.pageY
-			},
-			eventType:$event.gesture.eventType,
-			pointerType:$event.gesture.pointerType,
-			angle:$event.gesture.angle
-		};
-		console.log($event.gesture.angle);
-		//console.debug('onDrag', $scope.threads.indexOf(thread), $event)
-	}
-	$scope.onTouch = function(thread, $event) {
-		console.log('onTouch', $scope.threads.indexOf(thread))
+		$scope.usingViewer = true;
+		thread.lpsviewer_gesture = transformEventObject($event);
 	}
 	$scope.onRelease = function(thread, $event) {
-		
-		$scope.isUsingLpsViewer=false;
-		thread.lpsviewer_gesture = {
-			center : {
-				pageX: $event.gesture.center.pageX,
-				pageY: $event.gesture.center.pageY
-			},
-			eventType:$event.gesture.eventType,
-			pointerType:$event.gesture.pointerType
-		};
-
-		console.log('onRelease', $scope.threads.indexOf(thread))
+		$scope.usingViewer = false;
+		thread.lpsviewer_gesture = transformEventObject($event);
 	}
 
 	$scope.getItemStyle = function(thread) {
@@ -77,35 +65,37 @@ angular.module('lps.controllers')
 	// private
 
 	var getItemStyleForCurrentItem = function(thread) {
-		var trX = '';
-		if (thread.lpsviewer_gesture && thread.lpsviewer_gesture.center.pageX) {
-			var trX = window.innerWidth - thread.lpsviewer_gesture.center.pageX;
-			if(thread.lpsviewer_gesture.eventType=='end' && thread.lpsviewer_gesture.pointerType=='touch'){
-				var trX = '0';
+		var style="opacity:1;"
+		if (thread.lpsviewer_gesture && thread.lpsviewer_gesture.eventType=='move') {
+			
+			var trX = thread.lpsviewer_gesture.deltaX;
+			var trY = thread.lpsviewer_gesture.deltaY;
+
+			//var rotate = Math.abs(trX*trY)*Math.abs(thread.lpsviewer_gesture.center.pageX*thread.lpsviewer_gesture.center.pageY)/2000000;
+			var ROTATE_THRESOLD = 2*window.innerWidth/3;
+			var rotate = MathUtils.yEqualAXPlusB(ROTATE_THRESOLD, 0, 0, 20, thread.lpsviewer_gesture.center.pageX);
+			if (thread.lpsviewer_gesture.center.pageX > ROTATE_THRESOLD) {
+				rotate = 0;
 			}
 
-			var rotate = Math.abs(trX)/4;
-
-			return {
-				viewport: 'transform: translateX(-'+trX+'px) rotateZ('+rotate+'deg) ;',
-				content: 'transform: rotateZ(-'+rotate+'deg) translateX('+trX+'px);'
-			}
+			style = 'transform: translateX('+thread.lpsviewer_gesture.deltaX+'px) translateY('+thread.lpsviewer_gesture.deltaY+'px) rotateZ('+rotate+'deg) ;';
+		} else if (thread.lpsviewer_gesture && thread.lpsviewer_gesture.eventType=='end') {
+			style = 'transition:all .4s;transform: translateX(-100%);';
+			$scope.doNext();			
 		}
-		return trX;
+		return style;
 	}
 
 	var getItemStyleForNextItem = function(thread) {
-		var opacity = 'inherit';
-		var transform = 'none';
+		var style = "";
 
-		if (thread.lpsviewer_gesture) {
+		if (thread.lpsviewer_gesture && thread.lpsviewer_gesture.eventType=='move') {
 			var scale = '1';
-			var trX = '0'
 
 			var b = 0;
 			var a = 1/window.innerWidth;
 			var x = window.innerWidth - thread.lpsviewer_gesture.center.pageX;
-			opacity = a*x+b; // oh yeah;$
+			var opacity = a*x+b; // oh yeah;$
 
 			// var b2 = 0.5;
 			// var a2 = 0.5/window.innerWidth;
@@ -117,15 +107,29 @@ angular.module('lps.controllers')
 			// var x3 = window.innerWidth - thread.lpsviewer_gesture.center.pageX;
 			// trX = a3*x3+b3; // oh yeah*3;
 
-			// transform = 'translateX('+trX+'px) scale('+ scale +')'
+			style = 'opacity:'+opacity+'';
+
+		} else if (thread.lpsviewer_gesture && thread.lpsviewer_gesture.eventType=='end') {
+			style = 'transition:all .4s; opacity:1;'
 		}
+		
+		return style;
+	}
+
+	var transformEventObject = function($event){
 		return {
-			viewport: 'opacity:'+opacity+';transform:'+transform+';',
-			content: ''
+			center : {
+				pageX: $event.gesture.center.pageX,
+				pageY: $event.gesture.center.pageY
+			},
+			deltaX: $event.gesture.deltaX,
+			deltaY: $event.gesture.deltaY,
+			eventType:$event.gesture.eventType,
+			angle:$event.gesture.angle,
+			velocityX:$event.gesture.velocityX
 		}
 	}
 
-	
 
 
 })
