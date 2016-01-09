@@ -1,7 +1,7 @@
 
 angular.module('lps.controllers')
 
-.controller('HomeCtrl', function($scope, $state, ThreadsService, $ionicLoading, $ionicGesture, $timeout, MathUtils){
+.controller('HomeCtrl', function($scope, $state, ThreadsService, $ionicScrollDelegate, $ionicLoading, $ionicGesture, $timeout, MathUtils){
 
 	$scope.threads = [];
 	
@@ -9,6 +9,7 @@ angular.module('lps.controllers')
 		$ionicLoading.show();
 		ThreadsService.all().then(function(threads){
 			$scope.threads = threads;
+			displayThread(threads[0])
 			$ionicLoading.hide();
 		}, function(){
 			$ionicLoading.hide();
@@ -20,82 +21,206 @@ angular.module('lps.controllers')
 		$state.go('see', {thread_id:thread.id});
 	}
 
-	// below -> viewer
-	$scope.viewIndex = 0;
-	$scope.usingViewer = false;
-	$scope.viewerDisabled = false;
+	$scope.doDisplayAnswerForm = function(thread) {
+		thread.answerMode = true;
+		$ionicScrollDelegate.resize();
+	}
+	$scope.quitAnswerMode = function(thread) {
+		thread.answerMode = false;	
+		$ionicScrollDelegate.resize();
+	}
 
-	$scope.doNext = function(){
-		if ($scope.viewIndex < $scope.threads.length && !$scope.usingViewer && !$scope.viewerDisabled) {
-			$scope.usingViewer = false;
-			$scope.viewerDisabled = true;
-			$timeout(function(){
-				$scope.viewIndex = $scope.viewIndex+1;
-				$scope.viewerDisabled = false;
-			}, 400);
+	// below -> viewer
+
+	$scope.viewIndex = 0;
+	$scope.viewerDisabled = false;
+	$scope.usingViewer = false;
+	$scope.scrollEnabled = false;
+	$scope.nav = {
+		isGoingLeft:false,
+		isGoingRight:false
+	}
+	$scope.canScroll = true;
+	var DISABLED_TIME = 200;
+	var timeoutDetailsDisplay;
+
+	$scope.$watch('viewIndex', function(newVal, oldVal){
+		if (newVal != oldVal && newVal && newVal > 0 && newVal < $scope.threads.length && !$scope.threads[newVal].answers_loaded) {
+			var thread = $scope.threads[newVal];
+			ThreadsService.answers(thread.id).then(function(ret){
+				thread.answers_loaded=true;
+				thread.answers = ret;
+
+			});
 		}
+	})
+
+
+	var doNext = function(){
+		$scope.viewerDisabled = true;
+		$scope.doingNext = true;
+		$timeout(function(){
+			$scope.threads.forEach(function(t){ t.style=''; })
+			$scope.doingNext = false;
+			$scope.viewIndex = $scope.viewIndex + 1;	
+			$scope.viewerDisabled = false;
+		}, DISABLED_TIME);
+	}
+	var doPrev = function(){
+		$scope.viewerDisabled = true;
+		$scope.doingPrev = true;
+		$timeout(function(){
+			$scope.threads.forEach(function(t){ t.style=''; })
+			$scope.doingPrev = false;
+			$scope.viewIndex = $scope.viewIndex - 1;	
+			$scope.viewerDisabled = false;
+		}, DISABLED_TIME);
 	}
 
 	$scope.shouldLoadThreadItem = function(threadIndex) {
-		return threadIndex == $scope.viewIndex 
-		|| threadIndex-1 == $scope.viewIndex
-		|| threadIndex+1 == $scope.viewIndex;
+		return  $scope.viewIndex-4 < threadIndex && $scope.viewIndex+4 > threadIndex
 	}
-
-	$scope.isCurrent = function(threadIndex) { return threadIndex == $scope.viewIndex; }
-	$scope.isNext = function(threadIndex) { return threadIndex-1 == $scope.viewIndex; }
+	$scope.isRealFar = function(threadIndex) {
+		return  $scope.viewIndex-3 == threadIndex || $scope.viewIndex+3 == threadIndex
+	}
 
 	$scope.onDrag = function(thread, $event) {
 		$scope.usingViewer = true;
-		thread.lpsviewer_gesture = transformEventObject($event);
+		$scope.canScroll = false;
+
+		$timeout.cancel(timeoutDetailsDisplay);
+		thread.shouldDisplayDetails = false;
+		$scope.nav.isGoingLeft = false;
+		$scope.nav.isGoingRight = false;
+
+		var style = 'transform: translateX('+$event.gesture.deltaX+'px) translateY('+$event.gesture.deltaY+'px)';
+		var screenRatio = $event.gesture.center.pageX / window.innerWidth;
+		if (screenRatio < 1/3 && $scope.viewIndex < $scope.threads.length - 1) {
+			$scope.nav.isGoingLeft = true;
+			style += ' scale('+(MathUtils.yEqualAXPlusB(0, 0.2, 1/3, 1, screenRatio))+');';
+		} else if (screenRatio > 2/3 && $scope.viewIndex > 0) {
+			$scope.nav.isGoingRight = true;
+			style += 'scale('+(MathUtils.yEqualAXPlusB(2/3, 1, 1, 0.2, screenRatio))+');';
+		}
+
+		thread.style=style;
 	}
 	$scope.onRelease = function(thread, $event) {
 		$scope.usingViewer = false;
-		thread.lpsviewer_gesture = transformEventObject($event);
+		$scope.nav.isGoingLeft = false;
+		$scope.nav.isGoingRight = false;
+		$scope.canScroll = true;
+
+		var screenRatio = $event.gesture.center.pageX / window.innerWidth;
+		if (screenRatio < 1/3 && $scope.viewIndex < $scope.threads.length - 1) {
+			thread.style = DEF_TIME+DEF_PREV;
+			doNext();
+		} else if (screenRatio > 2/3 && $scope.viewIndex > 0) {
+			thread.style = DEF_TIME+DEF_NEXT;
+			doPrev();
+		} else {
+			thread.style=DEF_TIME+DEF_CURR;
+			console.log('display thread on release');
+			displayThread(thread);
+		}
 	}
 
+	$scope.onScroll = function(){
+		if (!$scope.canScroll) {
+			$ionicScrollDelegate.scrollTo(0,0, false);	
+		} else if ($scope.nav.isGoingLeft || $scope.nav.isGoingRight) {
+			if (Math.abs($ionicScrollDelegate.getScrollPosition().top) >= 0 + 1.5674){
+				$ionicScrollDelegate.scrollTo(0,0, true);	
+			} else {
+				$ionicScrollDelegate.scrollTo(0,0, false);	
+			}
+		}
+		console.log($ionicScrollDelegate);
+	}
+
+	var displayThread = function(thread){
+		$timeout.cancel(timeoutDetailsDisplay);
+		timeoutDetailsDisplay = $timeout(function(){
+			thread.shouldDisplayDetails = true;
+		}, 700)
+	}
+
+	var DEF_TIME = "transition: all .4s;"
+	var DEF_TIME_SLOW = "transition: all .3s ease-in-out;"
+	var DEF_CURR = "transform: translateX(0) translateY(0) scale(1)";
+	var DEF_NEXT = "transform: translateX(40%) translateY(60%) scale(0.2);";
+	var DEF_NEXT_POSWANTED = "transform: translateX(40%) translateY(65%) scale(0.2);";
+	var DEF_PREV = "transform: translateX(-40%) translateY(60%) scale(0.2);";
+	var DEF_PREV_POSWANTED = "transform: translateX(-40%) translateY(65%) scale(0.2);";
+	var DEF_FUTU = "transform: translateX(45%) translateY(75%) scale(0.1);";
+  var DEF_PAST = "transform: translateX(-45%) translateY(75%) scale(0.1);";
+
 	$scope.getItemStyle = function(thread) {
-		if ($scope.threads.indexOf(thread) == $scope.viewIndex) {
-			return getItemStyleForCurrentItem(thread)
-		} else if ($scope.threads.indexOf(thread)-1 == $scope.viewIndex) {
-			return getItemStyleForNextItem($scope.threads[$scope.viewIndex])
+		var indexInArray = $scope.threads.indexOf(thread);
+
+		if ($scope.viewIndex+1 == indexInArray) { // le suivant
+
+			// va devenir le suivant dans le futur
+			if ($scope.doingPrev) return DEF_TIME+DEF_FUTU;
+
+			// va devenir le current
+			if ($scope.doingNext) { 
+				console.log('display thread getItemStyle 1', thread.seen);
+				displayThread(thread);
+				return DEF_TIME+DEF_CURR;
+			}
+
+			// l'user veut aller dans ce sens
+			if ($scope.nav.isGoingRight) return DEF_TIME_SLOW+DEF_NEXT_POSWANTED;
+
+			return DEF_NEXT;
+
+		} else if ($scope.viewIndex-1 == indexInArray) { // le précédent
+
+			// va devenir le précédent dans le passé
+			if ($scope.doingNext) return DEF_TIME+DEF_PAST;
+
+			// va devenir le current
+			if ($scope.doingPrev) {
+				console.log('display thread getItemStyle 2');
+				displayThread(thread);
+				return DEF_TIME+DEF_CURR;
+			}
+
+			// l'user veut aller dans ce sens
+			if ($scope.nav.isGoingLeft) return DEF_TIME_SLOW+DEF_PREV_POSWANTED;
+
+			return DEF_PREV;
+
+		} else if (indexInArray < $scope.viewIndex-1) { // tout les plus précédents
+			
+			// va devenir le précédent strict
+			if ($scope.doingPrev && indexInArray == $scope.viewIndex-2) return DEF_TIME+DEF_PREV;
+			
+			return DEF_PAST;
+
+		} else if (indexInArray > $scope.viewIndex+1) { // tout les plus suivants
+
+			// va devenir le suivant strict
+			if ($scope.doingNext && indexInArray == $scope.viewIndex+2) return DEF_TIME+DEF_NEXT;
+			
+			return DEF_FUTU;
 		}
 	}
 	
 	// private
 
 	var getItemStyleForCurrentItem = function(thread) {
-		var style="opacity:1;"
-		if (thread.lpsviewer_gesture && thread.lpsviewer_gesture.eventType=='move') {
-			
-			var trX = thread.lpsviewer_gesture.deltaX;
-			var trY = thread.lpsviewer_gesture.deltaY;
-
-			//var rotate = Math.abs(trX*trY)*Math.abs(thread.lpsviewer_gesture.center.pageX*thread.lpsviewer_gesture.center.pageY)/2000000;
-			var ROTATE_THRESOLD = 2*window.innerWidth/3;
-			var rotate = MathUtils.yEqualAXPlusB(ROTATE_THRESOLD, 0, 0, 20, thread.lpsviewer_gesture.center.pageX);
-			if (thread.lpsviewer_gesture.center.pageX > ROTATE_THRESOLD) {
-				rotate = 0;
-			}
-
-			style = 'transform: translateX('+thread.lpsviewer_gesture.deltaX+'px) translateY('+thread.lpsviewer_gesture.deltaY+'px) rotateZ('+rotate+'deg) ;';
-		} else if (thread.lpsviewer_gesture && thread.lpsviewer_gesture.eventType=='end') {
-			style = 'transition:all .4s;transform: translateX(-100%);';
-			$scope.doNext();			
-		}
-		return style;
+		
 	}
 
 	var getItemStyleForNextItem = function(thread) {
-		var style = "";
+		var style = "transform: translateX(40%) translateY(60%) scale(0.2) rotateZ(10deg);";
 
 		if (thread.lpsviewer_gesture && thread.lpsviewer_gesture.eventType=='move') {
 			var scale = '1';
 
-			var b = 0;
-			var a = 1/window.innerWidth;
-			var x = window.innerWidth - thread.lpsviewer_gesture.center.pageX;
-			var opacity = a*x+b; // oh yeah;$
+			
 
 			// var b2 = 0.5;
 			// var a2 = 0.5/window.innerWidth;
@@ -107,11 +232,23 @@ angular.module('lps.controllers')
 			// var x3 = window.innerWidth - thread.lpsviewer_gesture.center.pageX;
 			// trX = a3*x3+b3; // oh yeah*3;
 
-			style = 'opacity:'+opacity+'';
-
 		} else if (thread.lpsviewer_gesture && thread.lpsviewer_gesture.eventType=='end') {
-			style = 'transition:all .4s; opacity:1;'
+			style = 'transition:all .4s; transform:none;'
 		}
+		if (thread.seen == 20) console.log(style);
+		return style;
+	}
+
+	var getItemStyleForPreviousItem = function(thread) {
+		var DEFAULT_PREVIOUS_ITEM = "transform: translateY(60%) scale(0.2) rotateZ(-10deg);";
+		var style = DEFAULT_PREVIOUS_ITEM;
+
+		if (thread.lpsviewer_gesture && thread.lpsviewer_gesture.eventType=='move') {
+			
+		} else if (thread.lpsviewer_gesture && thread.lpsviewer_gesture.eventType=='end') {
+			style = 'transition:all .4s;'+DEFAULT_PREVIOUS_ITEM;
+		}
+		if (thread.seen == 20) console.log(style);
 		
 		return style;
 	}

@@ -2,20 +2,58 @@
 angular.module('lps.services')
 
 .service('ThreadsService', function($http, $q, $timeout, ImgCache){
+	
+	// utils functions
+	function getCommentColor(){
+		var randomColor = stringToColor("Anonyme");
+		if (window.device && window.device.uuid) 
+			randomColor = stringToColor(device.uuid);
+		return randomColor;
+	}
 
+	function stringToColor(str) {
+	    for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash));
+	    for (var i = 0, colour = "#"; i < 3; colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
+	    return colour;
+	}
+
+	// variable initialization
 	var Thread = Parse.Object.extend("thread");
 	var Answer = Parse.Object.extend("answer");
 	var currentThread;
 	var threads = [];
+
+	// TEMP DATA
 	var cpt = 20;
 	while (cpt > 0) {
+
+		var answers = [];
+		var cptAnswers = 20;
+		while (cptAnswers > 0) {
+
+			var base = stringToColor((cptAnswers*cptAnswers*cptAnswers)+'hey');
+			var light = one.color(base).lightness(.8).hex();
+      var dark = one.color(base).black(.8).hex();
+
+			answers.push({
+				text:'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de limprimerie depuis les années 1500, quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un livre sp '+cptAnswers,
+				baseColor:base,
+				lightColor:light,
+				darkColor:dark,
+			});
+			cptAnswers--;
+		}
+
 		threads.push({
-			image:'img/CDVSquareCameraDefaultPicture.png',
-			seen:cpt
+			image:'https://placeholdit.imgix.net/~text?txtsize=33&txt=index'+cpt+'&w=210&h=210',
+			seen:cpt,
+			answers:answers,
+			answers_loaded:true
 		});
 		cpt--;
 	}
 
+	//
 	this.all = function(){
 		var deferred = $q.defer();
 
@@ -171,7 +209,9 @@ angular.module('lps.services')
     var object = {
     	image: image?image.url():undefined,
     	seen: parseThread.get('seen'),
-    	id: parseThread.id
+    	id: parseThread.id,
+    	answers: [],
+    	answers_loaded:false
     };
     return object;
 	}

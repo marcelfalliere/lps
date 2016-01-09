@@ -32,3 +32,10 @@ angular.module('lps.directives')
 	}
 })
 
+
+.directive('lpsLoaderIcon', function(){
+	return {
+		restrict:'E',
+		templateUrl:'templates/directives/lpsLoaderIcon.html'
+	}
+})

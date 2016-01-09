@@ -131,7 +131,7 @@
   background: none;
   position: relative;
   width: 200px;
-  height: 140px;
+  height: 200px;
 }
 .uil-triangle-css > div > div {
   position: absolute;
@@ -145,11 +145,11 @@
   position: absolute;
   width: 66px;
   height: 36px;
-  -ms-animation: uil-triangle-rotate 1s linear infinite;
-  -moz-animation: uil-triangle-rotate 1s linear infinite;
-  -webkit-animation: uil-triangle-rotate 1s linear infinite;
-  -o-animation: uil-triangle-rotate 1s linear infinite;
-  animation: uil-triangle-rotate 1s linear infinite;
+  -ms-animation: uil-triangle-rotate .5s linear infinite;
+  -moz-animation: uil-triangle-rotate .5s linear infinite;
+  -webkit-animation: uil-triangle-rotate .5s linear infinite;
+  -o-animation: uil-triangle-rotate .5s linear infinite;
+  animation: uil-triangle-rotate .5s linear infinite;
 }
 .uil-triangle-css > div:nth-of-type(1) {
   top: 40px;
@@ -172,61 +172,4 @@
 .uil-triangle-css > div:nth-of-type(3) > div {
   border-top: 56px solid #444444;
 }
-
-.all-the-loader {
-  text-align:center;
-}
-.all-the-loader .text {
-  color:#444444;
-}
-.uil-triangle-css {
-  margin:0 auto;
-}
-
-
-@-webkit-keyframes pendulum {
-   0% { -webkit-transform: translateX(20%) rotateZ(-20deg); }
-   100% { -webkit-transform: translateX(-20%) rotateZ(20deg); }
-}   
-.all-the-loader.pendulum {
-  -webkit-animation-name: pendulum;
-  -webkit-animation-duration: 1s;
-  -webkit-animation-timing-function: ease-in-out;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-direction: alternate;
-}
-
-@-webkit-keyframes rotatey {
-   70% { -webkit-transform: rotateY(360deg); }
-   100% { -webkit-transform: rotateY(360deg); }
-}   
-.all-the-loader.rotatey {
-  -webkit-animation-name: rotatey;
-  -webkit-animation-duration: 1.8s;
-  -webkit-animation-timing-function: ease-in-out;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-direction: alternate;
-}
-
-@-webkit-keyframes balancoire {
-   00% { -webkit-transform: translateY(-100%) skew(-20deg) }
-   100% { -webkit-transform: translateY(100%) skew(20deg) }
-}   
-.all-the-loader.balancoire {
-  -webkit-animation-name: balancoire;
-  -webkit-animation-duration: 1.8s;
-  -webkit-animation-timing-function: ease-in-out;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-direction: alternate;
-}
-
-</style>
-
-<div class="all-the-loader {{anim}}" ng-click="next()">
-  <div class='uil-triangle-css' style='-webkit-transform:scale(0.5)'>
-    <div><div></div></div>
-    <div><div></div></div>
-    <div><div></div></div>
-  </div>
-  <span class="text">{{message}}</span>
-</span>
+ </style> <div class='uil-triangle-css' style='transform:scale(0.16);'><div><div></div></div><div><div></div></div><div><div></div></div></div>

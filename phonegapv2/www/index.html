@@ -18,6 +18,7 @@
     <script src="lib/angular-imgcache.js/angular-imgcache.js"></script>
     <script src="lib/lodash/lodash.js"></script>
     <script src="lib/tagged-autogrow/taggedAutogrow.min.js"></script>
+    <script src="one-color-all.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
@@ -32,9 +33,10 @@
     <script src="js/controllers/see.js"></script>
     <script src="js/directives/lpsLoader.js"></script>
     <script src="js/directives/lpsLineHeight.js"></script>
+    <script src="js/directives/autofocus.js"></script>
 
   </head>
-  <body ng-app="lps">
+  <body ng-app="lps" ng-class="{ 'compose':$root.isComposing() }">
     <ion-nav-view></ion-nav-view>
   </body>
 </html>

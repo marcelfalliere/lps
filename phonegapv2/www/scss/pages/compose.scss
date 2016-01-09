@@ -1,4 +1,9 @@
 #page-compose {
+	background-color:black;
+	ion-header-bar a.ion-close {
+		color:#eee;
+	}
+
 	@include thread();
 
 	.send.button {
@@ -23,6 +28,7 @@
 		}
 
 	}
+
 }
 
 @-webkit-keyframes send_button_enter {

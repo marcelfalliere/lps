@@ -1,37 +1,111 @@
 #page-home {
 	@include thread();
 
+	ion-header-bar a.ion-camera {
+		font-size:30px;
+	}
+
 	.lpsViewer {
 
-		.lpsViewer-item {
+		.lpsViewer-nav {
+		    position: absolute;
+  			left: 20%;
+  			right: 20%;
+  			top:100vw;
+  			padding-left:5px;
+  			padding-right:5px;
 
+  			.lpsViewer-nav-left {
+  				float:left;
+  			}
+  			.lpsViewer-nav-right {
+  				float:right;
+  			}
+		}
+
+		.lpsViewer-item {
 			position:absolute;
-			display:none;
-			pointer-events:none;
+			height:100vw;
+
+
+			@-webkit-keyframes thread_details_appear {
+			  0% 		{ transform:translateY(50px); opacity:0; }
+			  100% 	{ transform:translateY(0); opacity:1; }
+			}
+
+			.thread-details {
+				z-index:1000;
+
+				animation: thread_details_appear .4s ease-in;
+		  	-webkit-animation: thread_details_appear .4s ease-in;
+
+		  	.intro {
+					margin-left:20%;
+					margin-right:20%;		
+					margin-top:20px;
+					margin-bottom:30vw;
+					text-align:center;
+		  	}
+
+		  	.answers {
+	  			text-align:justified;
+		  		.answer {
+		  			display:inline-block;
+		  			.text {
+		  				padding:5px 7px;
+		  				font-weight:400;
+		  			}
+		  			.meta {
+		  				padding:5px 7px;
+		  				font-weight:700;
+		  				em {
+		  					display:block;
+		  					font-weight:600;
+		  				}
+		  			}
+		  		}
+		  	}
+
+		  	.actions {
+		  		margin-top:20%;
+		  		text-align:center;
+		  		.button {
+		  			margin:20px;
+		  			font-size:30px;
+		  		}
+		  	}
+
+		  	.answer-form {
+		  		background-color:black;
+		  		padding:5px;
+		  		height:100vw;
+		  		margin-top:20%;
+		  		color:#eee;
+		  	}
+
+			}
+
 
 			&.lpsViewer-current {
-				display:block;
-				z-index:10;
-				pointer-events:all;
+				z-index:900;
 			}
-			&.lpsViewer-next {
-				display:block;
-				z-index:9;
+			&.lpsViewer-realfar {
+				z-index:-10;
 			}
+
+
 		}
 
 		&.lpsViewer-disabled {
-			pointer-events:none;
+			pointer-events:none !important;
 		}
 
-		&.lpsViewer-moving {
-			.lpsViewer-item {
-				transition:all 0s;
+		&.lpsViewer-moving,
+		 .lpsViewer-disabled {
+
+			.thread-details {
+				display:none;
 			}
 		}
-	}
-
-	.list {
-		padding-bottom:0;
 	}
 }
