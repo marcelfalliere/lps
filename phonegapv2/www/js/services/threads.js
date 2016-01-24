@@ -23,35 +23,35 @@ angular.module('lps.services')
 	var currentThread;
 	var threads = [];
 
-	// TEMP DATA
-	var cpt = 20;
-	while (cpt > 0) {
+	// // TEMP DATA
+	// var cpt = 20;
+	// while (cpt > 0) {
 
-		var answers = [];
-		var cptAnswers = 20;
-		while (cptAnswers > 0) {
+	// 	var answers = [];
+	// 	var cptAnswers = 20;
+	// 	while (cptAnswers > 0) {
 
-			var base = stringToColor((cptAnswers*cptAnswers*cptAnswers)+'hey');
-			var light = one.color(base).lightness(.8).hex();
-      var dark = one.color(base).black(.8).hex();
+	// 		var base = stringToColor((cptAnswers*cptAnswers*cptAnswers)+'hey');
+	// 		var light = one.color(base).lightness(.8).hex();
+ //      var dark = one.color(base).black(.8).hex();
 
-			answers.push({
-				text:'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de limprimerie depuis les années 1500, quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un livre sp '+cptAnswers,
-				baseColor:base,
-				lightColor:light,
-				darkColor:dark,
-			});
-			cptAnswers--;
-		}
+	// 		answers.push({
+	// 			text:'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de limprimerie depuis les années 1500, quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un livre sp '+cptAnswers,
+	// 			baseColor:base,
+	// 			lightColor:light,
+	// 			darkColor:dark,
+	// 		});
+	// 		cptAnswers--;
+	// 	}
 
-		threads.push({
-			image:'https://placeholdit.imgix.net/~text?txtsize=33&txt=index'+cpt+'&w=210&h=210',
-			seen:cpt,
-			answers:answers,
-			answers_loaded:true
-		});
-		cpt--;
-	}
+	// 	threads.push({
+	// 		image:'https://placeholdit.imgix.net/~text?txtsize=33&txt=index'+cpt+'&w=210&h=210',
+	// 		seen:cpt,
+	// 		answers:answers,
+	// 		answers_loaded:true
+	// 	});
+	// 	cpt--;
+	// }
 
 	//
 	this.all = function(){
@@ -63,36 +63,14 @@ angular.module('lps.services')
 			query = new Parse.Query(Thread);
 			query.descending('updatedAt');
 			query.equalTo('published', true);
+			query.limit(20);
 			query.find({
 				success:function(results){
 					for (var i = 0; i < results.length; i++) {
 			      threads.push(transformParseThreadToFlatObject(results[i]));
 			    }
+			    threads.length=20;
 					deferred.resolve(threads);
-				},
-				error:function(error){
-					console.error("ThreadsService#all ParseError: " + error.code + " \n Message: " + error.message+" \n");
-					deferred.reject();
-				}
-			});
-		}
-
-		return deferred.promise;
-	}
-
-	this.thread = function(thread_id) {
-		var deferred = $q.defer();
-
-		incrementThreadSeenCount(thread_id);
-
-		var thread = _.find(threads, {id:thread_id});
-		if (thread){
-			deferred.resolve(thread);
-		} else {
-			query = new Parse.Query(Thread);
-			query.get(thread_id, {
-				success:function(object){
-					deferred.resolve(transformParseThreadToFlatObject(object));
 				},
 				error:function(error){
 					console.error("ThreadsService#all ParseError: " + error.code + " \n Message: " + error.message+" \n");
@@ -151,38 +129,47 @@ angular.module('lps.services')
 		ImgCache.cacheFile(currentThread.get('image')._url);
 
 		var deferred = $q.defer();
-		currentThread.set('published',true);
-		currentThread.set('seen',0);
-		currentThread.save().then(function(){
-      // ajout au tableau des threads locaux
-      threads.unshift(transformParseThreadToFlatObject(currentThread));
-			deferred.resolve();
+
+		getThreadCount().then(function(count){
+			
+			currentThread.set('published',true);
+			currentThread.set('seen',0);
+			currentThread.set('incrementalId',count+1);
+			currentThread.save().then(function(){
+	      // ajout au tableau des threads locaux en premiere position
+	      threads.unshift(transformParseThreadToFlatObject(currentThread));
+	      threads.length = 20; // lol éh oué ça marche
+				deferred.resolve();
+
+			}, deferred.reject);
+
 		}, deferred.reject);
+
 		return deferred.promise;
 	}
+
 
 	this.publishAnswerToThread = function(thread_id, answerData){
 		var deferred = $q.defer();
 		var answer = new Answer();
-		answer.set('text', answerData.text);
+		answer.set('text', answerData);
 		var thread = new Thread();
 		thread.id = thread_id;
 		answer.set('thread', thread);
 		answer.save({
 			success:function(answer){
-				debugger;
-				deferred.resolve();
+				
+				deferred.resolve({
+					text:answerData,
+					createdAt:new Date()
+				});
 			},
 			error:deferred.reject
 		});
 		return deferred.promise;
 	}
 
-	// ----------------------------------------
-	// Private functions
-
-
-	var incrementThreadSeenCount = function(thread_id){
+	this.incrementThreadSeenCount = function(thread_id){
 		var thread = new Thread();
 		thread.id = thread_id;
 		thread.increment('seen');
@@ -195,6 +182,29 @@ angular.module('lps.services')
 			}
 		});
 	}
+
+
+
+
+
+	// ----------------------------------------
+	// Private functions
+
+	var getThreadCount = function(){
+      var deferred = $q.defer();
+
+      var query = new Parse.Query(Thread);
+      query.equalTo('published', true);
+      query.count({
+        success: function (count) {
+          deferred.resolve(count);
+        },
+        error: function (error) {
+          deferred.reject(error);
+        }
+      });
+      return deferred.promise;
+    }
 
 	var transformParseAnswerToFlatObject = function(parseAnswer) {
 		var object = {
@@ -209,7 +219,9 @@ angular.module('lps.services')
     var object = {
     	image: image?image.url():undefined,
     	seen: parseThread.get('seen'),
+    	incrementalId: parseThread.get('incrementalId'),
     	id: parseThread.id,
+    	createdAt: parseThread.get('createdAt'),
     	answers: [],
     	answers_loaded:false
     };

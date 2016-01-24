@@ -4,16 +4,22 @@ $font-family-sans-serif: 'Open Sans';
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 $overlay:rgba(255,255,255, 0.7);
 
+//$materialAnimationInterval:0.15s;
+$materialAnimationInterval:.1s;
+$materialTime:.3s;
+$materialFunction:ease-out;
+
 @import "www/lib/ionic/scss/ionic";
 
 @import "www/scss/fonts";
 @import "www/scss/mixins";
 
+
+@import "www/scss/pages/home";
+@import "www/scss/pages/compose";
+
 @import "www/scss/components/header";
 @import "www/scss/components/content";
 @import "www/scss/components/loader";
 @import "www/scss/components/loading";
-
-@import "www/scss/pages/see";
-@import "www/scss/pages/home";
-@import "www/scss/pages/compose";
+@import "www/scss/components/material";

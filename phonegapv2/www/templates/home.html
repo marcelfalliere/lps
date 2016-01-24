@@ -1,69 +1,56 @@
 <ion-view id="page-home">
   <ion-header-bar>
-    <h1 class="title">la&nbsp;&nbsp;petite&nbsp;&nbsp;s.</h1>
+    <h1 class="title">20 TRUCS</h1>
     <a class="button button-icon icon ion-camera" ui-sref="compose"></a>
   </ion-header-bar>
-  <ion-content on-scroll="onScroll()">
+  <ion-content scroll="false" magicthumb>
 
-    <div class="lpsViewer"  ng-class="{
-    	'lpsViewer-disabled':viewerDisabled,
-			'lpsViewer-moving':usingViewer
-    }">
-			<div class="lpsViewer-item" 
-					ng-if="shouldLoadThreadItem($index)"
-					ng-repeat="thread in threads track by $index" 
-					ng-class="{ 'lpsViewer-current' : $index==viewIndex, 'lpsViewer-realfar' : isRealFar($index)  }"
-					style="{{ $index==viewIndex ? thread.style : getItemStyle(thread) }}"
-					>
-				<div class="thread" data-tap-disabled on-drag="onDrag(thread, $event)" on-release="onRelease(thread, $event)">
-					<img img-cache ic-src="{{thread.image}}" />
+    <div class="threads">
+    	
+    	<material-popup-backdrop></material-popup-backdrop>
+
+			<div class="thread index-{{$index}}" 
+					 material-popup entity="thread"
+					 ng-repeat="thread in threads track by $index" >
+				<div class="details-when-popup header">
+					<span class="index"><em>#</em>{{$index+1}}</span>
+					<span class="id">{{thread.incrementalId}}<sup>ème</sup></span>
 				</div>
 
-				<div class="thread-details" ng-if="($index==viewIndex ? thread.shouldDisplayDetails==true : false)">
-					<div class="intro">
-						<div class="seen">
-							<i class="icon ion-eye"></i><span class="count">{{thread.seen}}</span>
-						</div>
-
-						<div class="answers-count" ng-if="thread.answers_loaded" >
-							<i class="icon ion-chatbox"></i>
-							<span class="count">{{thread.answers.length}}</span>
-						</div>
-						<lps-loader-icon ng-if="!thread.answers_loaded"></lps-loader-icon>
-
-					</div>
-					<div class="answers">
-						<div class="answer" ng-repeat="answer in thread.answers">
-							<div class="text" style="background-color:{{answer.lightColor}};color:{{answer.darkColor}}">{{answer.text}}</div>
-							<div class="meta" style="background-color:{{answer.baseColor}};color:{{answer.lightColor}}">some title ? <em>and a/time/stamp</em></div>
-						</div>
-					</div>
-					<div class="actions" ng-if="thread.answerMode!=true">
-						<a class="button button-icon icon ion-compose" ng-click="doDisplayAnswerForm(thread)"></a>
-						<a class="button button-icon icon ion-camera" ui-sref="compose({})"></a>
-					</div>
-					<div class="answer-form" ng-if="thread.answerMode==true">
-						<a class="button button-icon icon ion-close" ng-click="quitAnswerMode(thread)"></a>
-				    <form ng-submit="doSendAnswer()" ng-class="{'button-visible':!(answerData.text==undefined || answerData.text=='') }">
-				      <textarea autofocus ng-disabled="sending" ng-model="answerData.text" tagged-autogrow ></textarea>
-
-				      todo:choix d'une font
-
-				      <button type="submit" ng-disabled="sending" class="button button-clear button-positive">Publier</button>
-				    </textarea>
-					</div>
+				<div class="thread-image">
+					<img ng-if="thread.image!=undefined"
+							 img-cache ic-src="{{thread.image}}" />
+					<img ng-if="thread.image==undefined"
+							 src="img/fmf.jpeg" />
+				</div>
+				<div class="details-when-popup">
+					<span class="date">créé le {{ thread.createdAt | date :'dd/MM/yyyy @ h:mma' }}</span>
+				</div>
+				<div class="details-when-popup">
+					<span class="seen">vu {{thread.seen}} fois</span>
 				</div>
 
+				<div class="details-when-popup loading" ng-if="thread.loadingAnswers == true">
+					<ion-spinner></ion-spinner>
+				</div>
 
-			</div>
-			<div class="lpsViewer-nav">
-			
-				<div class="lpsViewer-nav-left" ng-show="nav.isGoingLeft==true">
-					<i class="ion-arrow-left-b"></i>
+				<div class="details-when-popup empty-answers" ng-if="thread.loadingAnswers == false && (thread.answers == undefined || thread.answers.length == 0)">
+					<span class="text">Personne n'a répondu _\o/</span>
 				</div>
-				<div class="lpsViewer-nav-right" ng-show="nav.isGoingRight==true">
-					<i class="ion-arrow-right-b"></i>
+
+				<div class="details-when-popup answer" ng-if="thread.loadingAnswers == false && !(thread.answers == undefined || thread.answers.length == 0)" ng-repeat="answer in thread.answers">
+					<span class="text">{{answer.text}}</span>
 				</div>
+				
+				<div class="details-when-popup form">
+					<div class="button button-block button-positive" ng-if="thread.seeMode!='form'" ng-click="doAnswer(thread)">Répondre</div>
+					<form ng-submit="doPostAnswer(thread)" ng-if="thread.seeMode=='form'">
+						<textarea ng-model="thread.newAnswer" tagged-autogrow></textarea>
+						<button ng-disabled="thread.postingAnswer" class="button button-block button-positive" type="submit">Envoyer</button>
+					</form>
+				</div>
+				
+
 			</div>
 		</div>
 

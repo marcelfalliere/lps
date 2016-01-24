@@ -1,0 +1,170 @@
+
+/*
+below : material popup parts
+*/
+material-popup-backdrop {
+	position:fixed;
+	top:0;
+	bottom:0;
+	right:0;
+	left:0;
+	transform:scaleY(0);
+	background-color:transparent;
+
+	&.shown {
+		z-index:999999999999999999;
+		height:100vh;
+		width:100vw;
+		transform:scaleY(1);
+		background-color:$loading-backdrop-bg-color;
+	}
+}
+
+$popup_height:50px;
+$popup_bigHeight:80px;
+$popup_paddingLeft:10px;
+$popup_paddingBottom:8px;
+
+@keyframes anim_thread_back {
+	100% {
+	transform:translate3d(5vw, 5vw, 0);
+	}
+}
+
+.threads .thread {
+
+
+	&.materialed-popup, &.materialed-removing {
+		transition:transform $materialTime $materialFunction, 
+				width $materialTime $materialFunction, 
+				height $materialTime $materialFunction,
+				box-shadow $materialTime $materialFunction,
+				background-color $materialTime $materialFunction;
+		z-index:999999999999;
+	}
+
+	&.materialed-removing {
+		background-color:white;
+
+		.details-when-popup.less-important {
+			transition:all 0s;
+		}
+	}
+
+	&.materialed-popup {
+
+		opacity:1;
+		
+		transform:translate3d(5vw, 5vw, 0);
+		animation:none;
+		@include BoxShadowHelper(5);
+		width:90vw;
+		background-color:white;
+
+		&.material-popup-opened {
+			transition:transform 0s;
+		}
+
+		.details-when-popup {
+			transform: scaleY(1);
+			opacity:1;
+			height:$popup_height;
+			width:100%;
+			&.header {
+				height:$popup_bigHeight;
+			}
+			&.empty-answers, 
+		 	&.answer,
+		 	&.form {
+		 		height:auto;
+		 		padding:$popup_paddingLeft $popup_paddingBottom;
+		 	}
+
+		}				
+
+		.thread-image {
+			height:90vw;
+			width:90vw;
+		}
+	}
+}
+
+
+// Popup items ; there are 3 kings :
+//  - header
+//  - meta
+//  - normal
+.details-when-popup {
+	height:0px;
+	position:relative;
+	border:0;
+ 	overflow:hidden;
+ 	opacity:0;
+ 	transform: scaleY(0);
+	transform-origin: 50% 50%;
+ 	transition:height $materialTime $materialFunction $materialAnimationInterval,
+ 		width $materialTime $materialFunction $materialAnimationInterval,
+ 		transform $materialTime $materialFunction $materialAnimationInterval,
+ 		opacity $materialTime $materialFunction $materialAnimationInterval;
+
+ 	&.less-important {
+ 		transition:all 0s linear $materialTime;
+ 	}
+
+
+ 	.index {
+		position:absolute;
+		left:$popup_paddingLeft;
+		bottom:$popup_paddingBottom;
+		font-size:36px;
+		em {
+			font-size:20px;
+		}					
+	}
+	.id {
+		font-size:12px;
+		position:absolute;
+		right:$popup_paddingLeft;
+		bottom:$popup_paddingBottom;
+	}
+	.date, 
+	.seen {
+		position:absolute;
+		left:$popup_paddingLeft;
+		top:0; bottom:0;
+		line-height:$popup_height;
+		// truc pour tenir en une ligne?
+	}
+
+	&.form {
+		.button {
+			margin:0;
+		}
+		textarea {
+	    width: 100%;
+	    margin-bottom:20px;
+      min-height: 70px;
+      border-bottom:1px solid #ddd;
+      border-top:1px solid #ddd;
+			padding:$popup_paddingLeft $popup_paddingBottom;
+		}
+	}
+
+	&.loading, &.empty-answers {
+		color:#444;
+		text-align:center;
+	}
+
+	&.answer {
+		white-space:pre-line;
+		font-size:1.4em;
+		font-family: Cambria, Georgia, sans-serif;
+		background-color:#333;
+		color:white;
+		text-align:left;
+
+		.text {
+		}
+
+	}
+}

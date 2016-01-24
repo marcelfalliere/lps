@@ -1,111 +1,55 @@
+
+
 #page-home {
-	@include thread();
-
-	ion-header-bar a.ion-camera {
-		font-size:30px;
-	}
-
-	.lpsViewer {
-
-		.lpsViewer-nav {
-		    position: absolute;
-  			left: 20%;
-  			right: 20%;
-  			top:100vw;
-  			padding-left:5px;
-  			padding-right:5px;
-
-  			.lpsViewer-nav-left {
-  				float:left;
-  			}
-  			.lpsViewer-nav-right {
-  				float:right;
-  			}
-		}
-
-		.lpsViewer-item {
-			position:absolute;
-			height:100vw;
-
-
-			@-webkit-keyframes thread_details_appear {
-			  0% 		{ transform:translateY(50px); opacity:0; }
-			  100% 	{ transform:translateY(0); opacity:1; }
-			}
-
-			.thread-details {
-				z-index:1000;
-
-				animation: thread_details_appear .4s ease-in;
-		  	-webkit-animation: thread_details_appear .4s ease-in;
-
-		  	.intro {
-					margin-left:20%;
-					margin-right:20%;		
-					margin-top:20px;
-					margin-bottom:30vw;
-					text-align:center;
-		  	}
-
-		  	.answers {
-	  			text-align:justified;
-		  		.answer {
-		  			display:inline-block;
-		  			.text {
-		  				padding:5px 7px;
-		  				font-weight:400;
-		  			}
-		  			.meta {
-		  				padding:5px 7px;
-		  				font-weight:700;
-		  				em {
-		  					display:block;
-		  					font-weight:600;
-		  				}
-		  			}
-		  		}
-		  	}
-
-		  	.actions {
-		  		margin-top:20%;
-		  		text-align:center;
-		  		.button {
-		  			margin:20px;
-		  			font-size:30px;
-		  		}
-		  	}
-
-		  	.answer-form {
-		  		background-color:black;
-		  		padding:5px;
-		  		height:100vw;
-		  		margin-top:20%;
-		  		color:#eee;
-		  	}
-
-			}
-
-
-			&.lpsViewer-current {
-				z-index:900;
-			}
-			&.lpsViewer-realfar {
-				z-index:-10;
-			}
-
-
-		}
-
-		&.lpsViewer-disabled {
-			pointer-events:none !important;
-		}
-
-		&.lpsViewer-moving,
-		 .lpsViewer-disabled {
-
-			.thread-details {
-				display:none;
-			}
+	ion-header-bar {
+		a.ion-camera {
+			font-size:30px;
 		}
 	}
+}
+
+
+.threads {
+
+	margin-top:20px;
+
+	.thread {
+		position:absolute;
+		background-color:transparent;
+		opacity:1;
+		width:25vw;
+
+		.thread-image {
+			@include thread-image();
+			width:25vw;
+			height:25vw;
+			transition:width $materialTime $materialFunction, 
+				height $materialTime $materialFunction;
+
+		}
+	}
+
+	@for $i from 0 through 20 {
+
+		@keyframes anim_thread_#{$i} {
+		  0% {
+		  	opacity:0;
+		  	transform:translate3d( #{(25vw * ($i%4) - 5vw )} , #{(25vw * ($i/4) - 5vw )} ,0 );
+		 	}
+		  100% {
+		  	opacity:1;
+		  	transform:translate3d( #{(25vw * ($i%4) )} , #{(25vw * ($i/4) )} , 0);
+		  }
+		}
+    .ng-enter.index-#{$i} {
+    	animation: anim_thread_#{$i} $materialTime;
+  		animation-delay:#{$materialAnimationInterval * $i};
+			opacity:0;
+    }
+    .index-#{$i}:not(.ng-enter) {
+			transition:all 0s;
+    	transform:translate3d( #{(25vw * ($i%4) )} , #{(25vw * ($i/4) )} , 0);
+    }
+  }
+
 }

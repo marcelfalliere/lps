@@ -3,9 +3,20 @@ ion-header-bar.bar.bar-header {
 	background-color:transparent;
 	z-index:20000;
 	border:none;
+
+	@keyframes title-anim {
+	  0%   { transform: translate3d(0,-100%,0); opacity:0; }
+	  100% { transform: translate3d(0,0,0); opacity:1; }
+	}
+
 	h1 {
-		font-family:'Birds';
+	  font-family: 'Varela', sans-serif;
 		font-size:2em;
 		line-height:56px;
+		opacity:0;
+		transform: translate3d(0,-100%,0);
+		animation:title-anim 1s ease-out;
+		animation-delay:#{$materialAnimationInterval * 21};
+		animation-fill-mode: forwards;
 	}
 }

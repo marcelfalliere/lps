@@ -1,10 +1,13 @@
 #page-compose {
+
 	background-color:black;
 	ion-header-bar a.ion-close {
 		color:#eee;
 	}
 
-	@include thread();
+	.thread-image {
+		@include thread-image();
+	}
 
 	.send.button {
 		position:absolute;

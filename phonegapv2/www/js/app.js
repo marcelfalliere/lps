@@ -63,10 +63,5 @@ angular.module('lps', [
     templateUrl : 'templates/compose.html',
     controller: 'ComposeCtrl'
   })
-  .state('see', {
-    url: '/see/{thread_id}',
-    templateUrl : 'templates/see.html',
-    controller: 'SeeCtrl'
-  })
   location.hash='#home';
 })

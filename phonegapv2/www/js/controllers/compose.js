@@ -63,7 +63,7 @@ angular.module('lps.controllers')
 			});
 		} else {
 			//alert('Oh copain, la caméra, ben elle marche pas chez toi.');
-			imageHasBeenTaken('img/CDVSquareCameraDefaultPicture.png');
+			imageHasBeenTaken('img/example-0'+ (Math.floor(Math.random() * 8) + 1)   +'.png');
 		}
 	}
 

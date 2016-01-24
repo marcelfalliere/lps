@@ -6,12 +6,15 @@
   },
   "resolutions": {
     "angular": "1.4.3",
-    "imgcache.js": "v1.0rc2"
+    "imgcache.js": "v1.0rc2",
+    "jquery": "~2.2.0"
   },
   "dependencies": {
     "angular-imgcache.js": "~0.1.0",
     "imgcache.js": "v1.0rc2",
     "lodash": "~3.10.1",
-    "tagged-autogrow": "~1.0.4"
+    "tagged-autogrow": "~1.0.4",
+    "impetus": "~0.8.3",
+    "jquery": "~2.2.0"
   }
 }
